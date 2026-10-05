@@ -42,10 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     }
 
-    signinForm.addEventListener('submit', (e) => {
-        if(!checkvalidateForm()){
-            e.preventDefault();
+        signinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!checkvalidateForm()) {
             return;
         }
+        window.location.href = 'trangchu.html';
     });
 });
