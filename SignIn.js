@@ -40,12 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     };
 
+<<<<<<< HEAD
     signinForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if(checkvalidateForm()){
             signinForm.submit();
         }else{
+=======
+        signinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!checkvalidateForm()) {
+>>>>>>> 2eac49c02f23f36a869c5d845d9af20cd2729ec6
             return;
         }
+        window.location.href = 'trangchu.html';
     });
 });
