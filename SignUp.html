@@ -4,43 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="SignIn.css">
-    <script src="SignIn.js"></script>
-    <title>SignIn Page</title>
+    <link rel="stylesheet" href="SignUp.css">
+    <script src="SignUp.js"></script>
+    <title>SignUp Page</title>
 </head>
 
 <body>
-    <header class="signin-header">
-        <a href="Home.html" class="signin-logo">GearHouse.</a>
+    <header class="signup-header">
+        <a href="Home.html" class="signup-logo">GearHouse.</a>
     </header>
     <main class="main-container">
-        <div class="signin-container">
-            <h1 class="signin-title">Đăng nhập</h1>
-            <label class="signin-subtitle">Sẵn sàng nâng tầm trải nghiệm của bạn.</label>
-            <form class="signin-form">
-                <div class="signin-form-group">
-                    <label class="signin-form-label" for="username">Username</label>
-                    <input class="signin-form-input" type="text" id="username" name="username" placeholder="Tên đăng nhập">
-                    <label class="signin-form-input-error-label"id="username-error"></label>
+        <div class="signup-container">
+            <h1 class="signup-title">Đăng ký</h1>
+            <label class="signup-subtitle">Trở thành GearHouse Member ngay hôm nay.</label>
+            <form class="signup-form">
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="fullname">Full Name</label>
+                    <input class="signup-form-input" type="text" id="fullname" name="fullname" placeholder="Họ và tên">
+                    <label class="signup-form-input-error-label"id="fullname-error"></label>
                 </div>
-                <div class="signin-form-group">
-                    <label class="signin-form-label" for="password">Password</label>
-                    <input class="signin-form-input" type="password" id="password" name="password" placeholder="Mật khẩu">
-                    <label class="signin-form-input-error-label"id="password-error"></label>
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="username">Username</label>
+                    <input class="signup-form-input" type="text" id="username" name="username" placeholder="Tên đăng nhập">
+                    <label class="signup-form-input-error-label"id="username-error"></label>
+                </div>
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="password">Password</label>
+                    <input class="signup-form-input" type="password" id="password" name="password" placeholder="Mật khẩu">
+                    <label class="signup-form-input-error-label"id="password-error"></label>
+                </div>
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="confirm-password">Confirm Password</label>
+                    <input class="signup-form-input" type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu">
+                    <label class="signup-form-input-error-label"id="confirm-password-error"></label>
                 </div>
                 <div class="error-notification">
                     <p id="error-message"></p>
                 </div>
-                <div class="signin-form-bottom">
-                    <div class="rememberme-container">
-                        <input type="checkbox" id="remember-me" name="remember-me">
-                        <label class="remember-me-label">Ghi nhớ đăng nhập</label>
-                    </div>
-                    <div class="forgot-password-container">
-                        <a class="forgot-password-link" href="#">Quên mật khẩu?</a>
-                    </div>
-                </div>
-                <button class="signin-form-button" type="submit">Đăng ký</button>
+                <button class="signup-form-button" type="submit">Đăng ký</button>
                 <div class="signup-nav-container">
                     <label class="signup-nav-label">Đã có tài khoản!</label>
                     <a class="signup-nav-link" href="SignIn.html">Đăng nhập ngay</a>

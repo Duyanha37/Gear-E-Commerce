@@ -1,0 +1,142 @@
+:root {
+    --color-bg: #F5F5F7;
+    --color-bg-alt: #FFFFFF;
+    --color-border: #D2D2D7;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--color-bg);
+}
+
+.signup-header{
+    text-align: center;
+    padding: 15px 0px;
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.signup-logo{
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000000;
+}
+
+.main-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+    height: 100%;
+}
+
+.signup-container{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg-alt);
+    border-radius: 20px;
+    border: 1px solid var(--color-bg);
+    padding: 50px 40px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+.signup-title{
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    align-self: center;
+}
+
+.signup-subtitle{
+    font-size: 16px;
+    font-weight: normal;
+    color: #333333;
+    margin-bottom: 40px;
+    align-self: center;
+}
+
+.signup-form-label{
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.signup-form-input{
+    height: 45px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.signup-form-group{
+    margin-bottom: 20px;
+}
+
+.signup-form-button{
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 0px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-nav-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.signup-nav-label{
+    font-size: 14px;
+    color: #333333;
+    margin-right: 5px;
+}
+
+.signup-nav-link{
+    font-size: 14px;
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.signup-nav-link:hover{
+    text-decoration: underline;
+}
+
+.error-notification{
+    background-color: #FBE7E8;
+    border: 1px solid #B86479;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+#error-message{
+    color: #000000;
+    font-size: 14px;
+    padding: 7px;
+}
+
+.signup-form-input-error-label{
+    color: #FF0000 ;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}

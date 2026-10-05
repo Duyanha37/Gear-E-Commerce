@@ -14,6 +14,7 @@ function taoId() {
     }
     return lonnhat + 1;
 }
+
 function kiemtra(ten, email, idboqua) {
     if (ten == "" || email == "") {
         return "Họ tên và email không được để trống!";
@@ -55,6 +56,7 @@ function hienthi(ds) {
     }
     document.getElementById("memberBody").innerHTML = noidung;
 }
+
 function timkiem() {
     var tukhoa = document.getElementById("searchInput").value.toLowerCase();
     var ketqua = [];
@@ -68,6 +70,7 @@ function timkiem() {
     }
     hienthi(ketqua);
 }
+
 function them() {
     var ten = prompt("Nhập họ tên:", "");
     if (ten == null) {
@@ -88,6 +91,7 @@ function them() {
     document.getElementById("searchInput").value = "";
     hienthi(danhsach);
 }
+
 function sua(id) {
     for (var i = 0; i < danhsach.length; i++) {
         if (danhsach[i].id == id) {
