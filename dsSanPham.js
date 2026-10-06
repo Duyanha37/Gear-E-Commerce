@@ -1,301 +1,147 @@
-﻿// ds sản phẩm
-const danhSachSanPham = [
-    {
-        ten: "Bàn phím cơ Logitech G Pro X",
-        loai: "Bàn phím cơ",
-        gia: 2990000,
-        anh: "https://tse1.mm.bing.net/th/id/OIP.j37lGvV1A77_wLDU4Zq8dwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Chuột Razer DeathAdder V3 Pro",
-        loai: "Chuột Gaming",
-        gia: 3690000,
-        anh: "https://tse4.mm.bing.net/th/id/OIP.rblQcogMbdpltLRmbNkzowHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Tai nghe HyperX Cloud III",
-        loai: "Tai nghe",
-        gia: 2290000,
-        anh: "https://tse3.mm.bing.net/th/id/OIP.fBpgG3Jiyxaa4s2pBDbwrQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: 'Màn hình LG UltraGear 27" 2K',
-        loai: "Màn hình",
-        gia: 7490000,
-        anh: "https://bizweb.dktcdn.net/100/329/122/products/man-hinh-2k-lg-ultragear-27-inch-oled-240hz-27gr95qe-b-atv.jpg?v=1683537896743"
-    },
-    {
-        ten: "Bàn phím cơ Akko 3098B",
-        loai: "Bàn phím cơ",
-        gia: 1990000,
-        anh: "https://tse1.mm.bing.net/th/id/OIP.j37lGvV1A77_wLDU4Zq8dwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Chuột Logitech G502 Hero",
-        loai: "Chuột Gaming",
-        gia: 1190000,
-        anh: "https://tse4.mm.bing.net/th/id/OIP.rblQcogMbdpltLRmbNkzowHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Tai nghe Razer BlackShark V2",
-        loai: "Tai nghe",
-        gia: 2590000,
-        anh: "https://tse3.mm.bing.net/th/id/OIP.fBpgG3Jiyxaa4s2pBDbwrQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: 'Màn hình Asus TUF Gaming 24"',
-        loai: "Màn hình",
-        gia: 4290000,
-        anh: "https://bizweb.dktcdn.net/100/329/122/products/man-hinh-2k-lg-ultragear-27-inch-oled-240hz-27gr95qe-b-atv.jpg?v=1683537896743"
-    },
-    {
-        ten: "Bàn phím cơ Keychron K8 Pro",
-        loai: "Bàn phím cơ",
-        gia: 2890000,
-        anh: "https://tse1.mm.bing.net/th/id/OIP.j37lGvV1A77_wLDU4Zq8dwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Chuột Logitech G Pro Wireless",
-        loai: "Chuột Gaming",
-        gia: 2490000,
-        anh: "https://tse4.mm.bing.net/th/id/OIP.rblQcogMbdpltLRmbNkzowHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Bàn phím cơ Corsair K70 RGB",
-        loai: "Bàn phím cơ",
-        gia: 3990000,
-        anh: "https://tse1.mm.bing.net/th/id/OIP.j37lGvV1A77_wLDU4Zq8dwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Chuột SteelSeries Rival 5",
-        loai: "Chuột Gaming",
-        gia: 1590000,
-        anh: "https://tse4.mm.bing.net/th/id/OIP.rblQcogMbdpltLRmbNkzowHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Tai nghe Logitech G733",
-        loai: "Tai nghe",
-        gia: 3190000,
-        anh: "https://tse3.mm.bing.net/th/id/OIP.fBpgG3Jiyxaa4s2pBDbwrQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: 'Màn hình Samsung Odyssey G5 27"',
-        loai: "Màn hình",
-        gia: 5990000,
-        anh: "https://bizweb.dktcdn.net/100/329/122/products/man-hinh-2k-lg-ultragear-27-inch-oled-240hz-27gr95qe-b-atv.jpg?v=1683537896743"
-    },
-    {
-        ten: "Bàn phím cơ Razer BlackWidow V3",
-        loai: "Bàn phím cơ",
-        gia: 3290000,
-        anh: "https://tse1.mm.bing.net/th/id/OIP.j37lGvV1A77_wLDU4Zq8dwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Chuột Razer Viper V2 Pro",
-        loai: "Chuột Gaming",
-        gia: 2990000,
-        anh: "https://tse4.mm.bing.net/th/id/OIP.rblQcogMbdpltLRmbNkzowHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Tai nghe SteelSeries Arctis Nova 7",
-        loai: "Tai nghe",
-        gia: 3890000,
-        anh: "https://tse3.mm.bing.net/th/id/OIP.fBpgG3Jiyxaa4s2pBDbwrQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: 'Màn hình Gigabyte G27Q 27"',
-        loai: "Màn hình",
-        gia: 6790000,
-        anh: "https://bizweb.dktcdn.net/100/329/122/products/man-hinh-2k-lg-ultragear-27-inch-oled-240hz-27gr95qe-b-atv.jpg?v=1683537896743"
-    },
-    {
-        ten: "Bàn phím cơ Ducky One 3",
-        loai: "Bàn phím cơ",
-        gia: 2590000,
-        anh: "https://tse1.mm.bing.net/th/id/OIP.j37lGvV1A77_wLDU4Zq8dwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        ten: "Chuột Corsair Katar Pro",
-        loai: "Chuột Gaming",
-        gia: 890000,
-        anh: "https://tse4.mm.bing.net/th/id/OIP.rblQcogMbdpltLRmbNkzowHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-    }
-];
-
-//  tham số URL
-const thamSoURL = new URLSearchParams(window.location.search);
-let loaiDangChon = thamSoURL.get("category") || "Tất cả sản phẩm";
-let cachSapXep = thamSoURL.get("sort") || "moi-nhat";
-let trangHienTai = parseInt(thamSoURL.get("page"), 10) || 1;
-const soSanPhamMoiTrang = 10;
-
-//định dạng giá
-function dinhDangGia(gia) {
-    return gia.toLocaleString("vi-VN") + "₫";
+let loaiDangChon = "Tất cả sản phẩm";
+let cachSapXep = "moi-nhat";
+let trangHienTai = 1;
+let soSanPhamMoiTrang = 10;
+let danhSachSanPham = [];
+let thuTuBanDau = [];
+document.addEventListener("DOMContentLoaded", function () {
+    danhSachSanPham = Array.from(document.querySelectorAll(".right .list .item"));
+    danhSachSanPham.forEach(function (item, index) {
+        item.dataset.thuTu = index;
+    });
+    thuTuBanDau = [...danhSachSanPham];
+    xuLyDanhMuc();
+    xuLySapXep();
+    xuLyTimKiem();
+    capNhatDanhSach();
+});
+function capNhatDanhSach() {
+    let tuKhoa = document.getElementById("timKiem").value.toLowerCase().trim();
+    let sanPhamPhuHop = [];
+    danhSachSanPham.forEach(function (item) {
+        let loai = item.dataset.category;
+        let ten = item.querySelector("h3").textContent.toLowerCase();
+        let dungDanhMuc = loaiDangChon === "Tất cả sản phẩm" || loai === loaiDangChon;
+        let dungTimKiem = ten.includes(tuKhoa);
+        if (dungDanhMuc && dungTimKiem) {
+            sanPhamPhuHop.push(item);
+        }
+        item.style.display = "none";
+    });
+    sapXepSanPham(sanPhamPhuHop);
+    hienThiPhanTrang(sanPhamPhuHop);
+    capNhatSoLuong(sanPhamPhuHop.length);
 }
-
-//lấy ds sản phẩm
-function layDanhSachSanPham() {
-    let sanPham = [...danhSachSanPham];
-    if (loaiDangChon !== "Tất cả sản phẩm") {
-        sanPham = sanPham.filter(function (item) {
-            return item.loai === loaiDangChon;
-        });
+function sapXepSanPham(danhSach) {
+    let mang = [...danhSach];
+    if (cachSapXep === "moi-nhat") {
+        for (let i = 0; i < mang.length - 1; i++) {
+            for (let j = 0; j < mang.length - 1 - i; j++) {
+                let thuTu1 = parseInt(mang[j].dataset.thuTu);
+                let thuTu2 = parseInt(mang[j + 1].dataset.thuTu);
+                if (thuTu1 > thuTu2) {
+                    let tam = mang[j];
+                    mang[j] = mang[j + 1];
+                    mang[j + 1] = tam;
+                }
+            }
+        }
     }
     if (cachSapXep === "gia-thap") {
-        sanPham.sort(function (a, b) {
-            return a.gia - b.gia;
-        });
+        for (let i = 0; i < mang.length - 1; i++) {
+            for (let j = 0; j < mang.length - 1 - i; j++) {
+                let gia1 = parseInt(mang[j].dataset.price);
+                let gia2 = parseInt(mang[j + 1].dataset.price);
+                if (gia1 > gia2) {
+                    let tam = mang[j];
+                    mang[j] = mang[j + 1];
+                    mang[j + 1] = tam;
+                }
+            }
+        }
     }
     if (cachSapXep === "gia-cao") {
-        sanPham.sort(function (a, b) {
-            return b.gia - a.gia;
-        });
+        for (let i = 0; i < mang.length - 1; i++) {
+            for (let j = 0; j < mang.length - 1 - i; j++) {
+                let gia1 = parseInt(mang[j].dataset.price);
+                let gia2 = parseInt(mang[j + 1].dataset.price);
+                if (gia1 < gia2) {
+                    let tam = mang[j];
+                    mang[j] = mang[j + 1];
+                    mang[j + 1] = tam;
+                }
+            }
+        }
     }
-    return sanPham;
+    let danhSachHTML = document.querySelector(".list");
+    mang.forEach(function (item) {
+        danhSachHTML.appendChild(item);
+    });
 }
-
-// hiển thị sản phẩm
-function hienThiSanPham() {
-    const danhSach = document.querySelector(".right .list");
-    const soLuong = document.querySelector(".top > p");
-    const selectSapXep = document.querySelector(".sort select");
-    if (!danhSach) {
+function hienThiPhanTrang(danhSach) {
+    let khungPhanTrang = document.getElementById("phanTrang");
+    khungPhanTrang.innerHTML = "";
+    let tongSoTrang = Math.ceil(danhSach.length / soSanPhamMoiTrang);
+    if (tongSoTrang === 0) {
         return;
     }
-    const sanPham = layDanhSachSanPham();
-    const tongSoTrang = Math.ceil(sanPham.length / soSanPhamMoiTrang);
-    if (tongSoTrang > 0 && trangHienTai > tongSoTrang) {
-        trangHienTai = tongSoTrang;
-    }
-    if (trangHienTai < 1) {
+    if (trangHienTai > tongSoTrang) {
         trangHienTai = 1;
     }
-    const batDau = (trangHienTai - 1) * soSanPhamMoiTrang;
-    const sanPhamHienThi = sanPham.slice(batDau, batDau + soSanPhamMoiTrang);
-    danhSach.innerHTML = "";
-    sanPhamHienThi.forEach(function (item) {
-        const sanPhamHTML = document.createElement("div");
-        sanPhamHTML.className = "item";
-        sanPhamHTML.innerHTML = `
-            <div class="picture">
-                <img src="${item.anh}" alt="${item.ten}">
-            </div>
-            <p class="type">${item.loai}</p>
-            <h3>${item.ten}</h3>
-            <p class="price">${dinhDangGia(item.gia)}</p>
-            <a href="#">Mua ngay</a>
-        `;
-        danhSach.appendChild(sanPhamHTML);
-    });
-    if (sanPham.length === 0) {
-        danhSach.innerHTML = "<p>Không có sản phẩm trong danh mục này.</p>";
+    let viTriBatDau = (trangHienTai - 1) * soSanPhamMoiTrang;
+    let viTriKetThuc = viTriBatDau + soSanPhamMoiTrang;
+    for (let i = 0; i < danhSach.length; i++) {
+        danhSach[i].style.display = "none";
     }
-    if (soLuong) {
-        soLuong.textContent = sanPham.length + " sản phẩm";
-    }
-    if (selectSapXep) {
-        selectSapXep.value = cachSapXep;
-    }
-    capNhatDanhMuc();
-    capNhatPhanTrang(tongSoTrang);
-}
-
-//cập nhật danh mục
-function capNhatDanhMuc() {
-    const danhMuc = document.querySelectorAll(".category-item");
-    danhMuc.forEach(function (item) {
-        item.classList.remove("active");
-        if (item.dataset.category === loaiDangChon) {
-            item.classList.add("active");
-        }
-    });
-}
-
-//  tạo URL
-function taoURL(trang) {
-    const url = new URL(window.location.href);
-    if (loaiDangChon === "Tất cả sản phẩm") {
-        url.searchParams.delete("category");
-    } else {
-        url.searchParams.set("category", loaiDangChon);
-    }
-    if (cachSapXep === "moi-nhat") {
-        url.searchParams.delete("sort");
-    } else {
-        url.searchParams.set("sort", cachSapXep);
-    }
-    if (trang === 1) {
-        url.searchParams.delete("page");
-    } else {
-        url.searchParams.set("page", trang);
-    }
-    url.hash = "";
-    return url.toString();
-}
-
-// phân trang
-function capNhatPhanTrang(tongSoTrang) {
-    const khuVucPhanTrang = document.querySelector(".page");
-    if (!khuVucPhanTrang) {
-        return;
-    }
-    khuVucPhanTrang.innerHTML = "";
-    if (tongSoTrang <= 1) {
-        return;
-    }
-    if (trangHienTai > 1) {
-        const nutTruoc = document.createElement("a");
-        nutTruoc.href = taoURL(trangHienTai - 1);
-        nutTruoc.textContent = "‹";
-        khuVucPhanTrang.appendChild(nutTruoc);
+    for (let i = viTriBatDau; i < viTriKetThuc && i < danhSach.length; i++) {
+        danhSach[i].style.display = "";
     }
     for (let i = 1; i <= tongSoTrang; i++) {
-        const link = document.createElement("a");
-        link.href = taoURL(i);
-        link.textContent = i;
+        let nut = document.createElement("a");
+        nut.href = "#";
+        nut.textContent = i;
         if (i === trangHienTai) {
-            link.classList.add("active");
+            nut.classList.add("active");
         }
-        khuVucPhanTrang.appendChild(link);
-    }
-    if (trangHienTai < tongSoTrang) {
-        const nutSau = document.createElement("a");
-        nutSau.href = taoURL(trangHienTai + 1);
-        nutSau.textContent = "›";
-        khuVucPhanTrang.appendChild(nutSau);
+        nut.addEventListener("click", function (event) {
+            event.preventDefault();
+            trangHienTai = i;
+            hienThiPhanTrang(danhSach);
+        });
+        khungPhanTrang.appendChild(nut);
     }
 }
-
-// chọn danh mục 
-function xuLyChonDanhMuc() {
-    const danhMuc = document.querySelectorAll(".category-item");
+function capNhatSoLuong(soLuong) {
+    let phanSoLuong = document.getElementById("soLuongSanPham");
+    phanSoLuong.textContent = soLuong + " sản phẩm";
+}
+function xuLyDanhMuc() {
+    let danhMuc = document.querySelectorAll(".category-item");
     danhMuc.forEach(function (item) {
         item.addEventListener("click", function (event) {
             event.preventDefault();
+            danhMuc.forEach(function (muc) {
+                muc.classList.remove("active");
+            });
+            item.classList.add("active");
             loaiDangChon = item.dataset.category;
             trangHienTai = 1;
-            window.location.href = taoURL(1);
+            capNhatDanhSach();
         });
     });
 }
-
-//sắp xếp
 function xuLySapXep() {
-    const selectSapXep = document.querySelector(".sort select");
-    if (!selectSapXep) {
-        return;
-    }
+    let selectSapXep = document.getElementById("sapXep");
     selectSapXep.addEventListener("change", function () {
-        cachSapXep = this.value;
+        cachSapXep = selectSapXep.value;
         trangHienTai = 1;
-        window.location.href = taoURL(1);
+        capNhatDanhSach();
     });
 }
-
-//khởi chạy
-document.addEventListener("DOMContentLoaded", function () {
-    xuLyChonDanhMuc();
-    xuLySapXep();
-    hienThiSanPham();
-});
+function xuLyTimKiem() {
+    let oTimKiem = document.getElementById("timKiem");
+    oTimKiem.addEventListener("input", function () {
+        trangHienTai = 1;
+        capNhatDanhSach();
+    });
+}
