@@ -1,0 +1,53 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SignIn.aspx.cs" Inherits="Gear_E_Commerce.SignIn" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="SignIn.css">
+    <script src="SignIn.js"></script>
+    <title>SignIn Page</title>
+</head>
+<body>
+    <header class="signin-header">
+        <a href="Home.html" class="signin-logo">GearHouse.</a>
+    </header>
+    <main class="main-container">
+        <div class="signin-container">
+            <h1 class="signin-title">Đăng nhập</h1>
+            <label class="signin-subtitle">Sẵn sàng nâng tầm trải nghiệm của bạn.</label>
+            <form class="signin-form">
+                <div class="signin-form-group">
+                    <label class="signin-form-label" for="username">Username</label>
+                    <input class="signin-form-input" type="text" id="username" name="username" placeholder="Tên đăng nhập">
+                    <label class="signin-form-input-error-label"id="username-error"></label>
+                </div>
+                <div class="signin-form-group">
+                    <label class="signin-form-label" for="password">Password</label>
+                    <input class="signin-form-input" type="password" id="password" name="password" placeholder="Mật khẩu">
+                    <label class="signin-form-input-error-label"id="password-error"></label>
+                </div>
+                <div class="error-notification">
+                    <p id="error-message"></p>
+                </div>
+                <div class="signin-form-bottom">
+                    <div class="rememberme-container">
+                        <input type="checkbox" id="remember-me" name="remember-me">
+                        <label class="remember-me-label">Ghi nhớ đăng nhập</label>
+                    </div>
+                    <div class="forgot-password-container">
+                        <a class="forgot-password-link" href="#">Quên mật khẩu?</a>
+                    </div>
+                </div>
+                <button class="signin-form-button" type="submit">Đăng nhập</button>
+                <div class="signup-nav-container">
+                    <label class="signup-nav-label">Chưa có tài khoản?</label>
+                    <a class="signup-nav-link" href="SignUp.html">Đăng ký ngay</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
