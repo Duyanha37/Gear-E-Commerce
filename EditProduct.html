@@ -26,9 +26,7 @@
                 </div>
             </header>
             <section class="box form-box">
-                // Có chọn file ảnh nên phải dùng POST và enctype="multipart/form-data"
                 <form method="POST" action="" enctype="multipart/form-data" onsubmit="return kiemtra()">
-                    // Sau này ASP sẽ lấy id bằng Request.QueryString.Get("id") rồi điền dữ liệu từ database vào các ô -->
                     <input type="hidden" name="id" value="1">
                     <label>Tên sản phẩm</label>
                     <input type="text" name="ten" id="inTen" value="Bàn phím cơ Logitech G Pro X"
