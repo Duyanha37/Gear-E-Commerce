@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Gear E-Commerce/AdminMember.js
 // ===== 1. Dữ liệu (chỉ lưu ở 1 chỗ duy nhất là mảng này) =====
 var danhsach = [
     { id: 1, ten: "Nguyễn Trần Duy Anh", email: "duyanh@gmail.com", vaitro: "Khách hàng", trangthai: "active" },
@@ -57,20 +58,25 @@ function hienthi(ds) {
     document.getElementById("memberBody").innerHTML = noidung;
 }
 
+=======
+>>>>>>> 5eff2f35d35e6358ff19d0c84669e001d51469c5:AdminMember.js
 function timkiem() {
-    var tukhoa = document.getElementById("searchInput").value.toLowerCase();
-    var ketqua = [];
+  var tukhoa = document.getElementById("searchInput").value.toLowerCase();
+  var cachang = document.getElementById("memberBody").getElementsByTagName("tr");
 
-    for (var i = 0; i < danhsach.length; i++) {
-        var ten = danhsach[i].ten.toLowerCase();
-        var email = danhsach[i].email.toLowerCase();
-        if (ten.indexOf(tukhoa) != -1 || email.indexOf(tukhoa) != -1) {
-            ketqua.push(danhsach[i]);
-        }
+  for (var i = 0; i < cachang.length; i++) {
+    var ten = cachang[i].cells[1].textContent.toLowerCase();
+    var email = cachang[i].cells[2].textContent.toLowerCase();
+
+    if (ten.indexOf(tukhoa) != -1 || email.indexOf(tukhoa) != -1) {
+      cachang[i].style.display = "";
+    } else {
+      cachang[i].style.display = "none";
     }
-    hienthi(ketqua);
+  }
 }
 
+<<<<<<< HEAD:Gear E-Commerce/AdminMember.js
 function them() {
     var ten = prompt("Nhập họ tên:", "");
     if (ten == null) {
@@ -140,4 +146,14 @@ function chonmenu(muc) {
     document.getElementById("menu1").setAttribute("class", "item");
     document.getElementById("menu2").setAttribute("class", "item");
     muc.setAttribute("class", "item active");
+=======
+function xoa(nut) {
+  if (confirm("Bạn có chắc muốn xóa thành viên này?")) {
+    var hang = nut.parentNode.parentNode;   
+    hang.parentNode.removeChild(hang);      
+  }
+  return false;   
+  // Khi làm ASP: bỏ phần trên, chỉ cần viết: return confirm("...");
+  // bấm OK thì trình duyệt tự đi tới DeleteMember?id=... để server xóa trong database
+>>>>>>> 5eff2f35d35e6358ff19d0c84669e001d51469c5:AdminMember.js
 }

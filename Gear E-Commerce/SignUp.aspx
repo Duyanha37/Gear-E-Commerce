@@ -4,12 +4,51 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="SignUp.css">
+    <script src="SignUp.js"></script>
+    <title>SignUp Page</title>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
+    <header class="signup-header">
+        <a href="Home.html" class="signup-logo">GearHouse.</a>
+    </header>
+    <main class="main-container">
+        <div class="signup-container">
+            <h1 class="signup-title">Đăng ký</h1>
+            <label class="signup-subtitle">Trở thành GearHouse Member ngay hôm nay.</label>
+            <form class="signup-form">
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="fullname">Full Name</label>
+                    <input class="signup-form-input" type="text" id="fullname" name="fullname" placeholder="Họ và tên">
+                    <label class="signup-form-input-error-label"id="fullname-error"></label>
+                </div>
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="username">Username</label>
+                    <input class="signup-form-input" type="text" id="username" name="username" placeholder="Tên đăng nhập">
+                    <label class="signup-form-input-error-label"id="username-error"></label>
+                </div>
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="password">Password</label>
+                    <input class="signup-form-input" type="password" id="password" name="password" placeholder="Mật khẩu">
+                    <label class="signup-form-input-error-label"id="password-error"></label>
+                </div>
+                <div class="signup-form-group">
+                    <label class="signup-form-label" for="confirm-password">Confirm Password</label>
+                    <input class="signup-form-input" type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu">
+                    <label class="signup-form-input-error-label"id="confirm-password-error"></label>
+                </div>
+                <div class="error-notification">
+                    <p id="error-message"></p>
+                </div>
+                <button class="signup-form-button" type="submit">Đăng ký</button>
+                <div class="signup-nav-container">
+                    <label class="signup-nav-label">Đã có tài khoản!</label>
+                    <a class="signup-nav-link" href="SignIn.html">Đăng nhập ngay</a>
+                </div>
+            </form>
         </div>
-    </form>
+    </main>
 </body>
 </html>
