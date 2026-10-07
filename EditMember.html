@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa thành viên - Admin GearHouse</title>
+    <link rel="stylesheet" href="AdminMember.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">GearHouse<br>Admin.</h1>
+            <a href="AdminMember.html" class="item active"><img src="images/users.png" alt=""> Quản lý Thành viên</a>
+            <a href="AdminProduct.html" class="item"><img src="images/box.png" alt=""> Quản lý Sản phẩm</a>
+            <a href="Home.html" class="item home"><img src="images/home.png" alt=""> Về Trang chủ</a>
+        </nav>
+        <main class="main">
+            <header class="header">
+                <h2>Sửa thành viên</h2>
+                <div class="user">
+                    <span>Admin</span>
+                    <img class="avatar" src="images/avatar.png" alt="Admin">
+                </div>
+            </header>
+            <section class="box form-box">
+                // Gửi bằng POST, ASP sẽ đọc Request.Form.Get("ten") ...
+                <form method="POST" action="" onsubmit="return kiemtra()">
+                    // Sau này ASP sẽ lấy id bằng Request.QueryString.Get("id") rồi điền dữ liệu từ database vào các ô
+                    <input type="hidden" name="id" value="1">
+                    <label>Họ tên</label>
+                    <input type="text" name="ten" id="inTen" value="Nguyễn Trần Duy Anh" placeholder="Nhập họ tên">
+                    <label>Email</label>
+                    <input type="text" name="email" id="inEmail" value="duyanh@gmail.com" placeholder="Nhập email">
+                    <label>Trạng thái</label>
+                    <select name="trangthai" id="inTrangthai">
+                        <option value="active">Hoạt động</option>
+                        <option value="locked">Bị khóa</option>
+                    </select>
+                    <p class="loi" id="loi"></p>
+                    <div class="form-btn">
+                        <a class="btn-huy" href="AdminMember.html">Hủy</a>
+                        <button class="btn-luu" type="submit">Lưu</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="FormMember.js"></script>
+</body>
+
+</html>

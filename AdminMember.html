@@ -5,19 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý thành viên - Admin GearHouse</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="AdminMember.css">
 </head>
 
-<body onload="hienthi(danhsach)">
+<body>
     <div class="container">
         <nav class="sidebar">
             <h1 class="logo">GearHouse<br>Admin.</h1>
-            <a href="#" id="menu1" class="item active" onclick="chonmenu(this)"><img src="images/users.png" alt=""> Quản
-                lý Thành viên</a>
-            <a href="#" id="menu2" class="item" onclick="chonmenu(this)"><img src="images/box.png" alt=""> Quản lý Sản
-                phẩm</a>
-            <a href="#" class="item home"><img src="images/home.png" alt=""> Về Trang chủ</a>
+            <a href="AdminMember.html" class="item active"><img src="images/users.png" alt=""> Quản lý Thành viên</a>
+            <a href="AdminProduct.html" class="item"><img src="images/box.png" alt=""> Quản lý Sản phẩm</a>
+            <a href="Home.html" class="item home"><img src="images/home.png" alt=""> Về Trang chủ</a>
         </nav>
         <main class="main">
             <header class="header">
@@ -29,11 +26,11 @@
             </header>
             <section class="box">
                 <div class="top">
-                    <div class="search">
+                    <form class="search" method="GET" action="AdminMember.html">
                         <img src="images/search.png" alt="">
                         <input type="text" id="searchInput" onkeyup="timkiem()" placeholder="Tìm kiếm tên, email...">
-                    </div>
-                    <button class="add-btn" onclick="them()"><img src="images/plus.png" alt=""> Thêm thành viên</button>
+                    </form>
+                    <a href="AddMember.html" class="add-btn"><img src="images/plus.png" alt=""> Thêm thành viên</a>
                 </div>
                 <table>
                     <thead>
@@ -46,12 +43,66 @@
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody id="memberBody"></tbody>
+                    <tbody id="memberBody">
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Trần Duy Anh</td>
+                            <td>duyanh@gmail.com</td>
+                            <td>Khách hàng</td>
+                            <td><span class="status active">Hoạt động</span></td>
+                            <td>
+                                <a class="btn edit" href="EditMember.html?id=1"><img src="images/edit.png"
+                                        alt="Sửa"></a>
+                                <a class="btn delete" href="DeleteMember.html?id=1" onclick="return xoa(this)"><img
+                                        src="images/delete.png" alt="Xóa"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Phạm Đỗ Nhật Linh</td>
+                            <td>nhatlinh@gmail.com</td>
+                            <td>Khách hàng</td>
+                            <td><span class="status locked">Bị khóa</span></td>
+                            <td>
+                                <a class="btn edit" href="EditMember.html?id=2"><img src="images/edit.png"
+                                        alt="Sửa"></a>
+                                <a class="btn delete" href="DeleteMember.html?id=2" onclick="return xoa(this)"><img
+                                        src="images/delete.png" alt="Xóa"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Quách Quang Lê</td>
+                            <td>quangle@gmail.com</td>
+                            <td>Khách hàng</td>
+                            <td><span class="status active">Hoạt động</span></td>
+                            <td>
+                                <a class="btn edit" href="EditMember.html?id=3"><img src="images/edit.png"
+                                        alt="Sửa"></a>
+                                <a class="btn delete" href="DeleteMember.html?id=3" onclick="return xoa(this)"><img
+                                        src="images/delete.png" alt="Xóa"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Lê Tuấn Khoa</td>
+                            <td>tuankhoa@gmail.com</td>
+                            <td>Khách hàng</td>
+                            <td><span class="status active">Hoạt động</span></td>
+                            <td>
+                                <a class="btn edit" href="EditMember.html?id=4"><img src="images/edit.png"
+                                        alt="Sửa"></a>
+                                <a class="btn delete" href="DeleteMember.html?id=4" onclick="return xoa(this)"><img
+                                        src="images/delete.png" alt="Xóa"></a>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </section>
         </main>
     </div>
     <script src="AdminMember.js"></script>
+
 </body>
 
 </html>
