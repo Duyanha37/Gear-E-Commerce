@@ -1,4 +1,4 @@
-/* dau trang */
+/* đầu trang */
 .dau-trang {
 height: 70px;
 background-color: #ffffff;
@@ -67,7 +67,7 @@ margin: 0 0 30px;
 border: 0;
 border-top: 1px solid #e5e5e5;
 }
-/* khu vuc noi dung */
+/* nội dung */
 .khu-vuc-noi-dung {
 display: flex;
 align-items: flex-start;
@@ -150,7 +150,7 @@ font-family: Arial;
 font-size: 13px;
 cursor: pointer;
 }
-/* danh sach san pham */
+/* danh sách sản phẩm */
 .danh-sach {
 display: flex;
 flex-wrap: wrap;
@@ -202,7 +202,7 @@ color: #111111;
 font-size: 16px;
 font-weight: 700;
 }
-/* phan trang */
+/* phân trang */
 .phan-trang {
 margin-top: 35px;
 display: flex;
@@ -227,7 +227,7 @@ color: #ffffff;
 background-color: #111111;
 color: #ffffff;
 }
-/* chan trang */
+/* chân trang */
 .chan-trang {
 margin-top: 0;
 background-color: #111111;
