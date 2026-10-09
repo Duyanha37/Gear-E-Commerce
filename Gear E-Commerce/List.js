@@ -7,8 +7,8 @@ const danhSachSanPham = [
     { id: 5, ten: "Bàn phím cơ Akko 3098B", loai: "Bàn phím cơ", gia: 1990000, anh: "images/Akko3098B.jpg" },
     { id: 6, ten: "Chuột Logitech G502 Hero", loai: "Chuột Gaming", gia: 1190000, anh: "images/LogitechG502.jpg" },
     { id: 7, ten: "Tai nghe Razer BlackShark V2", loai: "Tai nghe", gia: 2590000, anh: "images/RazerBlackSharkV2.jpg" },
-    { id: 8, ten: "Màn hình Asus TUF Gaming 24", loai: "Màn hình", gia: 4290000, anh: "images/" },
-    { id: 9, ten: "Bàn phím cơ Keychron K8 Pro", loai: "Bàn phím cơ", gia: 2890000, anh: "images/" },
+    { id: 8, ten: "Màn hình Asus TUF Gaming 24", loai: "Màn hình", gia: 4290000, anh: "images/AsuaTuf24.jpg" },
+    { id: 9, ten: "Bàn phím cơ Keychron K8 Pro", loai: "Bàn phím cơ", gia: 2890000, anh: "images/K8Pro.jpg" },
     { id: 10, ten: "Chuột Logitech G Pro Wireless", loai: "Chuột Gaming", gia: 2490000, anh: "images/" },
     { id: 11, ten: "Bàn phím cơ Corsair K70 RGB", loai: "Bàn phím cơ", gia: 3990000, anh: "images/" },
     { id: 12, ten: "Chuột SteelSeries Rival 5", loai: "Chuột Gaming", gia: 1590000, anh: "images/" },
@@ -75,6 +75,11 @@ function hienThiSanPham() {
             '<p class="loai-san-pham">' + sanPham.loai + '</p>' +
             '<h3>' + sanPham.ten + '</h3>' +
             '<p class="gia-san-pham">' + sanPham.gia.toLocaleString("vi-VN") + '₫</p>';
+        const anhSanPham = the.querySelector("img");
+        anhSanPham.style.cursor = "pointer";
+        anhSanPham.addEventListener("click", function () {
+            window.location.href = "ChiTietSanPham.html?id=" + sanPham.id;
+        });
         khungDanhSach.appendChild(the);
     });
     document.getElementById("soLuongSanPham").textContent = danhSachTrang.length + " sản phẩm";
