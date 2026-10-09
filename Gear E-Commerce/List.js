@@ -59,7 +59,15 @@ function hienThiSanPham() {
             return sanPhamB.gia - sanPhamA.gia;
         });
     }
-    const tongSoTrang = Math.ceil(danhSachLoc.length / trangThai.soSanPhamMoiTrang);
+    const soTrangTam = {
+        tongSoTrang: 0
+    };
+    danhSachLoc.forEach(function (sanPham, viTri) {
+        if (viTri % trangThai.soSanPhamMoiTrang === 0) {
+            soTrangTam.tongSoTrang = soTrangTam.tongSoTrang + 1;
+        }
+    });
+    const tongSoTrang = soTrangTam.tongSoTrang;
     if (trangThai.trangHienTai > tongSoTrang) {
         trangThai.trangHienTai = 1;
     }
