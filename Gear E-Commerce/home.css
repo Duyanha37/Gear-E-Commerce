@@ -36,6 +36,17 @@ gap: 18px;
 .tai-khoan a {
 font-size: 13px;
 }
+.bieu-tuong-gio-hang {
+width: 28px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.bieu-tuong-gio-hang img {
+width: 22px;
+height: 22px;
+}
 .bieu-tuong-tai-khoan {
 width: 28px;
 height: 28px;
