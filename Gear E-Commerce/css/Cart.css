@@ -363,3 +363,17 @@
         width:100%;
     }
 }
+
+.cart-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.thong-so-san-pham {
+    margin: 12px 0 20px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.8;
+}
