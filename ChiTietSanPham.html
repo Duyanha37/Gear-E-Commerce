@@ -5,25 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết sản phẩm - GearHouse</title>
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/ProductDetail.css">
+    <link rel="stylesheet" href="../css/ChiTietSanPham.css">
 </head>
 <body>
     <div class="dau-trang">
         <header>
             <a href="../html/home.html" class="logo-thuong-hieu">GearHouse</a>
-            <nav>
-                <a href="../html/home.html">Trang chủ</a>
-                <a href="../html/List.html">Sản phẩm</a>
-                <a href="../html/ProductDetail.html" class="active">Chi tiết</a>
+
+            <nav class="menu-chinh">
+                <a href="../html/List.html" class="active">Sản phẩm</a>
+                <a href="#">Khuyến mãi</a>
+                <a href="#">Hỗ trợ</a>
             </nav>
+
             <div class="nhom-lien-ket">
-                <a href="../html/Cart.html" class="lien-ket-gio-hang">Giỏ hàng <span id="soLuongGioHang">0</span></a>
+                <a href="../html/Cart.html" class="lien-ket-gio-hang">
+                    <img src="../assets/images/box.png"
+                         alt="Giỏ hàng"
+                         class="icon-gio-hang">
+                    <span id="soLuongGioHang">0</span>
+                </a>
             </div>
         </header>
     </div>
 
     <main class="trang-chi-tiet">
-        <a href="../html/List.html" class="quay-lai">← Quay lại danh sách sản phẩm</a>
+        <a href="../html/List.html" class="quay-lai">
+            ← Quay lại danh sách sản phẩm
+        </a>
+
+
         <div id="chiTietSanPham"></div>
     </main>
 
@@ -33,6 +44,7 @@
                 <h3>GearHouse</h3>
                 <p>Thiết bị công nghệ và gaming chất lượng dành cho bạn.</p>
             </div>
+
             <div class="cot-chan-trang">
                 <h4>Sản phẩm</h4>
                 <a href="../html/List.html?category=Bàn phím cơ">Bàn phím cơ</a>
@@ -40,6 +52,7 @@
                 <a href="../html/List.html?category=Tai nghe">Tai nghe</a>
                 <a href="../html/List.html?category=Màn hình">Màn hình</a>
             </div>
+
             <div class="cot-chan-trang">
                 <h4>Hỗ trợ</h4>
                 <a href="#">Liên hệ</a>
@@ -47,9 +60,12 @@
                 <a href="#">Chính sách bảo hành</a>
             </div>
         </div>
-        <div class="ban-quyen"><p>© 2026 GearHouse. All rights reserved.</p></div>
+
+        <div class="ban-quyen">
+            <p>© 2026 GearHouse. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="../js/ProductDetail.js"></script>
+    <script src="../js/ChiTietSanPham.js"></script>
 </body>
 </html>
