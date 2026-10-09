@@ -36,6 +36,18 @@ gap: 18px;
 .tai-khoan a {
 font-size: 13px;
 }
+.bieu-tuong-tai-khoan {
+width: 28px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.bieu-tuong-tai-khoan img {
+width: 22px;
+height: 22px;
+object-fit: contain;
+}
 /* nội dung */
 .khu-vuc-noi-dung {
 width: 90%;
