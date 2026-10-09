@@ -14,38 +14,49 @@ align-items: center;
 justify-content: space-between;
 }
 .logo-thuong-hieu {
-font-size: 24px;
+font-size: 20px;
 font-weight: 700;
 color: #111111;
 }
-.dau-trang nav {
+.menu-chinh {
 display: flex;
-gap: 35px;
+gap: 30px;
 }
-.dau-trang nav a {
+.menu-chinh a {
 color: #333333;
-font-size: 15px;
-font-weight: 500;
+font-size: 13px;
+font-weight: 400;
 }
-.dau-trang nav a:hover {
+.menu-chinh a:hover {
+color: #000000;
+}
+.menu-chinh a.active {
 color: #111111;
 font-weight: 700;
 }
-.dau-trang nav a.active {
-color: #111111;
-font-weight: 700;
-}
-.nhom-lien-ket {
+.tai-khoan {
 display: flex;
 align-items: center;
 gap: 20px;
 }
-.nhom-lien-ket a {
+.tai-khoan a {
 color: #111111;
 font-size: 17px;
 }
-.nhom-lien-ket a:hover {
+.tai-khoan a:hover {
 color: #555555;
+}
+.bieu-tuong-tai-khoan {
+width: 28px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.bieu-tuong-tai-khoan img {
+width: 22px;
+height: 22px;
+object-fit: contain;
 }
 .trang-san-pham {
 width: 90%;
@@ -71,7 +82,7 @@ border-top: 1px solid #e5e5e5;
 .khu-vuc-noi-dung {
 display: flex;
 align-items: flex-start;
-gap: 35px;
+gap: 30px;
 }
 .cot-danh-muc {
 width: 180px;
