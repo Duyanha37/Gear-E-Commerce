@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm - Admin GearHouse</title>
+    <link rel="stylesheet" href="AdminMember.css">
+    <link rel="stylesheet" href="AdminProduct.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">GearHouse<br>Admin.</h1>
+            <a href="AdminMember.html" class="item"><img src="assets/images/users.png" alt=""> Quản lý Thành viên</a>
+            <a href="AdminProduct.html" class="item active"><img src="assets/images/box.png" alt=""> Quản lý Sản phẩm</a>
+            <a href="Home.html" class="item home"><img src="assets/images/home.png" alt=""> Về Trang chủ</a>
+        </nav>
+        <main class="main">
+            <header class="header">
+                <h2>Sản phẩm</h2>
+                <div class="user">
+                    <span>Admin</span>
+                    <img class="avatar" src="assets/images/avatar.png" alt="Admin">
+                </div>
+            </header>
+            <section class="box">
+                <div class="top">
+                    <form class="search" onsubmit="return false;">
+                        <img src="assets/images/search.png" alt="">
+                        <input type="text" id="searchInput" onkeyup="timkiem()" placeholder="Tìm kiếm mã, tên sản phẩm...">
+                    </form>
+                    <a class="add-btn" href="AddProduct.html"><img src="assets/images/plus.png" alt=""> Thêm sản phẩm</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã SP</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Giá bán</th>
+                            <th>Kho</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productBody"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="AdminProduct.js"></script>
+</body>
+
+</html>

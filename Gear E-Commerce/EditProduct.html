@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa sản phẩm - Admin GearHouse</title>
+    <link rel="stylesheet" href="AdminMember.css">
+    <link rel="stylesheet" href="AdminProduct.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">GearHouse<br>Admin.</h1>
+            <a href="AdminMember.html" class="item"><img src="assets/images/users.png" alt=""> Quản lý Thành viên</a>
+            <a href="AdminProduct.html" class="item active"><img src="assets/images/box.png" alt=""> Quản lý Sản phẩm</a>
+            <a href="Home.html" class="item home"><img src="assets/images/home.png" alt=""> Về Trang chủ</a>
+        </nav>
+        <main class="main">
+            <header class="header">
+                <h2>Sửa sản phẩm</h2>
+                <div class="user">
+                    <span>Admin</span>
+                    <img class="avatar" src="assets/images/avatar.png" alt="Admin">
+                </div>
+            </header>
+            <section class="box form-box">
+                <form method="POST" action="" enctype="multipart/form-data" onsubmit="return kiemtra()">
+                    <input type="hidden" id="inId">
+
+                    <label>Tên sản phẩm</label>
+                    <input type="text" id="inTen">
+
+                    <label>Danh mục</label>
+                    <input type="text" id="inDanhmuc">
+
+                    <label>Giá bán (đ)</label>
+                    <input type="text" id="inGia">
+
+                    <label>Số lượng trong kho</label>
+                    <input type="text" id="inKho" placeholder="Nhập 0 nếu hết hàng">
+
+                    <p class="loi" id="loi"></p>
+
+                    <div class="form-btn">
+                        <a class="btn-huy" href="AdminProduct.html">Hủy</a>
+                        <button class="btn-luu" type="submit">Lưu</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="FormProduct.js"></script>
+</body>
+
+</html>

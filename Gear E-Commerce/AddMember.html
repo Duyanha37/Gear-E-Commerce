@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm thành viên - Admin GearHouse</title>
+    <link rel="stylesheet" href="AdminMember.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">GearHouse<br>Admin.</h1>
+            <a href="AdminMember.html" class="item active"><img src="assets/images/users.png" alt=""> Quản lý Thành viên</a>
+            <a href="AdminProduct.html" class="item"><img src="assets/images/box.png" alt=""> Quản lý Sản phẩm</a>
+            <a href="Home.html" class="item home"><img src="assets/images/home.png" alt=""> Về Trang chủ</a>
+        </nav>
+        <main class="main">
+            <header class="header">
+                <h2>Thêm thành viên</h2>
+                <div class="user">
+                    <span>Admin</span>
+                    <img class="avatar" src="assets/images/avatar.png" alt="Admin">
+                </div>
+            </header>
+            <section class="box form-box">
+                <form method="POST" action="" onsubmit="return kiemtra()">
+                    <input type="hidden" id="inId">
+                    <label>Họ tên</label>
+                    <input type="text" id="inTen" placeholder="Nhập họ tên">
+
+                    <label>Email</label>
+                    <input type="text" id="inEmail" placeholder="Nhập email">
+
+                    <label>Trạng thái</label>
+                    <select id="inTrangthai">
+                        <option value="active">Hoạt động</option>
+                        <option value="locked">Bị khóa</option>
+                    </select>
+
+                    <p class="loi" id="loi"></p>
+
+                    <div class="form-btn">
+                        <a class="btn-huy" href="AdminMember.html">Hủy</a>
+                        <button class="btn-luu" type="submit">Lưu</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="FormMember.js"></script>
+</body>
+
+</html>
