@@ -1,7 +1,7 @@
 var dsSanPham = [
-    { id: 1, ma: "#SP001", ten: "Bàn phím cơ Logitech G Pro X", danhmuc: "Bàn phím", gia: "2.990.000đ", kho: 50, anh: "assets/images/chuot-game-khong-day-logitech-g304-trang-usb-7.jpg" },
-    { id: 2, ma: "#SP002", ten: "Chuột Razer DeathAdder V3", danhmuc: "Chuột", gia: "1.690.000đ", kho: 0, anh: "assets/images/chuot-may-tinh-logitech-su-dang-cap-da-duoc-chung-08-800x450.webp" },
-    { id: 3, ma: "#SP003", ten: "Tai nghe HyperX Cloud III", danhmuc: "Tai nghe", gia: "2.290.000đ", kho: 120, anh: "assets/images/tai-nghe-gaming-overear-hyperx-cloud-iii-s2.png" }
+    { id: 1, ma: "#SP001", ten: "Bàn phím cơ Logitech G Pro X", danhmuc: "Bàn phím", gia: "2.990.000đ", kho: 50, anh: "../assets/images/chuot-game-khong-day-logitech-g304-trang-usb-7.jpg" },
+    { id: 2, ma: "#SP002", ten: "Chuột Razer DeathAdder V3", danhmuc: "Chuột", gia: "1.690.000đ", kho: 0, anh: "../assets/images/chuot-may-tinh-logitech-su-dang-cap-da-duoc-chung-08-800x450.webp" },
+    { id: 3, ma: "#SP003", ten: "Tai nghe HyperX Cloud III", danhmuc: "Tai nghe", gia: "2.290.000đ", kho: 120, anh: "../assets/images/tai-nghe-gaming-overear-hyperx-cloud-iii-s2.png" }
 ];
 
 function hienThi(ds) {
@@ -29,8 +29,8 @@ function hienThi(ds) {
         html += "<td class='gia'>" + sp.gia + "</td>";
         html += "<td>" + khoHtml + "</td>";
         html += "<td>";
-        html += "<a class='btn edit' href='EditProduct.html?id=" + sp.id + "'><img src='assets/images/edit.png' alt='Sửa'></a> ";
-        html += "<a class='btn delete' href='#' onclick='xoa(" + sp.id + "); return false;'><img src='assets/images/delete.png' alt='Xóa'></a>";
+        html += "<a class='btn edit' href='../html/EditProduct.html?id=" + sp.id + "'><img src='../assets/images/edit.png' alt='Sửa'></a> ";
+        html += "<a class='btn delete' href='#' onclick='xoa(" + sp.id + "); return false;'><img src='../assets/images/delete.png' alt='Xóa'></a>";
         html += "</td>";
         html += "</tr>";
     }

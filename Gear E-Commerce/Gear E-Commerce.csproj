@@ -70,11 +70,11 @@
     <Content Include="AddMember.aspx" />
     <Content Include="GlobalData.asax" />
     <Content Include="SignIn.aspx" />
-    <Content Include="SignIn.css" />
-    <Content Include="SignIn.js" />
+    <Content Include="css\SignIn.css" />
+    <Content Include="js\SignIn.js" />
     <Content Include="SignUp.aspx" />
-    <Content Include="SignUp.css" />
-    <Content Include="SignUp.js" />
+    <Content Include="css\SignUp.css" />
+    <Content Include="js\SignUp.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

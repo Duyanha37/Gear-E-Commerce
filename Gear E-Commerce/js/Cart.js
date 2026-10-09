@@ -10,7 +10,7 @@ function hienThiGioHang() {
     const khung = document.getElementById("noiDungGioHang");
     const gioHang = layGioHang();
     if (gioHang.length === 0) {
-        khung.innerHTML = '<div class="gio-hang-trong"><h2>Giỏ hàng đang trống</h2><p>Hãy chọn sản phẩm bạn muốn mua.</p><a href="List.html">Tiếp tục mua sắm</a></div>';
+        khung.innerHTML = '<div class="gio-hang-trong"><h2>Giỏ hàng đang trống</h2><p>Hãy chọn sản phẩm bạn muốn mua.</p><a href="../html/List.html">Tiếp tục mua sắm</a></div>';
         return;
     }
     let tongTien = 0;

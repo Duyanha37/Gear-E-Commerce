@@ -31,8 +31,8 @@ function hienThi(ds) {
         html += "<td>" + tv.vaitro + "</td>";
         html += "<td><span class='" + statusClass + "'>" + statusText + "</span></td>";
         html += "<td>";
-        html += "<a class='btn edit' href='EditMember.html?id=" + tv.id + "'><img src='assets/images/edit.png' alt='Sửa'></a> ";
-        html += "<a class='btn delete' href='#' onclick='xoa(" + tv.id + "); return false;'><img src='assets/images/delete.png' alt='Xóa'></a>";
+        html += "<a class='btn edit' href='../html/EditMember.html?id=" + tv.id + "'><img src='../assets/images/edit.png' alt='Sửa'></a> ";
+        html += "<a class='btn delete' href='#' onclick='xoa(" + tv.id + "); return false;'><img src='../assets/images/delete.png' alt='Xóa'></a>";
         html += "</td>";
         html += "</tr>";
     }
