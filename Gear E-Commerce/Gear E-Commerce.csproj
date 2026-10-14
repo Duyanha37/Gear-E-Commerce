@@ -67,42 +67,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AddMember.aspx" />
     <Content Include="GlobalData.asax" />
-    <Content Include="SignIn.aspx" />
+    <Content Include="aspx\SignIn.aspx" />
     <Content Include="css\SignIn.css" />
     <Content Include="js\SignIn.js" />
-    <Content Include="SignUp.aspx" />
+    <Content Include="aspx\SignUp.aspx" />
     <Content Include="css\SignUp.css" />
     <Content Include="js\SignUp.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddMember.aspx.cs">
-      <DependentUpon>AddMember.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AddMember.aspx.designer.cs">
-      <DependentUpon>AddMember.aspx</DependentUpon>
-    </Compile>
     <Compile Include="GlobalData.asax.cs">
       <DependentUpon>GlobalData.asax</DependentUpon>
     </Compile>
     <Compile Include="Member.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignIn.aspx.cs">
+    <Compile Include="aspx\SignIn.aspx.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SignIn.aspx.designer.cs">
+    <Compile Include="aspx\SignIn.aspx.designer.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SignUp.aspx.cs">
+    <Compile Include="aspx\SignUp.aspx.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SignUp.aspx.designer.cs">
+    <Compile Include="aspx\SignUp.aspx.designer.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
     </Compile>
   </ItemGroup>

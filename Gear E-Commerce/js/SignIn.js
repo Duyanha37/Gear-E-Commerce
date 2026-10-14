@@ -1,13 +1,21 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
-    const usernameInput = document.getElementById('username');
+    const username_emailInput = document.getElementById('username-email');
     const passwordError = document.getElementById('password-error');
-    const usernameError = document.getElementById('username-error');
+    const username_emailError = document.getElementById('username-email-error');
     const signinForm = document.querySelector('.signin-form');
 
+    if (!signinForm || !passwordInput || !username_emailInput) return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
     passwordInput.addEventListener('input', () => {
-        let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (passwordRegex.test(passwordInput.value) === false && passwordInput.value.trim() !== 'admin') {
+        const val = passwordInput.value.trim();
+        const isValid = passwordRegex.test(val) || val === 'admin'
+
+        if (!isValid && val !== '') {
             passwordError.innerHTML = 'Mật khẩu phải có ít nhất 8 ký tự và bao gồm chữ cái và số.';
             passwordError.style.display = 'block';
         } else {
@@ -15,41 +23,54 @@
         }
     });
 
-    usernameInput.addEventListener('input', () => {
-        let usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
-        if (usernameRegex.test(usernameInput.value) === false && usernameInput.value.trim() !== 'admin') {
-            usernameError.innerHTML = 'Tên đăng nhập không hợp lệ.';
-            usernameError.style.display = 'block';
+    username_emailInput.addEventListener('input', () => {
+        const val = username_emailInput.value.trim();
+        const isValid = emailRegex.test(val) || usernameRegex.test(val) || val === 'admin';
+
+        if (!isValid && val !== '') {
+            username_emailError.innerHTML = 'Email hoặc tên đăng nhập không hợp lệ.';
+            username_emailError.style.display = 'block';
         } else {
-            usernameError.style.display = 'none';
+            username_emailError.style.display = 'none';
         }
     });
 
-    const checkvalidateForm = (e) => {
+    const checkvalidateForm = () => {
         let isValid = true;
-        if (usernameInput.value.trim() === '') {
-            usernameError.textContent = 'Tên đăng nhập không được để trống.';
-            usernameError.style.display = 'block';
+        const username_emailVal = username_emailInput.value.trim();
+        const passwordVal = passwordInput.value.trim();
+
+        if (username_emailVal === '') {
+            username_emailError.textContent = 'Vui lòng nhập email hoặc tên đăng nhập.';
+            username_emailError.style.display = 'block';
+            isValid = false;
+        } else if (!emailRegex.test(username_emailVal) && !usernameRegex.test(username_emailVal) && username_emailVal !== 'admin') {
+            username_emailError.textContent = 'Email hoặc tên đăng nhập không hợp lệ.';
+            username_emailError.style.display = 'block';
             isValid = false;
         }
-        if (passwordInput.value.trim() === '') {
-            passwordError.textContent = 'Mật khẩu không được để trống.';
+
+        if (passwordVal === '') {
+            passwordError.textContent = 'Vui lòng nhập mật khẩu.';
             passwordError.style.display = 'block';
             isValid = false;
         }
+
         return isValid;
     };
 
     signinForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (usernameInput.value.trim() === 'admin' && passwordInput.value.trim() === 'admin') {
+        const username_emailVal = username_emailInput.value.trim();
+        const passwordVal = passwordInput.value.trim();
+
+        if (username_emailVal === 'admin' && passwordVal === 'admin') {
             window.location.href = "../html/AdminMember.html";
             return;
         }
+
         if (checkvalidateForm()) {
             signinForm.submit();
-        } else {
-            return;
         }
     });
 });

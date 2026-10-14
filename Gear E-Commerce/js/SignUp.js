@@ -76,6 +76,7 @@
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (checkvalidateForm()) {
+            alert('Đăng ký thành công!');
             signupForm.submit();
         } else {
             return;

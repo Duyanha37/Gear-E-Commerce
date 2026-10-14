@@ -1,0 +1,82 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SignIn.aspx.cs" Inherits="Gear_E_Commerce.SignIn" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - GearHouse</title>
+    <link rel="stylesheet" href="../css/SignIn.css">
+    <script src="../js/SignIn.js"></script>
+</head>
+<body>
+    <div class="auth-page">
+        <section class="auth-hero">
+            <img src="../assets/images/Circle.png" alt="" class="hero-bg-circles" aria-hidden="true">
+
+            <div class="hero-header">
+                <a href="Home.aspx" class="hero-brand" title="GearHouse Home">
+                    <img src="../assets/images/Logo-White.png" alt="GearHouse Logo" class="hero-logo">
+                    <span class="hero-brand-name">GearHouse</span>
+                </a>
+            </div>
+
+            <div class="hero-content">
+                <span class="hero-tagline">GEAR FOR WHAT'S NEXT</span>
+                <h1 class="hero-title">Welcome back.</h1>
+                <p class="hero-desc">Your builds, orders, and saved components—all in one place.</p>
+            </div>
+
+            <div class="hero-footer">
+                <p class="hero-copyright">&copy; 2026 GearHouse</p>
+            </div>
+        </section>
+
+        <main class="auth-main">
+            <div class="auth-form-container">
+                <div class="back-nav">
+                    <a href="Home.aspx" class="back-link">
+                        <span class="back-arrow">&larr;</span> Trở lại cửa hàng
+                </a>
+                </div>
+
+                <div class="form-header">
+                    <span class="form-badge">Truy cập thành viên</span>
+                    <h2 class="form-title">Đăng nhập GearHouse</h2>
+                    <p class="form-subtitle">Điền thông tin để truy cập tài khoản của bạn.</p>
+                </div>
+
+                <form class="signin-form" action="#" method="POST" novalidate>
+                    <div class="form-group">
+                        <label class="form-label" for="username-email">Tên đăng nhập hoặc Email</label>
+                        <input class="form-input" type="text" id="username-email" name="username" placeholder="Email/Tên đăng nhập">
+                        <span class="form-error-message" id="username-email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Mật khẩu</label>
+                        <input class="form-input" type="password" id="password" name="password" placeholder="Ít nhất 8 ký tự">
+                        <span class="form-error-message" id="password-error"></span>
+                    </div>
+
+                    <div class="form-row-between">
+                        <label class="remember-me-wrapper">
+                            <input type="checkbox" id="remember-me" name="remember-me" class="remember-checkbox">
+                            <span class="remember-me-text">Ghi nhớ tôi</span>
+                        </label>
+                        <a href="#" class="forgot-password-link">Quên mật khẩu?</a>
+                    </div>
+
+                    <button type="submit" class="signin-button">Đăng nhập</button>
+
+                    <div class="form-footer">
+                        <span class="footer-text">Chưa có tài khoản?</span>
+                        <a href="SignUp.aspx" class="footer-link">Tạo một tài khoản</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
