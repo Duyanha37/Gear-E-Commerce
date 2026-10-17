@@ -1,17 +1,21 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.querySelector('.signup-form');
     const fullnameInput = document.getElementById('fullname');
-    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
     const passwordInput = document.getElementById('password');
     const confirmpasswordInput = document.getElementById('confirm-password');
     const fullnameError = document.getElementById('fullname-error');
-    const usernameError = document.getElementById('username-error');
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
     const passwordError = document.getElementById('password-error');
     const confirmpasswordError = document.getElementById('confirm-password-error');
+    const regexFullname = /^[a-zA-ZÀ-ỹ\s]+$/;
+    const regexPhone = /^0[0-9]{9}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     fullnameInput.addEventListener('input', () => {
-        let regexFullname = /^[a-zA-ZÀ-ỹ\s]+$/;
-        if (regexFullname.test(fullnameInput.value) === false) {
+        if (!regexFullname.test(fullnameInput.value) && fullnameInput.value.trim() !== '') {
             fullnameError.textContent = 'Họ và tên chỉ được phép chứa chữ cái và khoảng trắng.';
             fullnameError.style.display = 'block';
         } else {
@@ -19,19 +23,26 @@
         }
     });
 
-    usernameInput.addEventListener('input', () => {
-        let usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
-        if (usernameRegex.test(usernameInput.value) === false) {
-            usernameError.textContent = 'Tên đăng nhập không hợp lệ.';
-            usernameError.style.display = 'block';
+    emailInput.addEventListener('input', () => {
+        if (emailInput.validity.typeMismatch && emailInput.value.trim() !== '') {
+            emailError.textContent = 'Địa chỉ email không hợp lệ.';
+            emailError.style.display = 'block';
         } else {
-            usernameError.style.display = 'none';
+            emailError.style.display = 'none';
+        }
+    });
+
+    phoneInput.addEventListener('input', () => {
+        if (!regexPhone.test(phoneInput.value) && phoneInput.value.trim() !== '') {
+            phoneError.textContent = 'Số điện thoại không hợp lệ.';
+            phoneError.style.display = 'block';
+        } else {
+            phoneError.style.display = 'none';
         }
     });
 
     passwordInput.addEventListener('input', () => {
-        let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (passwordRegex.test(passwordInput.value) === false) {
+        if (!passwordRegex.test(passwordInput.value) && passwordInput.value.trim() !== '') {
             passwordError.textContent = 'Mật khẩu phải có ít nhất 8 ký tự và bao gồm chữ cái và số.';
             passwordError.style.display = 'block';
         } else {
@@ -51,22 +62,27 @@
     const checkvalidateForm = (e) => {
         let isValid = true;
         if (fullnameInput.value.trim() === '') {
-            fullnameError.innerHTML = 'Họ và tên không được để trống.';
+            fullnameError.textContent = 'Họ và tên không được để trống.';
             fullnameError.style.display = 'block';
             isValid = false;
         }
-        if (usernameInput.value.trim() === '') {
-            usernameError.innerHTML = 'Tên đăng nhập không được để trống.';
-            usernameError.style.display = 'block';
+        if (emailInput.value.trim() === '') {
+            emailError.textContent = 'Địa chỉ email không được để trống.';
+            emailError.style.display = 'block';
+            isValid = false;
+        }
+        if (phoneInput.value.trim() === '') {
+            phoneError.textContent = 'Số điện thoại không được để trống.';
+            phoneError.style.display = 'block';
             isValid = false;
         }
         if (passwordInput.value.trim() === '') {
-            passwordError.innerHTML = 'Mật khẩu không được để trống.';
+            passwordError.textContent = 'Mật khẩu không được để trống.';
             passwordError.style.display = 'block';
             isValid = false;
         }
         if (confirmpasswordInput.value.trim() === '') {
-            confirmpasswordError.innerHTML = 'Xác nhận mật khẩu không được để trống.';
+            confirmpasswordError.textContent = 'Xác nhận mật khẩu không được để trống.';
             confirmpasswordError.style.display = 'block';
             isValid = false;
         }
@@ -76,7 +92,6 @@
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (checkvalidateForm()) {
-            alert('Đăng ký thành công!');
             signupForm.submit();
         } else {
             return;

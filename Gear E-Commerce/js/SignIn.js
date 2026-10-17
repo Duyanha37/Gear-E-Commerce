@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const username_emailError = document.getElementById('username-email-error');
     const signinForm = document.querySelector('.signin-form');
 
-    if (!signinForm || !passwordInput || !username_emailInput) return;
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -16,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isValid = passwordRegex.test(val) || val === 'admin'
 
         if (!isValid && val !== '') {
-            passwordError.innerHTML = 'Mật khẩu phải có ít nhất 8 ký tự và bao gồm chữ cái và số.';
+            passwordError.textContent = 'Mật khẩu phải có ít nhất 8 ký tự và bao gồm chữ cái và số.';
             passwordError.style.display = 'block';
         } else {
             passwordError.style.display = 'none';
@@ -28,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isValid = emailRegex.test(val) || usernameRegex.test(val) || val === 'admin';
 
         if (!isValid && val !== '') {
-            username_emailError.innerHTML = 'Email hoặc tên đăng nhập không hợp lệ.';
+            username_emailError.textContent = 'Email hoặc tên đăng nhập không hợp lệ.';
             username_emailError.style.display = 'block';
         } else {
             username_emailError.style.display = 'none';
@@ -61,16 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     signinForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const username_emailVal = username_emailInput.value.trim();
-        const passwordVal = passwordInput.value.trim();
-
-        if (username_emailVal === 'admin' && passwordVal === 'admin') {
-            window.location.href = "../html/AdminMember.html";
-            return;
-        }
-
         if (checkvalidateForm()) {
             signinForm.submit();
+        }else {
+            return;
         }
     });
 });
