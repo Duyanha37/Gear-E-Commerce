@@ -16,7 +16,7 @@
             <img src="../assets/images/Circle.png" alt="" class="hero-bg-circles">
 
             <div class="hero-header">
-                <a href="home.html" class="hero-brand" title="GearHouse Home">
+                <a href="Home.aspx" class="hero-brand" title="GearHouse Home">
                     <img src="../assets/images/Logo-White.png" alt="GearHouse Logo" class="hero-logo">
                     <span class="hero-brand-name">GearHouse</span>
                 </a>
@@ -36,7 +36,7 @@
         <main class="auth-main">
             <div class="auth-form-container">
                 <div class="back-nav">
-                    <a href="home.html" class="back-link">
+                    <a href="Home.aspx" class="back-link">
                         <span class="back-arrow">&larr;</span> Trở lại cửa hàng
                 </a>
                 </div>

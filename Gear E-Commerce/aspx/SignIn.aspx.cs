@@ -33,7 +33,6 @@ namespace Gear_E_Commerce
 
                 if (mb == null)
                 {
-                    Response.Write("Lỗi không có mb");
                     username_email_error.InnerHtml = "Tên đăng nhập hoặc mật khẩu không đúng!";
                 }else
                 {
