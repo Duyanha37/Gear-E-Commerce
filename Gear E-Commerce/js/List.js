@@ -1,25 +1,25 @@
 // danh sách sản phẩm
 const danhSachSanPham = [
-    { ProductID: "1", Name: "Bàn phím cơ Logitech G Pro X", Category: "Bàn phím cơ", Price: 2990000, Image: "../assets/images/logitechGPro.jpg" },
-    { ProductID: "2", Name: "Chuột Razer DeathAdder V3 Pro", Category: "Chuột Gaming", Price: 3690000, Image: "../assets/images/deathAdderV3pro.jpg" },
-    { ProductID: "3", Name: "Tai nghe HyperX Cloud III", Category: "Tai nghe", Price: 2290000, Image: "../assets/images/HpHyperX3.jpg" },
-    { ProductID: "4", Name: "Màn hình LG UltraGear 27 2K", Category: "Màn hình", Price: 7490000, Image: "../assets/images/LgutraGear.jpg" },
-    { ProductID: "5", Name: "Bàn phím cơ Akko 3098B", Category: "Bàn phím cơ", Price: 1990000, Image: "../assets/images/Akko3098B.jpg" },
-    { ProductID: "6", Name: "Chuột Logitech G502 Hero", Category: "Chuột Gaming", Price: 1190000, Image: "../assets/images/LogitechG502.jpg" },
-    { ProductID: "7", Name: "Tai nghe Razer BlackShark V2", Category: "Tai nghe", Price: 2590000, Image: "../assets/images/RazerBlackSharkV2.jpg" },
-    { ProductID: "8", Name: "Màn hình Asus TUF Gaming 24", Category: "Màn hình", Price: 4290000, Image: "../assets/images/AsuaTuf24.jpg" },
-    { ProductID: "9", Name: "Bàn phím cơ Keychron K8 Pro", Category: "Bàn phím cơ", Price: 2890000, Image: "../assets/images/K8Pro.jpg" },
-    { ProductID: "10", Name: "Chuột Logitech G Pro Wireless", Category: "Chuột Gaming", Price: 2490000, Image: "../assets/images/" },
-    { ProductID: "11", Name: "Bàn phím cơ Corsair K70 RGB", Category: "Bàn phím cơ", Price: 3990000, Image: "../assets/images/" },
-    { ProductID: "12", Name: "Chuột SteelSeries Rival 5", Category: "Chuột Gaming", Price: 1590000, Image: "../assets/images/" },
-    { ProductID: "13", Name: "Tai nghe Logitech G733", Category: "Tai nghe", Price: 3190000, Image: "../assets/images/" },
-    { ProductID: "14", Name: "Màn hình Samsung Odyssey G5 27", Category: "Màn hình", Price: 5990000, Image: "../assets/images/" },
-    { ProductID: "15", Name: "Bàn phím cơ Razer BlackWidow V3", Category: "Bàn phím cơ", Price: 3290000, Image: "../assets/images/" },
-    { ProductID: "16", Name: "Chuột Razer Viper V2 Pro", Category: "Chuột Gaming", Price: 2990000, Image: "../assets/images/" },
-    { ProductID: "17", Name: "Tai nghe SteelSeries Arctis Nova 7", Category: "Tai nghe", Price: 3890000, Image: "../assets/images/" },
-    { ProductID: "18", Name: "Màn hình Gigabyte G27Q 27", Category: "Màn hình", Price: 6790000, Image: "../assets/images/" },
-    { ProductID: "19", Name: "Bàn phím cơ Ducky One 3", Category: "Bàn phím cơ", Price: 2590000, Image: "../assets/images/" },
-    { ProductID: "20", Name: "Chuột Corsair Katar Pro", Category: "Chuột Gaming", Price: 890000, Image: "../assets/images/" }
+    { productID: "1", Name: "Bàn phím cơ Logitech G Pro X", Description: "Bàn phím cơ gaming thiết kế gọn gàng", Price: 2990000, Stock: 25, Category: "Bàn phím cơ", Image: "../assets/images/logitechGPro.jpg" },
+    { productID: "2", Name: "Chuột Razer DeathAdder V3 Pro", Description: "Chuột gaming không dây thiết kế công thái học", Price: 3690000, Stock: 25, Category: "Chuột Gaming", Image: "../assets/images/deathAdderV3pro.jpg" },
+    { productID: "3", Name: "Tai nghe HyperX Cloud III", Description: "Tai nghe gaming cho chơi game và giải trí", Price: 2290000, Stock: 25, Category: "Tai nghe", Image: "../assets/images/HpHyperX3.jpg" },
+    { productID: "4", Name: "Màn hình LG UltraGear 27 2K", Description: "Màn hình gaming 27 inch độ phân giải 2K", Price: 7490000, Stock: 25, Category: "Màn hình", Image: "../assets/images/LgutraGear.jpg" },
+    { productID: "5", Name: "Bàn phím cơ Akko 3098B", Description: "Bàn phím cơ phù hợp cho học tập và gaming", Price: 1990000, Stock: 25, Category: "Bàn phím cơ", Image: "../assets/images/Akko3098B.jpg" },
+    { productID: "6", Name: "Chuột Logitech G502 Hero", Description: "Chuột gaming có thiết kế chắc chắn", Price: 1190000, Stock: 25, Category: "Chuột Gaming", Image: "../assets/images/LogitechG502.jpg" },
+    { productID: "7", Name: "Tai nghe Razer BlackShark V2", Description: "Tai nghe gaming cho âm thanh và giao tiếp", Price: 2590000, Stock: 25, Category: "Tai nghe", Image: "../assets/images/RazerBlackSharkV2.jpg" },
+    { productID: "8", Name: "Màn hình Asus TUF Gaming 24", Description: "Màn hình gaming 24 inch", Price: 4290000, Stock: 25, Category: "Màn hình", Image: "../assets/images/AsuaTuf24.jpg" },
+    { productID: "9", Name: "Bàn phím cơ Keychron K8 Pro", Description: "Bàn phím cơ phù hợp cho công việc và giải trí", Price: 2890000, Stock: 25, Category: "Bàn phím cơ", Image: "../assets/images/K8Pro.jpg" },
+    { productID: "10", Name: "Chuột Logitech G Pro Wireless", Description: "Chuột gaming không dây thao tác chính xác", Price: 2490000, Stock: 25, Category: "Chuột Gaming", Image: "../assets/images/" },
+    { productID: "11", Name: "Bàn phím cơ Corsair K70 RGB", Description: "Bàn phím cơ gaming có đèn nền RGB", Price: 3990000, Stock: 25, Category: "Bàn phím cơ", Image: "../assets/images/" },
+    { productID: "12", Name: "Chuột SteelSeries Rival 5", Description: "Chuột gaming đa năng", Price: 1590000, Stock: 25, Category: "Chuột Gaming", Image: "../assets/images/" },
+    { productID: "13", Name: "Tai nghe Logitech G733", Description: "Tai nghe gaming không dây", Price: 3190000, Stock: 25, Category: "Tai nghe", Image: "../assets/images/" },
+    { productID: "14", Name: "Màn hình Samsung Odyssey G5 27", Description: "Màn hình gaming 27 inch", Price: 5990000, Stock: 25, Category: "Màn hình", Image: "../assets/images/" },
+    { productID: "15", Name: "Bàn phím cơ Razer BlackWidow V3", Description: "Bàn phím cơ gaming thiết kế chắc chắn", Price: 3290000, Stock: 25, Category: "Bàn phím cơ", Image: "../assets/images/" },
+    { productID: "16", Name: "Chuột Razer Viper V2 Pro", Description: "Chuột gaming nhẹ cho thao tác nhanh", Price: 2990000, Stock: 25, Category: "Chuột Gaming", Image: "../assets/images/" },
+    { productID: "17", Name: "Tai nghe SteelSeries Arctis Nova 7", Description: "Tai nghe gaming thoải mái khi sử dụng", Price: 3890000, Stock: 25, Category: "Tai nghe", Image: "../assets/images/" },
+    { productID: "18", Name: "Màn hình Gigabyte G27Q 27", Description: "Màn hình 27 inch cho gaming và giải trí", Price: 6790000, Stock: 25, Category: "Màn hình", Image: "../assets/images/" },
+    { productID: "19", Name: "Bàn phím cơ Ducky One 3", Description: "Bàn phím cơ gọn gàng và ổn định", Price: 2590000, Stock: 25, Category: "Bàn phím cơ", Image: "../assets/images/" },
+    { productID: "20", Name: "Chuột Corsair Katar Pro", Description: "Chuột gaming nhỏ gọn", Price: 890000, Stock: 25, Category: "Chuột Gaming", Image: "../assets/images/" }
 ];
 // sắp xếp và phân trang
 const thamSoLienKet = new URLSearchParams(window.location.search);
@@ -63,8 +63,9 @@ function hienThiSanPham() {
         const dungDanhMuc = trangThai.danhMuc === "Tất cả sản phẩm" || sanPham.Category === trangThai.danhMuc;
         const tenSanPham = sanPham.Name.toLowerCase();
         const tenDanhMuc = sanPham.Category.toLowerCase();
-        const dungTimKiem = tenSanPham.includes(tuKhoa) || tenDanhMuc.includes(tuKhoa);
-        const dungSanPham = trangThai.idSanPham === "0" || sanPham.ProductID === trangThai.idSanPham;
+        const moTaSanPham = sanPham.Description.toLowerCase();
+        const dungTimKiem = tenSanPham.includes(tuKhoa) || moTaSanPham.includes(tuKhoa) || tenDanhMuc.includes(tuKhoa);
+        const dungSanPham = trangThai.idSanPham === "0" || sanPham.productID === trangThai.idSanPham;
         if (dungDanhMuc && dungTimKiem && dungSanPham) {
             danhSachLoc.push(sanPham);
         }
@@ -107,7 +108,7 @@ function hienThiSanPham() {
         const anhSanPham = the.querySelector("img");
         anhSanPham.style.cursor = "pointer";
         anhSanPham.addEventListener("click", function () {
-            window.location.href = "ChiTietSanPham.html?id=" + sanPham.ProductID;
+            window.location.href = "ChiTietSanPham.html?id=" + sanPham.productID;
         });
         khungDanhSach.appendChild(the);
     });
@@ -166,7 +167,7 @@ function ganSuKienTimKiem() {
         trangThai.tuKhoa = oTimKiem.value.toLowerCase().trim();
         const cacDanhMucTimThay = [];
         danhSachSanPham.forEach(function (sanPham) {
-            const thongTinSanPham = (sanPham.Name + " " + sanPham.Category).toLowerCase();
+            const thongTinSanPham = (sanPham.Name + " " + sanPham.Description + " " + sanPham.Category).toLowerCase();
             if (thongTinSanPham.includes(trangThai.tuKhoa) && !cacDanhMucTimThay.includes(sanPham.Category)) {
                 cacDanhMucTimThay.push(sanPham.Category);
             }
@@ -176,6 +177,7 @@ function ganSuKienTimKiem() {
         } else {
             trangThai.danhMuc = "Tất cả sản phẩm";
         }
+        trangThai.idSanPham = "0";
         const cacMucDanhMuc = document.querySelectorAll(".muc-danh-muc");
         cacMucDanhMuc.forEach(function (mucDanhMuc) {
             if (mucDanhMuc.dataset.category === trangThai.danhMuc) {
