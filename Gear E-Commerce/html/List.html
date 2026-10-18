@@ -1,92 +1,105 @@
 <!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sản phẩm - GearHouse</title>
-        <link rel="stylesheet" href="../css/global.css">
-        <link rel="stylesheet" href="../css/List.css">
-    </head>
-    <body>
-        <!-- menu -->
-        <div class="dau-trang">
-            <header>
-                <a href="../html/home.html" class="logo-thuong-hieu">GearHouse.</a>
-                <nav class="menu-chinh">
-                    <a href="../html/List.html" class="active">Sản phẩm</a>
-                    <a href="#">Khuyến mãi</a>
-                    <a href="#">Hỗ trợ</a>
-                </nav>
-                <div class="tai-khoan">
-                    <a class="bieu-tuong-gio-hang" href="../html/Cart.html" aria-label="Giỏ hàng" title="Giỏ hàng"><img src="../assets/images/shopping-cart.png" alt="Giỏ hàng"></a>
-                    <a class="bieu-tuong-tai-khoan" href="../html/SignIn.html" aria-label="Đăng nhập" title="Đăng nhập"><img src="../assets/images/user.png" alt="Đăng nhập"></a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm - GearHouse</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/List.css">
+</head>
+<body>
+    <!-- menu -->
+    <div class="dau-trang">
+        <header>
+            <div class="logo-thuong-hieu">
+                <a href="../html/home.html">GearHouse.</a>
+            </div>
+            <nav class="menu-chinh">
+                <a href="../html/List.html">Sản phẩm</a>
+                <a href="#">Khuyến mãi</a>
+                <a href="#">Hỗ trợ</a>
+            </nav>
+            <div class="tai-khoan">
+                <form class="hop-tim-kiem" id="formTimKiem">
+                    <input type="search" id="timKiem" placeholder="Tìm sản phẩm" autocomplete="off">
+                </form>
+                <a class="bieu-tuong-gio-hang" href="../html/Cart.html" aria-label="Giỏ hàng" title="Giỏ hàng"><img src="../assets/images/shopping-cart.png" alt="Giỏ hàng"></a>
+                <a class="bieu-tuong-tai-khoan" href="../html/SignIn.html" aria-label="Đăng nhập" title="Đăng nhập">
+                    <img src="../assets/images/user.png" alt="Đăng nhập">
+                </a>
+            </div>
+        </header>
+    </div>
+    <!-- nội dung -->
+    <main class="trang-san-pham">
+        <h1>Tất cả sản phẩm</h1>
+        <p class="mo-ta-trang">Khám phá các thiết bị công nghệ và gaming dành cho bạn.</p>
+        <hr>
+        <div class="khu-vuc-noi-dung">
+            <!-- danh sách lọc sản phẩm -->
+            <div class="cot-danh-muc">
+                <h3>Danh mục</h3>
+                <div class="danh-sach-danh-muc">
+                    <a href="#" class="muc-danh-muc active" data-category="Tất cả sản phẩm">Tất cả sản phẩm</a>
+                    <a href="#" class="muc-danh-muc" data-category="Bàn phím cơ">Bàn phím cơ</a>
+                    <a href="#" class="muc-danh-muc" data-category="Chuột Gaming">Chuột Gaming</a>
+                    <a href="#" class="muc-danh-muc" data-category="Tai nghe">Tai nghe</a>
+                    <a href="#" class="muc-danh-muc" data-category="Màn hình">Màn hình</a>
+                    <a href="#" class="muc-danh-muc" data-category="Phụ kiện">Phụ kiện</a>
                 </div>
-            </header>
+            </div>
+            <!-- tìm kiếm và lọc -->
+            <section class="cot-san-pham">
+                <div class="thanh-cong-cu">
+                    <p id="soLuongSanPham">20 sản phẩm</p>
+                    <div class="sap-xep">
+                        <span>Sắp xếp:</span>
+                        <select id="sapXep">
+                            <option value="moi-nhat">Mới nhất</option>
+                            <option value="gia-thap">Giá thấp đến cao</option>
+                            <option value="gia-cao">Giá cao đến thấp</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="danh-sach" id="danhSachSanPham"></div>
+                <div class="phan-trang" id="phanTrang"></div>
+            </section>
         </div>
-        <!-- nội dung -->
-        <main class="trang-san-pham">
-            <h1>Tất cả sản phẩm</h1>
-            <p class="mo-ta-trang">Khám phá các thiết bị công nghệ và gaming dành cho bạn.</p>
-            <hr>
-            <div class="khu-vuc-noi-dung">
-                <!-- danh sách lọc sản phẩm -->
-                <div class="cot-danh-muc">
-                    <h3>Danh mục</h3>
-                    <div class="danh-sach-danh-muc">
-                        <a href="#" class="muc-danh-muc active" data-category="Tất cả sản phẩm">Tất cả sản phẩm</a>
-                        <a href="#" class="muc-danh-muc" data-category="Bàn phím cơ">Bàn phím cơ</a>
-                        <a href="#" class="muc-danh-muc" data-category="Chuột Gaming">Chuột Gaming</a>
-                        <a href="#" class="muc-danh-muc" data-category="Tai nghe">Tai nghe</a>
-                        <a href="#" class="muc-danh-muc" data-category="Màn hình">Màn hình</a>
-                        <a href="#" class="muc-danh-muc" data-category="Phụ kiện">Phụ kiện</a>
-                    </div>
-                </div>
-                <!-- tìm kiếm và lọc -->
-                <section class="cot-san-pham">
-                    <div class="thanh-cong-cu">
-                        <p id="soLuongSanPham">20 sản phẩm</p>
-                        <div class="o-tim-kiem">
-                            <input type="text" id="timKiem" placeholder="Tìm kiếm sản phẩm">
-                        </div>
-                        <div class="sap-xep">
-                            <span>Sắp xếp:</span>
-                            <select id="sapXep">
-                                <option value="moi-nhat">Mới nhất</option>
-                                <option value="gia-thap">Giá thấp đến cao</option>
-                                <option value="gia-cao">Giá cao đến thấp</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="danh-sach" id="danhSachSanPham"></div>
-                    <div class="phan-trang" id="phanTrang"></div>
-                </section>
+    </main>
+    <!-- chân trang -->
+    <div class="chan-trang">
+        <div class="danh-sach">
+            <div class="the-san-pham">
+                <h4>Sản phẩm</h4>
+                <a href="../html/List.html?category=Bàn phím cơ">Bàn phím cơ</a>
+                <a href="../html/List.html?category=Chuột Gaming">Chuột Gaming</a>
+                <a href="../html/List.html?category=Màn hình">Màn hình</a>
+                <a href="../html/List.html?category=Tai nghe">Tai nghe</a>
             </div>
-        </main>
-        <!-- chân trang -->
-        <footer class="chan-trang">
-            <div class="noi-dung-chan-trang">
-                <div class="cot-chan-trang">
-                    <h3>GearHouse</h3>
-                    <p>Thiết bị công nghệ và gaming chất lượng dành cho bạn.</p>
-                </div>
-                <div class="cot-chan-trang">
-                    <h4>Sản phẩm</h4>
-                    <a href="../html/List.html?category=Bàn phím cơ">Bàn phím cơ</a>
-                    <a href="../html/List.html?category=Chuột Gaming">Chuột Gaming</a>
-                    <a href="../html/List.html?category=Tai nghe">Tai nghe</a>
-                    <a href="../html/List.html?category=Màn hình">Màn hình</a>
-                </div>
-                <div class="cot-chan-trang">
-                    <h4>Hỗ trợ</h4>
-                    <a href="#">Liên hệ</a>
-                    <a href="#">Chính sách đổi trả</a>
-                    <a href="#">Chính sách bảo hành</a>
-                </div>
+            <div class="the-san-pham">
+                <h4>Về GearHouse</h4>
+                <a href="#">Câu chuyện thương hiệu</a>
+                <a href="#">Tuyển dụng</a>
+                <a href="#">Tin tức công nghệ</a>
             </div>
-            <div class="ban-quyen">
-                <p>© 2026 GearHouse. All rights reserved.</p>
+            <div class="the-san-pham">
+                <h4>Hỗ trợ khách hàng</h4>
+                <a href="#">Chính sách bảo hành</a>
+                <a href="#">Hướng dẫn mua hàng</a>
+                <a href="#">Phương thức thanh toán</a>
             </div>
-        </footer>
-        <script src="../js/List.js"></script>
-    </body>
+            <div class="the-san-pham">
+                <h4>Liên hệ</h4>
+                <a href="#">Hotline: 1800 1234</a>
+                <a href="#">Email: cskh@gearhouse.vn</a>
+                <a href="#">Hệ thống cửa hàng</a>
+            </div>
+        </div>
+        <div class="dong-cuoi">
+            <p>© 2026 GearHouse</p>
+        </div>
+    </div>
+    <script src="../js/List.js?v=5"></script>
+</body>
 </html>
+

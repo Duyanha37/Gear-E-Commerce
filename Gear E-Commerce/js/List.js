@@ -1,62 +1,82 @@
 // danh sách sản phẩm
 const danhSachSanPham = [
-    { id: 1, ten: "Bàn phím cơ Logitech G Pro X", loai: "Bàn phím cơ", gia: 2990000, anh: "../assets/images/logitechGPro.jpg" },
-    { id: 2, ten: "Chuột Razer DeathAdder V3 Pro", loai: "Chuột Gaming", gia: 3690000, anh: "../assets/images/deathAdderV3pro.jpg" },
-    { id: 3, ten: "Tai nghe HyperX Cloud III", loai: "Tai nghe", gia: 2290000, anh: "../assets/images/HpHyperX3.jpg" },
-    { id: 4, ten: "Màn hình LG UltraGear 27 2K", loai: "Màn hình", gia: 7490000, anh: "../assets/images/LgutraGear.jpg" },
-    { id: 5, ten: "Bàn phím cơ Akko 3098B", loai: "Bàn phím cơ", gia: 1990000, anh: "../assets/images/Akko3098B.jpg" },
-    { id: 6, ten: "Chuột Logitech G502 Hero", loai: "Chuột Gaming", gia: 1190000, anh: "../assets/images/LogitechG502.jpg" },
-    { id: 7, ten: "Tai nghe Razer BlackShark V2", loai: "Tai nghe", gia: 2590000, anh: "../assets/images/RazerBlackSharkV2.jpg" },
-    { id: 8, ten: "Màn hình Asus TUF Gaming 24", loai: "Màn hình", gia: 4290000, anh: "../assets/images/AsuaTuf24.jpg" },
-    { id: 9, ten: "Bàn phím cơ Keychron K8 Pro", loai: "Bàn phím cơ", gia: 2890000, anh: "../assets/images/K8Pro.jpg" },
-    { id: 10, ten: "Chuột Logitech G Pro Wireless", loai: "Chuột Gaming", gia: 2490000, anh: "../assets/images/" },
-    { id: 11, ten: "Bàn phím cơ Corsair K70 RGB", loai: "Bàn phím cơ", gia: 3990000, anh: "../assets/images/" },
-    { id: 12, ten: "Chuột SteelSeries Rival 5", loai: "Chuột Gaming", gia: 1590000, anh: "../assets/images/" },
-    { id: 13, ten: "Tai nghe Logitech G733", loai: "Tai nghe", gia: 3190000, anh: "../assets/images/" },
-    { id: 14, ten: "Màn hình Samsung Odyssey G5 27", loai: "Màn hình", gia: 5990000, anh: "../assets/images/" },
-    { id: 15, ten: "Bàn phím cơ Razer BlackWidow V3", loai: "Bàn phím cơ", gia: 3290000, anh: "../assets/images/" },
-    { id: 16, ten: "Chuột Razer Viper V2 Pro", loai: "Chuột Gaming", gia: 2990000, anh: "../assets/images/" },
-    { id: 17, ten: "Tai nghe SteelSeries Arctis Nova 7", loai: "Tai nghe", gia: 3890000, anh: "../assets/images/" },
-    { id: 18, ten: "Màn hình Gigabyte G27Q 27", loai: "Màn hình", gia: 6790000, anh: "../assets/images/" },
-    { id: 19, ten: "Bàn phím cơ Ducky One 3", loai: "Bàn phím cơ", gia: 2590000, anh: "../assets/images/" },
-    { id: 20, ten: "Chuột Corsair Katar Pro", loai: "Chuột Gaming", gia: 890000, anh: "../assets/images/" }
+    { ProductID: "1", Name: "Bàn phím cơ Logitech G Pro X", Category: "Bàn phím cơ", Price: 2990000, Image: "../assets/images/logitechGPro.jpg" },
+    { ProductID: "2", Name: "Chuột Razer DeathAdder V3 Pro", Category: "Chuột Gaming", Price: 3690000, Image: "../assets/images/deathAdderV3pro.jpg" },
+    { ProductID: "3", Name: "Tai nghe HyperX Cloud III", Category: "Tai nghe", Price: 2290000, Image: "../assets/images/HpHyperX3.jpg" },
+    { ProductID: "4", Name: "Màn hình LG UltraGear 27 2K", Category: "Màn hình", Price: 7490000, Image: "../assets/images/LgutraGear.jpg" },
+    { ProductID: "5", Name: "Bàn phím cơ Akko 3098B", Category: "Bàn phím cơ", Price: 1990000, Image: "../assets/images/Akko3098B.jpg" },
+    { ProductID: "6", Name: "Chuột Logitech G502 Hero", Category: "Chuột Gaming", Price: 1190000, Image: "../assets/images/LogitechG502.jpg" },
+    { ProductID: "7", Name: "Tai nghe Razer BlackShark V2", Category: "Tai nghe", Price: 2590000, Image: "../assets/images/RazerBlackSharkV2.jpg" },
+    { ProductID: "8", Name: "Màn hình Asus TUF Gaming 24", Category: "Màn hình", Price: 4290000, Image: "../assets/images/AsuaTuf24.jpg" },
+    { ProductID: "9", Name: "Bàn phím cơ Keychron K8 Pro", Category: "Bàn phím cơ", Price: 2890000, Image: "../assets/images/K8Pro.jpg" },
+    { ProductID: "10", Name: "Chuột Logitech G Pro Wireless", Category: "Chuột Gaming", Price: 2490000, Image: "../assets/images/" },
+    { ProductID: "11", Name: "Bàn phím cơ Corsair K70 RGB", Category: "Bàn phím cơ", Price: 3990000, Image: "../assets/images/" },
+    { ProductID: "12", Name: "Chuột SteelSeries Rival 5", Category: "Chuột Gaming", Price: 1590000, Image: "../assets/images/" },
+    { ProductID: "13", Name: "Tai nghe Logitech G733", Category: "Tai nghe", Price: 3190000, Image: "../assets/images/" },
+    { ProductID: "14", Name: "Màn hình Samsung Odyssey G5 27", Category: "Màn hình", Price: 5990000, Image: "../assets/images/" },
+    { ProductID: "15", Name: "Bàn phím cơ Razer BlackWidow V3", Category: "Bàn phím cơ", Price: 3290000, Image: "../assets/images/" },
+    { ProductID: "16", Name: "Chuột Razer Viper V2 Pro", Category: "Chuột Gaming", Price: 2990000, Image: "../assets/images/" },
+    { ProductID: "17", Name: "Tai nghe SteelSeries Arctis Nova 7", Category: "Tai nghe", Price: 3890000, Image: "../assets/images/" },
+    { ProductID: "18", Name: "Màn hình Gigabyte G27Q 27", Category: "Màn hình", Price: 6790000, Image: "../assets/images/" },
+    { ProductID: "19", Name: "Bàn phím cơ Ducky One 3", Category: "Bàn phím cơ", Price: 2590000, Image: "../assets/images/" },
+    { ProductID: "20", Name: "Chuột Corsair Katar Pro", Category: "Chuột Gaming", Price: 890000, Image: "../assets/images/" }
 ];
-// trạng thái danh mục sắp xếp và phân trang
+// sắp xếp và phân trang
 const thamSoLienKet = new URLSearchParams(window.location.search);
+const danhMucDaLuu = sessionStorage.getItem("danhMucList");
+const trangDaLuu = sessionStorage.getItem("trangList");
 const trangThai = {
-    danhMuc: thamSoLienKet.get("category") || "Tất cả sản phẩm",
-    idSanPham: Number(thamSoLienKet.get("id")) || 0,
+    danhMuc: thamSoLienKet.get("category") || danhMucDaLuu || "Tất cả sản phẩm",
+    idSanPham: thamSoLienKet.get("id") || "0",
+    tuKhoa: thamSoLienKet.get("search") || "",
     cachSapXep: "moi-nhat",
-    trangHienTai: 1,
+    trangHienTai: Number(thamSoLienKet.get("page") || trangDaLuu) || 1,
     soSanPhamMoiTrang: 10
 };
-// khởi động 
+// lưu danh mục và số trang 
+function capNhatLienKet() {
+    thamSoLienKet.set("category", trangThai.danhMuc);
+    thamSoLienKet.set("page", trangThai.trangHienTai);
+    sessionStorage.setItem("danhMucList", trangThai.danhMuc);
+    sessionStorage.setItem("trangList", trangThai.trangHienTai);
+    thamSoLienKet.delete("search");
+    if (trangThai.idSanPham === "0") {
+        thamSoLienKet.delete("id");
+    } else {
+        thamSoLienKet.set("id", trangThai.idSanPham);
+    }
+    window.history.replaceState(null, "", window.location.pathname + "?" + thamSoLienKet.toString());
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     ganSuKienDanhMuc();
     ganSuKienTimKiem();
     ganSuKienSapXep();
     hienThiSanPham();
 });
-// lọc sắp xếp và hiển thị danh sách sản phẩm
+
+// lọc sắp xếp và hiển thị 
 function hienThiSanPham() {
-    const tuKhoa = document.getElementById("timKiem").value.toLowerCase().trim();
+    const tuKhoa = trangThai.tuKhoa;
     const danhSachLoc = [];
     danhSachSanPham.forEach(function (sanPham) {
-        const dungDanhMuc = trangThai.danhMuc === "Tất cả sản phẩm" || sanPham.loai === trangThai.danhMuc;
-        const dungTimKiem = sanPham.ten.toLowerCase().includes(tuKhoa);
-        const dungSanPham = trangThai.idSanPham === 0 || sanPham.id === trangThai.idSanPham;
+        const dungDanhMuc = trangThai.danhMuc === "Tất cả sản phẩm" || sanPham.Category === trangThai.danhMuc;
+        const tenSanPham = sanPham.Name.toLowerCase();
+        const tenDanhMuc = sanPham.Category.toLowerCase();
+        const dungTimKiem = tenSanPham.includes(tuKhoa) || tenDanhMuc.includes(tuKhoa);
+        const dungSanPham = trangThai.idSanPham === "0" || sanPham.ProductID === trangThai.idSanPham;
         if (dungDanhMuc && dungTimKiem && dungSanPham) {
             danhSachLoc.push(sanPham);
         }
     });
     if (trangThai.cachSapXep === "gia-thap") {
         danhSachLoc.sort(function (sanPhamA, sanPhamB) {
-            return sanPhamA.gia - sanPhamB.gia;
+            return sanPhamA.Price - sanPhamB.Price;
         });
     }
     if (trangThai.cachSapXep === "gia-cao") {
         danhSachLoc.sort(function (sanPhamA, sanPhamB) {
-            return sanPhamB.gia - sanPhamA.gia;
+            return sanPhamB.Price - sanPhamA.Price;
         });
     }
     const soTrangTam = {
@@ -71,6 +91,7 @@ function hienThiSanPham() {
     if (trangThai.trangHienTai > tongSoTrang) {
         trangThai.trangHienTai = 1;
     }
+    capNhatLienKet();
     const viTriBatDau = (trangThai.trangHienTai - 1) * trangThai.soSanPhamMoiTrang;
     const danhSachTrang = danhSachLoc.slice(viTriBatDau, viTriBatDau + trangThai.soSanPhamMoiTrang);
     const khungDanhSach = document.getElementById("danhSachSanPham");
@@ -79,21 +100,21 @@ function hienThiSanPham() {
         const the = document.createElement("article");
         the.className = "the-san-pham";
         the.innerHTML =
-            '<div class="khung-anh"><img src="' + sanPham.anh + '" alt="' + sanPham.ten + '"></div>' +
-            '<p class="loai-san-pham">' + sanPham.loai + '</p>' +
-            '<h3>' + sanPham.ten + '</h3>' +
-            '<p class="gia-san-pham">' + sanPham.gia.toLocaleString("vi-VN") + '₫</p>';
+            '<div class="khung-anh"><img src="' + sanPham.Image + '" alt="' + sanPham.Name + '"></div>' +
+            '<p class="loai-san-pham">' + sanPham.Category + '</p>' +
+            '<h3>' + sanPham.Name + '</h3>' +
+            '<p class="gia-san-pham">' + sanPham.Price.toLocaleString("vi-VN") + '₫</p>';
         const anhSanPham = the.querySelector("img");
         anhSanPham.style.cursor = "pointer";
         anhSanPham.addEventListener("click", function () {
-            window.location.href = "ChiTietSanPham.html?id=" + sanPham.id;
+            window.location.href = "ChiTietSanPham.html?id=" + sanPham.ProductID;
         });
         khungDanhSach.appendChild(the);
     });
     document.getElementById("soLuongSanPham").textContent = danhSachTrang.length + " sản phẩm";
     hienThiNutPhanTrang(tongSoTrang);
 }
-// nút chuyển trang
+// chuyển trang
 function hienThiNutPhanTrang(tongSoTrang) {
     const khung = document.getElementById("phanTrang");
     khung.innerHTML = "";
@@ -113,7 +134,7 @@ function hienThiNutPhanTrang(tongSoTrang) {
         khung.appendChild(nut);
     });
 }
-// xử lý khi khách chọn danh mục
+// chọn danh mục
 function ganSuKienDanhMuc() {
     const cacMuc = document.querySelectorAll(".muc-danh-muc");
     cacMuc.forEach(function (muc) {
@@ -129,15 +150,40 @@ function ganSuKienDanhMuc() {
             });
             muc.classList.add("active");
             trangThai.danhMuc = muc.dataset.category;
-            trangThai.idSanPham = 0;
+            trangThai.idSanPham = "0";
             trangThai.trangHienTai = 1;
             hienThiSanPham();
         });
     });
 }
-// xử lý tìm kiếm
+// tìm kiếm
 function ganSuKienTimKiem() {
-    document.getElementById("timKiem").addEventListener("input", function () {
+    const formTimKiem = document.getElementById("formTimKiem");
+    const oTimKiem = document.getElementById("timKiem");
+    oTimKiem.value = trangThai.tuKhoa;
+    formTimKiem.addEventListener("submit", function (event) {
+        event.preventDefault();
+        trangThai.tuKhoa = oTimKiem.value.toLowerCase().trim();
+        const cacDanhMucTimThay = [];
+        danhSachSanPham.forEach(function (sanPham) {
+            const thongTinSanPham = (sanPham.Name + " " + sanPham.Category).toLowerCase();
+            if (thongTinSanPham.includes(trangThai.tuKhoa) && !cacDanhMucTimThay.includes(sanPham.Category)) {
+                cacDanhMucTimThay.push(sanPham.Category);
+            }
+        });
+        if (cacDanhMucTimThay.length === 1) {
+            trangThai.danhMuc = cacDanhMucTimThay[0];
+        } else {
+            trangThai.danhMuc = "Tất cả sản phẩm";
+        }
+        const cacMucDanhMuc = document.querySelectorAll(".muc-danh-muc");
+        cacMucDanhMuc.forEach(function (mucDanhMuc) {
+            if (mucDanhMuc.dataset.category === trangThai.danhMuc) {
+                mucDanhMuc.classList.add("active");
+            } else {
+                mucDanhMuc.classList.remove("active");
+            }
+        });
         trangThai.trangHienTai = 1;
         hienThiSanPham();
     });
@@ -150,3 +196,4 @@ function ganSuKienSapXep() {
         hienThiSanPham();
     });
 }
+
