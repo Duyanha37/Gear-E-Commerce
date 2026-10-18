@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
-    const username_emailInput = document.getElementById('username-email');
-    const passwordError = document.getElementById('password-error');
-    const username_emailError = document.getElementById('username-email-error');
+    const username_emailInput = document.getElementById('username_email');
+    const passwordError = document.getElementById('password_error');
+    const username_emailError = document.getElementById('username_email_error');
     const signinForm = document.querySelector('.signin-form');
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     passwordInput.addEventListener('input', () => {
         const val = passwordInput.value.trim();
-        const isValid = passwordRegex.test(val) || val === 'admin'
+        const isValid = passwordRegex.test(val);
 
         if (!isValid && val !== '') {
             passwordError.textContent = 'Mật khẩu phải có ít nhất 8 ký tự và bao gồm chữ cái và số.';
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     username_emailInput.addEventListener('input', () => {
         const val = username_emailInput.value.trim();
-        const isValid = emailRegex.test(val) || usernameRegex.test(val) || val === 'admin';
+        const isValid = emailRegex.test(val) || usernameRegex.test(val);
 
         if (!isValid && val !== '') {
             username_emailError.textContent = 'Email hoặc tên đăng nhập không hợp lệ.';

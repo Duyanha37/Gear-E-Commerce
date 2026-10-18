@@ -47,17 +47,17 @@
                     <p class="form-subtitle">Điền thông tin để truy cập tài khoản của bạn.</p>
                 </div>
 
-                <form class="signin-form" action="#" method="POST" novalidate>
+                <form class="signin-form" method="POST" runat="server" novalidate>
                     <div class="form-group">
-                        <label class="form-label" for="username-email">Tên đăng nhập hoặc Email</label>
-                        <input class="form-input" type="text" id="username-email" name="username" placeholder="Email/Tên đăng nhập">
-                        <span class="form-error-message" id="username-email-error"></span>
+                        <label class="form-label" for="username_email">Tên đăng nhập hoặc Email</label>
+                        <input class="form-input" type="email" id="username_email" name="username_email" placeholder="Email/Tên đăng nhập">
+                        <span class="form-error-message" id="username_email_error" runat="server" ClientIDMode="Static"></span>
                     </div>
 
-                    <div class="form-group">
+                     <div class="form-group">
                         <label class="form-label" for="password">Mật khẩu</label>
                         <input class="form-input" type="password" id="password" name="password" placeholder="Ít nhất 8 ký tự">
-                        <span class="form-error-message" id="password-error"></span>
+                        <span class="form-error-message" id="password_error" runat="server" ClientIDMode="Static"></span>
                     </div>
 
                     <div class="form-row-between">

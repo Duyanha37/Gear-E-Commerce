@@ -7,12 +7,22 @@ namespace Gear_E_Commerce
 {
     public class Product
     {
-        string ProductID { get; set; }
-        string Name { get; set; }
-        string Description { get; set; }
-        long Price { get; set; }
-        int Stock { get; set; }
-        string Category { get; set; }
-        string Image { get; set; }
+        public Product(string productID, string Name, string Description, long Price, int Stock, string Category, string Image)
+        {
+            this.productID = productID;
+            this.Name = Name;
+            this.Description = Description;
+            this.Price = Price;
+            this.Stock = Stock;
+            this.Category = Category;
+            this.Image = Image;
+        }
+        public string productID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public long Price { get; set; }
+        public int Stock { get; set; }
+        public string Category { get; set; }
+        public string Image { get; set; }
     }
 }

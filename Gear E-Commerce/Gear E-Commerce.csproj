@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GlobalData.asax" />
+    <Content Include="Global.asax" />
     <Content Include="aspx\SignIn.aspx" />
     <Content Include="css\SignIn.css" />
     <Content Include="js\SignIn.js" />
@@ -77,8 +77,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalData.asax.cs">
-      <DependentUpon>GlobalData.asax</DependentUpon>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Member.cs" />
     <Compile Include="Product.cs" />

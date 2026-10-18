@@ -6,49 +6,87 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="SignUp.css">
-    <script src="SignUp.js"></script>
-    <title>SignUp Page</title>
+    <title>Sign up - GearHouse</title>
+    <link rel="stylesheet" href="../css/SignUp.css">
+    <script src="../js/SignUp.js"></script>
 </head>
 <body>
-    <header class="signup-header">
-        <a href="Home.html" class="signup-logo">GearHouse.</a>
-    </header>
-    <main class="main-container">
-        <div class="signup-container">
-            <h1 class="signup-title">Đăng ký</h1>
-            <label class="signup-subtitle">Trở thành GearHouse Member ngay hôm nay.</label>
-            <form class="signup-form">
-                <div class="signup-form-group">
-                    <label class="signup-form-label" for="fullname">Full Name</label>
-                    <input class="signup-form-input" type="text" id="fullname" name="fullname" placeholder="Họ và tên">
-                    <label class="signup-form-input-error-label"id="fullname-error"></label>
+    <div class="auth-page">
+        <section class="auth-hero">
+            <img src="../assets/images/Circle.png" alt="" class="hero-bg-circles">
+
+            <div class="hero-header">
+                <a href="home.html" class="hero-brand" title="GearHouse Home">
+                    <img src="../assets/images/Logo-White.png" alt="GearHouse Logo" class="hero-logo">
+                    <span class="hero-brand-name">GearHouse</span>
+                </a>
+            </div>
+
+            <div class="hero-content">
+                <span class="hero-tagline">GEAR FOR WHAT'S NEXT</span>
+                <h1 class="hero-title">Join the house.</h1>
+                <p class="hero-desc">Create your account and build with confidence.</p>
+            </div>
+
+            <div class="hero-footer">
+                <p class="hero-copyright">&copy; 2026 GearHouse</p>
+            </div>
+        </section>
+
+        <main class="auth-main">
+            <div class="auth-form-container">
+                <div class="back-nav">
+                    <a href="home.html" class="back-link">
+                        <span class="back-arrow">&larr;</span> Trở lại cửa hàng
+                </a>
                 </div>
-                <div class="signup-form-group">
-                    <label class="signup-form-label" for="username">Username</label>
-                    <input class="signup-form-input" type="text" id="username" name="username" placeholder="Tên đăng nhập">
-                    <label class="signup-form-input-error-label"id="username-error"></label>
+
+                <div class="form-header">
+                    <span class="form-badge">Tạo tài khoản</span>
+                    <h2 class="form-title">Hãy bắt đầu thôi</h2>
+                    <p class="form-subtitle">Nhập thông tin của bạn để tạo tài khoản.</p>
                 </div>
-                <div class="signup-form-group">
-                    <label class="signup-form-label" for="password">Password</label>
-                    <input class="signup-form-input" type="password" id="password" name="password" placeholder="Mật khẩu">
-                    <label class="signup-form-input-error-label"id="password-error"></label>
-                </div>
-                <div class="signup-form-group">
-                    <label class="signup-form-label" for="confirm-password">Confirm Password</label>
-                    <input class="signup-form-input" type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu">
-                    <label class="signup-form-input-error-label"id="confirm-password-error"></label>
-                </div>
-                <div class="error-notification">
-                    <p id="error-message"></p>
-                </div>
-                <button class="signup-form-button" type="submit">Đăng ký</button>
-                <div class="signup-nav-container">
-                    <label class="signup-nav-label">Đã có tài khoản!</label>
-                    <a class="signup-nav-link" href="SignIn.html">Đăng nhập ngay</a>
-                </div>
-            </form>
-        </div>
-    </main>
+
+                <form class="signup-form" method="POST" runat="server" novalidate>
+                    <div class="form-group">
+                        <label class="form-label" for="fullname">Họ và tên</label>
+                        <input class="form-input" type="text" id="fullname" name="fullname" placeholder="Họ và tên">
+                        <span class="form-error-message" id="fullname_error" runat="server" ClientIDMode="Static"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Địa chỉ email</label>
+                        <input class="form-input" type="email" id="email" name="email" placeholder="Nhập email">
+                        <span class="form-error-message" id="email_error" runat="server" ClientIDMode="Static"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Số điện thoại</label>
+                        <input class="form-input" type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại">
+                        <span class="form-error-message" id="phone_error" runat="server" ClientIDMode="Static"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Mật khẩu</label>
+                        <input class="form-input" type="password" id="password" name="password" placeholder="Ít nhất 8 ký tự">
+                        <span class="form-error-message" id="password_error" runat="server" ClientIDMode="Static"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirm-password">Nhập lại mật khẩu</label>
+                        <input class="form-input" type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu của bạn">
+                        <span class="form-error-message" id="confirm_password_error" runat="server" ClientIDMode="Static"></span>
+                    </div>
+
+                    <button type="submit" class="signup-button">Tạo tài khoản</button>
+
+                    <div class="form-footer">
+                        <span class="footer-text">Đã có tài khoản?</span>
+                        <a href="SignIn.aspx" class="footer-link">Đăng nhập</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

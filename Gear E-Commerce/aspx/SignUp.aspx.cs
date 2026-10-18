@@ -11,7 +11,59 @@ namespace Gear_E_Commerce
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+            {
+                string fullname = Request.Form["fullname"];
+                string email = Request.Form["email"];
+                string phone = Request.Form["phone"];
+                string password = Request.Form["password"];
+                string confirm_password = Request.Form["confirm-password"];
+                Boolean isValid = true;
 
+                if (string.IsNullOrWhiteSpace(fullname))
+                {
+                    fullname_error.InnerHtml = "Họ tên không được để trống.";
+                    isValid = false;
+                }
+                if(string.IsNullOrWhiteSpace(email))
+                {
+                    email_error.InnerHtml = "Email không được để trống.";
+                    isValid = false;
+                }
+                if(string.IsNullOrWhiteSpace(phone))
+                {
+                    phone_error.InnerHtml = "Số điện thoại không được để trống.";
+                    isValid = false;
+                }
+                if(string.IsNullOrWhiteSpace(password))
+                {
+                    password_error.InnerHtml = "Mật khẩu không được để trống.";
+                    isValid = false;
+                }
+                if(string.IsNullOrWhiteSpace(confirm_password) || password != confirm_password)
+                {
+                    confirm_password_error.InnerHtml = "Xác nhận mật khẩu không hợp lệ.";
+                    isValid = false;
+                }
+                if (!isValid) return;
+
+                int index = email.IndexOf("@");
+                string username = email.Substring(0, index);
+                List<Member> memberList = (List<Member>)Application["MemberList"];
+                int count = memberList.Count(m => m.Email == email || m.Username == username);
+                
+                if(count > 0)
+                {
+                    email_error.InnerHtml = "Email đã tồn tại.";
+                    return;
+                }else
+                {
+                    Member newMember = new Member((memberList.Count + 1).ToString(), "Member", fullname, username, password, email, phone);
+                    memberList.Add(newMember);
+                    Application["MemberList"] = memberList;
+                    Response.Redirect("SignIn.aspx");
+                }
+            }
         }
     }
 }

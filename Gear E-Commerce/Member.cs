@@ -7,12 +7,23 @@ namespace Gear_E_Commerce
 {
     public class Member
     {
-        string memberID { get; set; }
-        string Role { get; set; }
-        string FullName { get; set; }
-        string Username { get; set; }
-        string Password { get; set; }
-        string Email { get; set; }
-        string Phone { get; set; }
+        public Member(string memberID, string Role, string FullName, string Username, string Password, string Email, string Phone)
+        {
+            this.memberID = memberID;
+            this.Role = Role;
+            this.FullName = FullName;
+            this.Username = Username;
+            this.Password = Password;
+            this.Email = Email;
+            this.Phone = Phone;
+        }
+        public string memberID { get; set; }
+        public string Role { get; set; }
+        public string FullName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public Boolean isDeleted { get; set; } = false;
     }
 }

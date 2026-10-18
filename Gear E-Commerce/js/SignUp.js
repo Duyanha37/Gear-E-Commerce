@@ -1,18 +1,20 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.querySelector('.signup-form');
     const fullnameInput = document.getElementById('fullname');
     const emailInput = document.getElementById('email');
     const phoneInput = document.getElementById('phone');
     const passwordInput = document.getElementById('password');
     const confirmpasswordInput = document.getElementById('confirm-password');
-    const fullnameError = document.getElementById('fullname-error');
-    const emailError = document.getElementById('email-error');
-    const phoneError = document.getElementById('phone-error');
-    const passwordError = document.getElementById('password-error');
-    const confirmpasswordError = document.getElementById('confirm-password-error');
+    const fullnameError = document.getElementById('fullname_error');
+    const emailError = document.getElementById('email_error');
+    const phoneError = document.getElementById('phone_error');
+    const passwordError = document.getElementById('password_error');
+    const confirmpasswordError = document.getElementById('confirm_password_error');
+
     const regexFullname = /^[a-zA-ZÀ-ỹ\s]+$/;
     const regexPhone = /^0[0-9]{9}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 
     fullnameInput.addEventListener('input', () => {
         if (!regexFullname.test(fullnameInput.value) && fullnameInput.value.trim() !== '') {
@@ -24,7 +26,7 @@
     });
 
     emailInput.addEventListener('input', () => {
-        if (emailInput.validity.typeMismatch && emailInput.value.trim() !== '') {
+        if (!emailRegex.test(emailInput.value) && emailInput.value.trim() !== '') {
             emailError.textContent = 'Địa chỉ email không hợp lệ.';
             emailError.style.display = 'block';
         } else {
@@ -94,6 +96,7 @@
         if (checkvalidateForm()) {
             signupForm.submit();
         } else {
+            console.log("Không hợp lệ");
             return;
         }
     });
