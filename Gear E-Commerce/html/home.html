@@ -1,153 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GearHouse - Đỉnh cao công nghệ</title>
-    <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/home.css">
-</head>
-<body>
-    <!-- menu -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GearHouse - Linh kiện máy tính</title>
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/home.css" />
+  </head>
+  <body>
     <div class="dau-trang">
-        <header>
-            <div class="logo-thuong-hieu">
-                <a href="../html/home.html">GearHouse.</a>
-            </div>
-            <nav class="menu-chinh">
-                <a href="../html/List.html">Sản phẩm</a>
-                <a href="#">Khuyến mãi</a>
-                <a href="#">Hỗ trợ</a>
-            </nav>
-            <div class="tai-khoan">
-                <form class="hop-tim-kiem" id="formTimKiem">
-                    <input type="search" id="oTimKiem" placeholder="Tìm sản phẩm" aria-label="Tìm sản phẩm">
-                </form>
-                <a class="bieu-tuong-gio-hang" href="../html/Cart.html" aria-label="Giỏ hàng" title="Giỏ hàng"><img src="../assets/images/shopping-cart.png" alt="Giỏ hàng"></a>
-                <a class="bieu-tuong-tai-khoan" href="../html/SignIn.html" aria-label="Đăng nhập" title="Đăng nhập">
-                    <img src="../assets/images/user.png" alt="Đăng nhập">
-                </a>
-            </div>
-        </header>
+      <header>
+        <div class="logo-thuong-hieu">
+          <a href="../html/home.html">G GearHouse</a>
+        </div>
+        <nav class="menu-chinh">
+          <a class="dang-chon" href="../html/home.html">Home</a>
+          <a href="../html/List.html">Products</a>
+          <a href="#danh-muc">PC Builder</a>
+          <a href="#chan-trang">Support</a>
+        </nav>
+        <div class="tai-khoan">
+          <form class="hop-tim-kiem" id="formTimKiem">
+            <input
+              type="search"
+              id="oTimKiem"
+              placeholder="Tìm sản phẩm"
+              aria-label="Tìm sản phẩm"
+            />
+          </form>
+          <a
+            class="bieu-tuong-gio-hang"
+            href="../html/Cart.html"
+            aria-label="Giỏ hàng"
+            ><img src="../assets/images/shopping-cart.png" alt="Giỏ hàng"
+          /></a>
+          <a class="nut-dang-nhap" href="../html/SignIn.html">Log in</a>
+        </div>
+      </header>
     </div>
     <main>
-        <section class="khu-vuc-noi-dung">
-            <div class="cot-danh-muc">
-                <p class="loi-chao">GEARHOUSE · HIỆU NĂNG CHO MỌI BỘ MÁY</p>
-                <h1>Xây dựng<br>cấu hình của bạn</h1>
-                <p class="doan-van">Lựa chọn linh kiện và thiết bị gaming phù hợp, sẵn sàng cho mọi thử thách.</p>
-                <div class="nhom-nut">
-                    <a href="../html/List.html">Khám phá sản phẩm →</a>
-                    <a href="#san-pham-noi-bat">Sản phẩm nổi bật</a>
-                </div>
-            </div>
-            <div class="khung-anh">
-                <img src="../assets/images/Banner.jpg" alt="Không gian lắp ráp máy tính GearHouse">
-            </div>
-        </section>
-        <section class="khu-vuc-danh-muc">
-            <div class="tieu-de-khu-vuc">
-                <div>
-                    <p class="loi-chao">BẮT ĐẦU LỰA CHỌN</p>
-                    <h2>Khám phá danh mục</h2>
-                </div>
-                <a href="../html/List.html">Xem tất cả →</a>
-            </div>
-            <div class="danh-sach">
-                <a href="../html/List.html?category=Bàn phím cơ" class="the-san-pham">
-                    <div class="khung-anh"><img src="../assets/images/logitechGPro.jpg" alt="Bàn phím cơ"></div>
-                    <p>Bàn phím cơ</p>
-                </a>
-                <a href="../html/List.html?category=Chuột Gaming" class="the-san-pham">
-                    <div class="khung-anh"><img src="../assets/images/deathAdderV3pro.jpg" alt="Chuột gaming"></div>
-                    <p>Chuột gaming</p>
-                </a>
-                <a href="../html/List.html?category=Tai nghe" class="the-san-pham">
-                    <div class="khung-anh"><img src="../assets/images/HpHyperX3.jpg" alt="Tai nghe gaming"></div>
-                    <p>Tai nghe</p>
-                </a>
-                <a href="../html/List.html?category=Màn hình" class="the-san-pham">
-                    <div class="khung-anh"><img src="../assets/images/LgutraGear.jpg" alt="Màn hình gaming"></div>
-                    <p>Màn hình</p>
-                </a>
-            </div>
-        </section>
-        <section class="khu-vuc-san-pham" id="san-pham-noi-bat">
-            <div class="tieu-de-khu-vuc">
-                <div>
-                    <p class="loi-chao">LỰA CHỌN THEO NHU CẦU</p>
-                    <h2>Sản phẩm nổi bật</h2>
-                </div>
-            </div>
-            <section class="ket-qua-tim-kiem" id="ketQuaTimKiem" hidden>
-                <h3>Kết quả tìm kiếm</h3>
-                <div class="danh-sach" id="danhSachKetQuaTimKiem"></div>
-            </section>
-            <div class="danh-sach" id="danhSachSanPhamNoiBat"></div>
-        </section>
-        <section class="khu-vuc-noi-dung khu-vuc-san-pham" id="bannerHieuNang">
-            <div class="cot-danh-muc">
-                <p class="loi-chao">THẾ HỆ HIỆU NĂNG MỚI</p>
-                <h2>Sức mạnh luôn<br>theo kịp bạn.</h2>
-                <p class="doan-van">Thiết bị được tuyển chọn để đồng hành cùng những trận đấu và dự án sáng tạo.</p>
-                <div class="nhom-nut"><a href="../html/List.html">Khám phá sản phẩm →</a></div>
-            </div>
-            <div class="khung-anh"><img src="../assets/images/Banner.jpg" alt="Linh kiện máy tính hiệu năng cao"></div>
-        </section>
-        <section class="khu-vuc-san-pham" id="cacDanhMucSanPham">
-            <div class="nhom-danh-muc">
-                <div class="tieu-de-danh-muc"><h3>Bàn phím</h3><a href="../html/List.html?category=Bàn phím cơ">Xem tất cả →</a></div>
-                <div class="danh-sach" id="danhSachBanPhim"></div>
-            </div>
-            <div class="nhom-danh-muc">
-                <div class="tieu-de-danh-muc"><h3>Chuột</h3><a href="../html/List.html?category=Chuột Gaming">Xem tất cả →</a></div>
-                <div class="danh-sach" id="danhSachChuot"></div>
-            </div>
-            <div class="nhom-danh-muc">
-                <div class="tieu-de-danh-muc"><h3>Tai nghe</h3><a href="../html/List.html?category=Tai nghe">Xem tất cả →</a></div>
-                <div class="danh-sach" id="danhSachTaiNghe"></div>
-            </div>
-            <div class="nhom-danh-muc">
-                <div class="tieu-de-danh-muc"><h3>Màn hình</h3><a href="../html/List.html?category=Màn hình">Xem tất cả →</a></div>
-                <div class="danh-sach" id="danhSachManHinh"></div>
-            </div>
-        </section>
+      <section class="khu-vuc-noi-dung">
+        <div class="cot-danh-muc">
+          <p class="loi-chao">ENGINEERED FOR MORE</p>
+          <h1>Build Your<br />Perfect PC</h1>
+          <p class="doan-van">
+            High-performance components, expertly curated. Everything you need
+            to build without compromise.
+          </p>
+          <div class="nhom-nut">
+            <a href="../html/List.html">Shop components</a>
+            <a href="#san-pham-noi-bat">Explore new arrivals</a>
+          </div>
+        </div>
+        <div class="khung-anh"></div>
+      </section>
+      <section class="khu-vuc-danh-muc" id="danh-muc">
+        <div class="tieu-de-khu-vuc">
+          <div>
+            <p class="loi-chao">START YOUR BUILD</p>
+            <h2>Shop by category</h2>
+          </div>
+          <a href="../html/List.html">View all ›</a>
+        </div>
+        <div class="danh-sach danh-sach-danh-muc">
+          <a href="../html/List.html?category=CPU" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>CPU</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+          <a href="../html/List.html?category=GPU" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>GPU</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+          <a href="../html/List.html?category=RAM" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>RAM</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+          <a href="../html/List.html?category=Motherboard" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>Motherboard</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+          <a href="../html/List.html?category=SSD" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>SSD</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+          <a href="../html/List.html?category=Power Supply" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>Power Supply</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+          <a href="../html/List.html?category=Accessories" class="the-san-pham"
+            ><div class="khung-anh"></div>
+            <p>Accessories</p>
+            <p class="mo-ta-danh-muc">Shop now ›</p></a
+          >
+        </div>
+      </section>
+      <section class="khu-vuc-san-pham" id="san-pham-noi-bat">
+        <div class="tieu-de-khu-vuc">
+          <div>
+            <p class="loi-chao">CURATED FOR PERFORMANCE</p>
+            <h2>Featured products</h2>
+          </div>
+          <a href="../html/List.html">Shop all ›</a>
+        </div>
+        <div
+          class="danh-sach danh-sach-noi-bat"
+          id="danhSachSanPhamNoiBat"
+        ></div>
+      </section>
+      <section class="khu-vuc-noi-dung banner-hieu-nang">
+        <div class="cot-danh-muc">
+          <p class="loi-chao">NEW GENERATION</p>
+          <h2>Power that keeps up.</h2>
+          <p class="doan-van">
+            Discover cutting-edge processors and graphics cards engineered for
+            the next era of performance.
+          </p>
+          <div class="nhom-nut">
+            <a href="../html/List.html">Explore new arrivals</a>
+          </div>
+        </div>
+        <div class="khung-anh"></div>
+      </section>
+      <section class="khu-vuc-san-pham" id="san-pham-moi">
+        <div class="tieu-de-khu-vuc">
+          <div>
+            <p class="loi-chao">JUST LANDED</p>
+            <h2>New arrivals</h2>
+          </div>
+          <a href="../html/List.html">Shop all ›</a>
+        </div>
+        <div class="danh-sach danh-sach-moi" id="danhSachSanPhamMoi"></div>
+      </section>
+      <section class="cam-ket">
+        <div>
+          <b>Free shipping</b>
+          <p>On orders over $99</p>
+        </div>
+        <div>
+          <b>3-year protection</b>
+          <p>On selected components</p>
+        </div>
+        <div>
+          <b>30-day returns</b>
+          <p>Shop with confidence</p>
+        </div>
+      </section>
     </main>
-    <div class="chan-trang">
-        <div class="danh-sach">
-            <div class="the-san-pham">
-                <h4>Sản phẩm</h4>
-                <a href="../html/List.html?category=Bàn phím cơ">Bàn phím cơ</a>
-                <a href="../html/List.html?category=Chuột Gaming">Chuột Gaming</a>
-                <a href="../html/List.html?category=Màn hình">Màn hình</a>
-                <a href="../html/List.html?category=Tai nghe">Tai nghe</a>
-            </div>
-            <div class="the-san-pham">
-                <h4>Về GearHouse</h4>
-                <a href="#">Câu chuyện thương hiệu</a>
-                <a href="#">Tuyển dụng</a>
-                <a href="#">Tin tức công nghệ</a>
-            </div>
-            <div class="the-san-pham">
-                <h4>Hỗ trợ khách hàng</h4>
-                <a href="#">Chính sách bảo hành</a>
-                <a href="#">Hướng dẫn mua hàng</a>
-                <a href="#">Phương thức thanh toán</a>
-            </div>
-            <div class="the-san-pham">
-                <h4>Liên hệ</h4>
-                <a href="#">Hotline: 1800 1234</a>
-                <a href="#">Email: cskh@gearhouse.vn</a>
-                <a href="#">Hệ thống cửa hàng</a>
-            </div>
+    <div class="chan-trang" id="chan-trang">
+      <div class="danh-sach">
+        <div class="the-san-pham">
+          <h4>G GearHouse</h4>
+          <p>Precision components for your next great build.</p>
         </div>
-        <div class="dong-cuoi">
-            <p>© 2026 GearHouse</p>
+        <div class="the-san-pham">
+          <h4>Shop</h4>
+          <a href="../html/List.html">All products</a
+          ><a href="../html/List.html?category=GPU">Graphics cards</a
+          ><a href="../html/List.html?category=CPU">Processors</a>
         </div>
+        <div class="the-san-pham">
+          <h4>Support</h4>
+          <a href="#">Order status</a><a href="#">Shipping and returns</a
+          ><a href="#">Contact us</a>
+        </div>
+        <div class="the-san-pham">
+          <h4>GearHouse</h4>
+          <a href="#">Admin portal</a><a href="#">About</a
+          ><a href="#">Careers</a>
+        </div>
+      </div>
+      <div class="dong-cuoi">
+        <p>© 2026 GearHouse, Inc. All rights reserved.</p>
+      </div>
     </div>
-    <script src="../js/home.js?v=5"></script>
-</body>
+    <script src="../js/List.js"></script>
+    <script src="../js/home.js"></script>
+  </body>
 </html>
-
-
-
