@@ -34,7 +34,8 @@ namespace Gear_E_Commerce
                 if (mb == null)
                 {
                     username_email_error.InnerHtml = "Tên đăng nhập hoặc mật khẩu không đúng!";
-                }else
+                }
+                else
                 {
                     Session["memberID"] = mb.memberID;
                     Session["username"] = mb.Username;
