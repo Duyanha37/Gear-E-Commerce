@@ -257,7 +257,9 @@ main {
   padding: 35px;
 }
 .banner-hieu-nang .khung-anh {
+  height: 240px;
   min-height: 240px;
+  overflow: hidden;
   background-color: #182432;
 }
 .banner-hieu-nang h2 {
@@ -380,6 +382,9 @@ main {
   .banner-hieu-nang .khung-anh {
     width: 100%;
     min-height: 185px;
+  }
+  .banner-hieu-nang .khung-anh {
+    height: 185px;
   }
   .danh-sach-danh-muc .the-san-pham {
     width: 30%;

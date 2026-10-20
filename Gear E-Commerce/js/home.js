@@ -1,6 +1,4 @@
-﻿// dùng danh sách sản phẩm chung trong List.js
-// danh sách sản phẩm nổi bật lấy từ danh sách sản phẩm
-const featuredProductIDs = ["1", "2", "3", "4"];
+﻿const featuredProductIDs = ["1", "2", "3", "4"];
 const featuredProducts = [];
 productList.forEach(function (product) {
   featuredProductIDs.forEach(function (productID) {
