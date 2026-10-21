@@ -1,4 +1,3 @@
-// danh sách sản phẩm của trang list
 const productList = [
   {
     productID: "1",
