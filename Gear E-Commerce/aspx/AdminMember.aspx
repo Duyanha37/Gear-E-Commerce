@@ -1,5 +1,4 @@
-﻿git gi
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminMember.aspx.cs" Inherits="Gear_E_Commerce.aspx.AdminMember" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminMember.aspx.cs" Inherits="Gear_E_Commerce.aspx.AdminMember" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
