@@ -1,4 +1,4 @@
-﻿
+﻿git gi
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminMember.aspx.cs" Inherits="Gear_E_Commerce.aspx.AdminMember" %>
 
 <!DOCTYPE html>
@@ -19,15 +19,11 @@
         </div>
         <p class="sidebar-title">ADMIN CONSOLE</p>
         <div class="menu">
-            <a href="#" class="menu-item">
-                <img src="../assets/images/dashboard.png" alt="" />
-                <span>Dashboard</span>
-            </a>
             <a href="AdminMember.aspx" class="menu-item active">
                 <img src="../assets/images/member.png" alt="" />
                 <span>Member Management</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="AdminProduct.aspx" class="menu-item">
                 <img src="../assets/images/product.png" alt="" />
                 <span>Product Management</span>
             </a>
