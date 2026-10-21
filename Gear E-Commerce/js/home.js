@@ -1,4 +1,4 @@
-﻿const featuredProductIDs = ["1", "2", "3", "4"];
+const featuredProductIDs = ["1", "2", "3", "4", "5"];
 const featuredProducts = [];
 productList.forEach(function (product) {
   featuredProductIDs.forEach(function (productID) {
@@ -55,26 +55,22 @@ function showProducts(products, containerID, numberToShow) {
 
 // hiện sản phẩm trên home
 document.addEventListener("DOMContentLoaded", function () {
-  showProducts(featuredProducts, "danhSachSanPhamNoiBat", 4);
+  showProducts(featuredProducts, "danhSachSanPhamNoiBat", 5);
   const newProducts = [];
   productList.forEach(function (product, index) {
-    if (index >= productList.length - 4) {
+    if (index >= productList.length - 5) {
       newProducts.push(product);
     }
   });
-  showProducts(newProducts, "danhSachSanPhamMoi", 4);
+  showProducts(newProducts, "danhSachSanPhamMoi", 5);
 
-  document
-    .getElementById("formTimKiem")
-    .addEventListener("submit", function (event) {
-      event.preventDefault();
-      const keyword = document.getElementById("oTimKiem").value.toLowerCase();
-      if (keyword !== "") {
-        const searchValues = new URLSearchParams();
-        searchValues.set("search", keyword);
-        searchValues.set("category", "All");
-        searchValues.set("page", "1");
-        window.location.href = "../html/List.html?" + searchValues.toString();
-      }
-    });
+  bindSearchForm("formTimKiem", function (keyword) {
+    if (keyword !== "") {
+      const searchValues = new URLSearchParams();
+      searchValues.set("search", keyword);
+      searchValues.set("category", "All");
+      searchValues.set("page", "1");
+      window.location.href = "../html/List.html?" + searchValues.toString();
+    }
+  });
 });
