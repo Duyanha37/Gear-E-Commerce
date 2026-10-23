@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="aspx\AdminMember.aspx" />
+    <Content Include="aspx\SaveProduct.aspx" />
     <Content Include="assets\images\add.png" />
     <Content Include="assets\images\close.png" />
     <Content Include="assets\images\dashboard.png" />
@@ -86,6 +87,7 @@
     <Content Include="css\SignUp.css" />
     <Content Include="js\SignUp.js" />
     <Content Include="Web.config" />
+    <Content Include="aspx\AdminProduct.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="aspx\AdminMember.aspx.cs">
@@ -94,6 +96,13 @@
     </Compile>
     <Compile Include="aspx\AdminMember.aspx.designer.cs">
       <DependentUpon>AdminMember.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\SaveProduct.aspx.cs">
+      <DependentUpon>SaveProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\SaveProduct.aspx.designer.cs">
+      <DependentUpon>SaveProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -114,6 +123,13 @@
     </Compile>
     <Compile Include="aspx\SignUp.aspx.designer.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\AdminProduct.aspx.cs">
+      <DependentUpon>AdminProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\AdminProduct.aspx.designer.cs">
+      <DependentUpon>AdminProduct.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

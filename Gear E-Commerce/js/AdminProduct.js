@@ -89,23 +89,31 @@
     }
 ];
 
-var savedData = localStorage.getItem("gearProducts");
-if (savedData != null) {
-    products = JSON.parse(savedData);
-}
+const luudulieu = async (product) => {
+    var formData = new FormData();
+    formData.append("productID", product.productID);
+    formData.append("Name", product.Name);
+    formData.append("Brand", product.Brand);
+    formData.append("Description", product.Description);
+    formData.append("Price", product.Price);
+    formData.append("Stock", product.Stock);
+    formData.append("Category", product.Category);
+    formData.append("Image", product.Image);
+    formData.append("isDelete", product.isDeleted);
+
+    const response = await fetch("SaveProduct.aspx", {
+        method: "POST",
+        body: formData
+    });
+    if (!response.ok) {
+        return false;
+    }
+    return true;
+};
+
 var editingIndex = -1;
 var addImageData = "";
 var editImageData = "";
-
-function luuDuLieu() {
-    try {
-        localStorage.setItem("gearProducts", JSON.stringify(products));
-        return true;
-    } catch (error) {
-        alert("Khong the luu du lieu, bo nho co the da day!");
-        return false;
-    }
-}
 
 function maHoa(text) {
     var value = String(text);
@@ -250,7 +258,7 @@ function hienThiSanPham() {
             newProduct.image = editImageData;
         }
         products[editingIndex] = newProduct;
-        if (luuDuLieu() == false) {
+        if(luudulieu(products[editingIndex]) == false) {
             products[editingIndex] = oldProduct;
             return;
         }

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear_E_Commerce.aspx
+namespace Gear_E_Commerce
 {
 
 

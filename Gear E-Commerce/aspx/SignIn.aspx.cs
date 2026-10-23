@@ -39,8 +39,14 @@ namespace Gear_E_Commerce
                 {
                     Session["memberID"] = mb.memberID;
                     Session["username"] = mb.Username;
-                    Session["Role"] = mb.Role;
-                    Response.Redirect("Home.aspx");
+                    if(mb.Role == "Admin")
+                    {
+                        Response.Redirect("AdminMember.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("Home.aspx");
+                    }
                 }
             }
         }
