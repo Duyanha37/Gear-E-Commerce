@@ -39,57 +39,6 @@ const productList = [
   { productID: "38", Name: "Keychron K8 Pro Keyboard", Description: "Wireless mechanical keyboard with RGB lighting", Price: 109, Stock: 8, Category: "Accessories", Image: "../assets/images-backup/K8Pro.jpg" },
 ];
 
-function bindSearchForm(formId, onSearch) {
-  const form = document.getElementById(formId);
-  if (!form) return;
-  const input = form.querySelector('input[type="search"]');
-  if (!input) return;
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-    const keyword = input.value.trim().toLowerCase();
-    input.value = "";
-    onSearch(keyword);
-  });
-}
-// Dùng chung bởi trang Home và trang List.
-document.addEventListener("DOMContentLoaded", function () {
-  const searchForm = document.getElementById("formTimKiem");
-  if (!searchForm) return;
-  const searchToggle = document.getElementById("nutMoTimKiem");
-  const searchInput = searchForm.querySelector('input[type="search"]');
-  if (!searchToggle || !searchInput) return;
-
-  function closeSearch() {
-    searchForm.classList.remove("dang-mo");
-    searchToggle.setAttribute("aria-expanded", "false");
-    searchToggle.setAttribute("aria-label", "Mở tìm kiếm");
-  }
-
-  searchToggle.addEventListener("click", function () {
-    const isOpen = searchForm.classList.toggle("dang-mo");
-    searchToggle.setAttribute("aria-expanded", String(isOpen));
-    searchToggle.setAttribute("aria-label", isOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm");
-    if (isOpen) searchInput.focus();
-  });
-
-  searchInput.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-      closeSearch();
-      searchToggle.focus();
-    }
-  });
-
-  searchForm.addEventListener("focusout", function (event) {
-    if (!searchForm.contains(event.relatedTarget)) closeSearch();
-  });
-
-  document.addEventListener("pointerdown", function (event) {
-    if (!searchForm.contains(event.target)) closeSearch();
-  });
-
-  searchForm.addEventListener("submit", closeSearch);
-});
 // lưu bộ lọc và trang hiện tại
 const queryValues = new URLSearchParams(window.location.search);
 const savedCategory = sessionStorage.getItem("listCategory");
@@ -115,23 +64,20 @@ const pageState = {
   sortType: "featured",
 };
 
-// hiển thị trang khi tải
-document.addEventListener("DOMContentLoaded", function () {
-  if (document.getElementById("danhSachSanPham") === null) {
-    return;
-  }
-  const searchInput = document.getElementById("timKiem");
-  searchInput.value = "";
-  document.getElementById("timTrongDanhMuc").value = "";
-  chooseCategory();
-  searchFromHeader();
-  searchFromFilter();
-  changeCategory();
-  changeSort();
-  changePrice();
-  clearFilters();
-  showProducts();
-});
+//  Tìm kiếm dùng chung 
+function bindSearchForm(formId, onSearch) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  const input = form.querySelector('input[type="search"]');
+  if (!input) return;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const keyword = input.value.trim().toLowerCase();
+    input.value = "";
+    onSearch(keyword);
+  });
+}
 
 // lọc sản phẩm theo các điều kiện
 function filterProducts() {
@@ -268,6 +214,8 @@ function updateSavedPage() {
   );
 }
 
+
+//  Điều khiển danh mục, tìm kiếm và bộ lọc 
 // đánh dấu danh mục đang chọn
 function chooseCategory() {
   document.querySelectorAll(".muc-danh-muc").forEach(function (item) {
@@ -369,3 +317,61 @@ function clearFilters() {
     showProducts();
   });
 }
+
+//  Khởi tạo giao diện 
+// Dùng chung bởi trang Home và trang List.
+document.addEventListener("DOMContentLoaded", function () {
+  const searchForm = document.getElementById("formTimKiem");
+  if (!searchForm) return;
+  const searchToggle = document.getElementById("nutMoTimKiem");
+  const searchInput = searchForm.querySelector('input[type="search"]');
+  if (!searchToggle || !searchInput) return;
+
+  function closeSearch() {
+    searchForm.classList.remove("dang-mo");
+    searchToggle.setAttribute("aria-expanded", "false");
+    searchToggle.setAttribute("aria-label", "Mở tìm kiếm");
+  }
+
+  searchToggle.addEventListener("click", function () {
+    const isOpen = searchForm.classList.toggle("dang-mo");
+    searchToggle.setAttribute("aria-expanded", String(isOpen));
+    searchToggle.setAttribute("aria-label", isOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm");
+    if (isOpen) searchInput.focus();
+  });
+
+  searchInput.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeSearch();
+      searchToggle.focus();
+    }
+  });
+
+  searchForm.addEventListener("focusout", function (event) {
+    if (!searchForm.contains(event.relatedTarget)) closeSearch();
+  });
+
+  document.addEventListener("pointerdown", function (event) {
+    if (!searchForm.contains(event.target)) closeSearch();
+  });
+
+  searchForm.addEventListener("submit", closeSearch);
+});
+// hiển thị trang khi tải
+document.addEventListener("DOMContentLoaded", function () {
+  if (document.getElementById("danhSachSanPham") === null) {
+    return;
+  }
+  const searchInput = document.getElementById("timKiem");
+  searchInput.value = "";
+  document.getElementById("timTrongDanhMuc").value = "";
+  chooseCategory();
+  searchFromHeader();
+  searchFromFilter();
+  changeCategory();
+  changeSort();
+  changePrice();
+  clearFilters();
+  showProducts();
+});
+

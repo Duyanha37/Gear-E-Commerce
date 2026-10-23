@@ -373,6 +373,14 @@ main {
 .danh-sach-danh-muc .khung-anh {
   width: 100%;
   flex: 0 0 82px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+.danh-sach-danh-muc .khung-anh img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .danh-sach-danh-muc .the-san-pham p:first-of-type {
   min-height: 2.6em;

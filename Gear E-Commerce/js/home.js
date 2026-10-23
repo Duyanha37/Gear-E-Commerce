@@ -1,3 +1,4 @@
+﻿//  Danh sách sản phẩm nổi bật
 const featuredProductIDs = ["1", "2", "3", "4", "5"];
 const featuredProducts = [];
 productList.forEach(function (product) {
@@ -8,7 +9,7 @@ productList.forEach(function (product) {
   });
 });
 
-// tạo thẻ sản phẩm
+//  Tạo và hiển thị thẻ sản phẩm
 function createProductCard(product) {
   const imageContent =
     product.Image === ""
@@ -53,7 +54,7 @@ function showProducts(products, containerID, numberToShow) {
   });
 }
 
-// hiện sản phẩm trên home
+//  Khởi tạo sản phẩm và tìm kiếm trên Home
 document.addEventListener("DOMContentLoaded", function () {
   showProducts(featuredProducts, "danhSachSanPhamNoiBat", 5);
   const newProducts = [];
