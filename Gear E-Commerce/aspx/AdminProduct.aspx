@@ -49,10 +49,10 @@
             </div>
             <div class="admin-profile">
                 <div class="admin-info">
-                    <strong>Nhat Linh</strong>
+                    <strong runat="server" id="adminName"></strong>
                     <small>Administrator</small>
                 </div>
-                <div class="admin-avatar">NL</div>
+                <div class="admin-avatar" runat="server" id="adminAvatar"></div>
             </div>
         </div>
         <div class="content">

@@ -15,7 +15,7 @@ function createProductCard(product) {
     product.Image === ""
       ? ""
       : '<img src="' + product.Image + '" alt="' + product.Name + '">';
-  const detailLink = "../html/ChiTietSanPham.html?id=" + product.productID;
+  const detailLink = "../aspx/ChiTietSanPham.aspx?id=" + product.productID;
   return (
     '<div class="the-san-pham">' +
     '<a class="khung-anh" href="' +
