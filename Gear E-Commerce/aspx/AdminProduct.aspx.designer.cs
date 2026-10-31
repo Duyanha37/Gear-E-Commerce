@@ -13,5 +13,23 @@ namespace Gear_E_Commerce
 
     public partial class AdminProduct
     {
+
+        /// <summary>
+        /// adminName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminName;
+
+        /// <summary>
+        /// adminAvatar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminAvatar;
     }
 }

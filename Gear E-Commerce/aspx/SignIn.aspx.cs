@@ -15,7 +15,7 @@ namespace Gear_E_Commerce
             {
                 string username_email = Request.Form["username_email"];
                 string password = Request.Form["password"];
-                Boolean isValid = true;
+                bool isValid = true;
                 if (string.IsNullOrWhiteSpace(username_email))
                 {
                     username_email_error.InnerHtml = "Vui lòng nhập đầy đủ thông tin!";

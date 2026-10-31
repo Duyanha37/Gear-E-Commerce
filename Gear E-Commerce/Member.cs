@@ -11,6 +11,7 @@
             this.Password = Password;
             this.Email = Email;
             this.Phone = Phone;
+            this.Status = "Active";
             this.isDeleted = false;
         }
 
@@ -21,6 +22,7 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public bool isDeleted { get; set; } = false;
+        public string Status { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

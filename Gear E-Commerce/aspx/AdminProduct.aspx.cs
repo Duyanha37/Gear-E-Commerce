@@ -11,7 +11,10 @@ namespace Gear_E_Commerce
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string username = Session["username"].ToString();
+            adminName.InnerHtml = username;
+            adminAvatar.InnerHtml = username.Substring(0, 1).ToUpper();
+            List<Product> products = (List<Product>)Application["Products"];
         }
     }
 }

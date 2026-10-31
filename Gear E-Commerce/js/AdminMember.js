@@ -1,48 +1,20 @@
-﻿var members = [
-    {
-        id: "GH-1024",
-        name: "Duy Anh",
-        email: "duyanh@gmail.com",
-        phone: "0123456789",
-        status: "Active",
-        isDeleted: false
-    },
-    {
-        id: "GH-1025",
-        name: "Nhật Linh",
-        email: "nhatlinh@gmail.com",
-        phone: "0234567890",
-        status: "Active",
-        isDeleted: false
-    },
-    {
-        id: "GH-1026",
-        name: "Quang Lê",
-        email: "quangle@gmail.com",
-        phone: "0987654321",
-        status: "Inactive",
-        isDeleted: false
-    },
-    {
-        id: "GH-1027",
-        name: "Tuấn Khoa",
-        email: "tuankhoa@gmail.com",
-        phone: "0987654322",
-        status: "Active",
-        isDeleted: false
-    },
-];
-
-var savedData = localStorage.getItem("gearMembers");
-if (savedData != null) {
-    members = JSON.parse(savedData);
+﻿const loadMembers = async () => {
+    try {
+        var response = await fetch("AdminMember.aspx", {
+            method: "GET",
+            headers: {
+                "Request-With": "Fetch"
+            }
+        });
+        return members = await response.json();
+    } catch (error) {
+        console.error("Co loi khi lay members:", error);
+    }
 }
 var editingIndex = -1;
-function luuDuLieu() {
-    localStorage.setItem("gearMembers", JSON.stringify(members));
-}
 
-function hienThiThanhVien() {
+const hienThiThanhVien = async () => {
+    members = await loadMembers();
     var html = "";
     var total = 0;
     var showing = 0;
@@ -51,30 +23,30 @@ function hienThiThanhVien() {
     for (var i = 0; i < members.length; i++) {
         if (members[i].isDeleted == false) {
             total++;
-            if (members[i].name.toLowerCase().indexOf(search) == -1 &&
-                members[i].email.toLowerCase().indexOf(search) == -1) {
+            if (members[i].FullName.toLowerCase().indexOf(search) == -1 &&
+                members[i].Email.toLowerCase().indexOf(search) == -1) {
                 continue;
             }
-            if (status != "All" && members[i].status != status) {
+            if (status != "All" && members[i].Status != status) {
                 continue;
             }
             showing++;
-            var words = members[i].name.split(" ");
+            var words = members[i].FullName.split(" ");
             var avatar = words[0].charAt(0);
             if (words.length > 1) {
                 avatar += words[words.length - 1].charAt(0);
             }
             html += "<tr>";
-            html += "<td class='member-id'>" + members[i].id + "</td>";
+            html += "<td class='member-id'>" + members[i].memberID + "</td>";
             html += "<td>";
             html += "<div class='member-info'>";
             html += "<div class='member-avatar'>" + avatar.toUpperCase() + "</div>";
-            html += "<span>" + members[i].name + "</span>";
+            html += "<span>" + members[i].FullName + "</span>";
             html += "</div>";
             html += "</td>";
-            html += "<td>" + members[i].email + "</td>";
-            html += "<td>" + members[i].phone + "</td>";
-            if (members[i].status == "Active") {
+            html += "<td>" + members[i].Email + "</td>";
+            html += "<td>" + members[i].Phone + "</td>";
+            if (members[i].Status == "Active") {
                 html += "<td><span class='status status-active'>Active</span></td>";
             } else {
                 html += "<td><span class='status status-inactive'>Inactive</span></td>";
@@ -108,17 +80,17 @@ function dongModal() {
 
 function moModalXem(i) {
     var member = members[i];
-    var words = member.name.split(" ");
+    var words = member.FullName.split(" ");
     var avatar = words[0].charAt(0);
     if (words.length > 1) {
         avatar += words[words.length - 1].charAt(0);
     }
     document.getElementById("viewAvatar").innerHTML = avatar.toUpperCase();
-    document.getElementById("viewId").innerHTML = member.id;
-    document.getElementById("viewName").innerText = member.name;
-    document.getElementById("viewEmail").innerText = member.email;
-    document.getElementById("viewPhone").innerText = member.phone;
-    document.getElementById("viewStatus").innerText = member.status;
+    document.getElementById("viewId").innerHTML = member.memberID;
+    document.getElementById("viewName").innerText = member.FullName;
+    document.getElementById("viewEmail").innerText = member.Email;
+    document.getElementById("viewPhone").innerText = member.Phone;
+    document.getElementById("viewStatus").innerText = member.Status;
     document.getElementById("modalOverlay").style.display = "block";
     document.getElementById("viewModal").style.display = "block";
     document.body.style.overflow = "hidden";
@@ -126,10 +98,10 @@ function moModalXem(i) {
 
 function moModalSua(i) {
     editingIndex = i;
-    document.getElementById("editName").value = members[i].name;
-    document.getElementById("editEmail").value = members[i].email;
-    document.getElementById("editPhone").value = members[i].phone;
-    document.getElementById("editStatus").value = members[i].status;
+    document.getElementById("editName").value = members[i].FullName;
+    document.getElementById("editEmail").value = members[i].Email;
+    document.getElementById("editPhone").value = members[i].Phone;
+    document.getElementById("editStatus").value = members[i].Status;
     document.getElementById("modalOverlay").style.display = "block";
     document.getElementById("editModal").style.display = "block";
     document.body.style.overflow = "hidden";
@@ -155,10 +127,10 @@ function luuSuaThanhVien() {
             return;
         }
     }
-    members[editingIndex].name = name;
-    members[editingIndex].email = email;
-    members[editingIndex].phone = phone;
-    members[editingIndex].status = status;
+    members[editingIndex].FullName = name;
+    members[editingIndex].Email = email;
+    members[editingIndex].Phone = phone;
+    members[editingIndex].Status = status;
     luuDuLieu();
     hienThiThanhVien();
     dongModal();
@@ -174,6 +146,7 @@ function moModalThem() {
     document.body.style.overflow = "hidden";
 }
 
+/*
 function themThanhVien() {
     var name = document.getElementById("addName").value.trim();
     var email = document.getElementById("addEmail").value.trim();
@@ -186,7 +159,7 @@ function themThanhVien() {
     for (var i = 0; i < members.length; i++) {
 
         if (members[i].isDeleted == false &&
-            members[i].email.toLowerCase() == email.toLowerCase()) {
+            members[i].Email.toLowerCase() == email.toLowerCase()) {
 
             alert("Tài khoản gmail đã tồn tại!");
             return;
@@ -232,7 +205,7 @@ function xoaThanhVien(i) {
         alert("Xóa thành viên thành công!");
     }
 }
-
+*/
 function moSidebar() {
     document.getElementById("sidebar").classList.add("show");
     document.getElementById("sidebarOverlay").classList.add("show");
