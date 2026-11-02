@@ -21,8 +21,15 @@ namespace Gear_E_Commerce
             }
 
             if(Request.HttpMethod == "GET" && Request.Headers["Request-With"] == "Fetch")
+            {
                 LoadMemberList();
-
+                return;
+            }
+            if(Request.HttpMethod == "GET" && Request.Headers["Service-Name"] == "GetMemberByID")
+            {
+                LoadMemberByID();
+                return;
+            }
         }
         
         private void LoadMemberList()
@@ -34,6 +41,20 @@ namespace Gear_E_Commerce
             List<Member> members = (List<Member>)Application["MemberList"];
             JavaScriptSerializer seri = new JavaScriptSerializer();
             Response.Write(seri.Serialize(members));
+            Context.ApplicationInstance.CompleteRequest();
+            return;
+        }
+
+        private void LoadMemberByID()
+        {
+            isApiRequest = true;
+            string memberID = Request.QueryString["memberID"];
+            Response.Clear();
+            Response.ContentType = "application/json";
+            List<Member> members = (List<Member>)Application["MemberList"];
+            Member member = members.FirstOrDefault(m => m.memberID == memberID);
+            JavaScriptSerializer seri = new JavaScriptSerializer();
+            Response.Write(seri.Serialize(member));
             Context.ApplicationInstance.CompleteRequest();
             return;
         }

@@ -6,12 +6,14 @@
                 "Request-With": "Fetch"
             }
         });
-        return members = await response.json();
+        if (!response.ok) {
+            throw new Error("Lỗi fetch member by id")
+        }
+        return await response.json();
     } catch (error) {
-        console.error("Co loi khi lay members:", error);
+        console.error("Có lỗi khi lấy member:", error);
     }
 }
-var editingIndex = -1;
 
 const hienThiThanhVien = async () => {
     members = await loadMembers();
@@ -52,9 +54,9 @@ const hienThiThanhVien = async () => {
                 html += "<td><span class='status status-inactive'>Inactive</span></td>";
             }
             html += "<td><div class='action-buttons'>";
-            html += "<button class='btn-action' onclick='moModalXem(" + i + ")'>View</button>";
-            html += "<button class='btn-action' onclick='moModalSua(" + i + ")'>Edit</button>";
-            html += "<button class='btn-action btn-delete' onclick='xoaThanhVien(" + i + ")'>Delete</button>";
+            html += "<button class='btn-action' onclick='moModalXem(" + members[i].memberID + ")'>View</button>";
+            html += "<button class='btn-action' onclick='moModalSua(" + members[i].memberID + ")'>Edit</button>";
+            html += "<button class='btn-action btn-delete' onclick='xoaThanhVien(" + members[i].memberID + ")'>Delete</button>";
             html += "</div></td>";
             html += "</tr>";
         }
@@ -78,8 +80,22 @@ function dongModal() {
     document.body.style.overflow = "";
 }
 
-function moModalXem(i) {
-    var member = members[i];
+const getMemberById = async (id) => {
+    try {
+        const response = await fetch("AdminMember.aspx?memberID=" + id, {
+            method: "GET",
+            headers: {
+                "Service-Name": "GetMemberByID"
+            }
+        });
+        return member = response.json();
+    }catch (error) {
+        console.error("Loi tim member bang id:", error);
+    }
+};
+
+const moModalXem = async (id) => {
+    var member = await getMemberById(id);
     var words = member.FullName.split(" ");
     var avatar = words[0].charAt(0);
     if (words.length > 1) {
@@ -96,19 +112,18 @@ function moModalXem(i) {
     document.body.style.overflow = "hidden";
 }
 
-function moModalSua(i) {
-    editingIndex = i;
-    document.getElementById("editName").value = members[i].FullName;
-    document.getElementById("editEmail").value = members[i].Email;
-    document.getElementById("editPhone").value = members[i].Phone;
-    document.getElementById("editStatus").value = members[i].Status;
+const moModalSua = async (id) => {
+    var member = await getMemberById(id);
+    document.getElementById("editName").value = member.FullName;
+    document.getElementById("editEmail").value = member.Email;
+    document.getElementById("editPhone").value = member.Phone;
+    document.getElementById("editStatus").value = member.Status;
     document.getElementById("modalOverlay").style.display = "block";
     document.getElementById("editModal").style.display = "block";
     document.body.style.overflow = "hidden";
 }
 
 function luuSuaThanhVien() {
-
     var name = document.getElementById("editName").value.trim();
     var email = document.getElementById("editEmail").value.trim();
     var phone = document.getElementById("editPhone").value.trim();
@@ -145,8 +160,6 @@ function moModalThem() {
     document.getElementById("addModal").style.display = "block";
     document.body.style.overflow = "hidden";
 }
-
-/*
 function themThanhVien() {
     var name = document.getElementById("addName").value.trim();
     var email = document.getElementById("addEmail").value.trim();
@@ -205,7 +218,7 @@ function xoaThanhVien(i) {
         alert("Xóa thành viên thành công!");
     }
 }
-*/
+
 function moSidebar() {
     document.getElementById("sidebar").classList.add("show");
     document.getElementById("sidebarOverlay").classList.add("show");
