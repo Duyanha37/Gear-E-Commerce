@@ -1,383 +1,304 @@
-const danhSachSanPham = [
-    {
-        id: 1,
-        ten: "Bàn phím cơ Logitech G Pro X",
-        loai: "Bàn phím cơ",
-        gia: 2990000,
-        anh: "../assets/images/logitechGPro.jpg",
-        moTa: "Bàn phím cơ gaming thiết kế gọn gàng, phù hợp cho chơi game và làm việc hằng ngày.",
-        tonkho: 25,
-        thongSo: "Loại: Bàn phím cơ | Kết nối: USB | Đèn nền: RGB | Thiết kế: Gaming"
-    },
-    {
-        id: 2,
-        ten: "Chuột Razer DeathAdder V3 Pro",
-        loai: "Chuột Gaming",
-        gia: 3690000,
-        anh: "../assets/images/deathAdderV3pro.jpg",
-        moTa: "Chuột gaming không dây với thiết kế công thái học, phù hợp cho nhu cầu chơi game và sử dụng lâu dài.",
-        tonkho: 25,
-        thongSo: "Loại: Chuột không dây | Thiết kế: Công thái học | DPI: Tối đa 30.000 | Sử dụng: Gaming"
-    },
-    {
-        id: 3,
-        ten: "Tai nghe HyperX Cloud III",
-        loai: "Tai nghe",
-        gia: 2290000,
-        anh: "../assets/images/HpHyperX3.jpg",
-        moTa: "Tai nghe gaming mang đến trải nghiệm âm thanh rõ ràng, phù hợp chơi game, nghe nhạc và giải trí.",
-        tonkho: 25,
-        thongSo: "Loại: Tai nghe gaming | Kết nối: USB / 3.5 mm | Micro: Có | Thiết kế: Over-ear"
-    },
-    {
-        id: 4,
-        ten: "Màn hình LG UltraGear 27 2K",
-        loai: "Màn hình",
-        gia: 7490000,
-        anh: "../assets/images/LgutraGear.jpg",
-        moTa: "Màn hình gaming kích thước 27 inch, độ phân giải 2K, hướng đến trải nghiệm hình ảnh sắc nét.",
-        tonkho: 25,
-        thongSo: "Kích thước: 27 inch | Độ phân giải: 2560 × 1440 | Mục đích: Gaming và giải trí"
-    },
-    {
-        id: 5,
-        ten: "Bàn phím cơ Akko 3098B",
-        loai: "Bàn phím cơ",
-        gia: 1990000,
-        anh: "../assets/images/Akko3098B.jpg",
-        moTa: "Bàn phím cơ thiết kế hiện đại, phù hợp cho học tập, làm việc và gaming.",
-        tonkho: 25,
-        thongSo: "Loại: Bàn phím cơ | Layout: 98 phím | Kết nối: Tùy phiên bản | Đèn nền: Tùy phiên bản"
-    },
-    {
-        id: 6,
-        ten: "Chuột Logitech G502 Hero",
-        loai: "Chuột Gaming",
-        gia: 1190000,
-        anh: "../assets/images/LogitechG502.jpg",
-        moTa: "Chuột gaming có thiết kế chắc chắn, phù hợp cho nhiều thể loại game.",
-        tonkho: 25,
-        thongSo: "Loại: Chuột gaming có dây | Kết nối: USB | Cảm biến: HERO | DPI: Tối đa 25.600"
-    },
-    {
-        id: 7,
-        ten: "Tai nghe Razer BlackShark V2",
-        loai: "Tai nghe",
-        gia: 2590000,
-        anh: "../assets/images/RazerBlackSharkV2.jpg",
-        moTa: "Tai nghe gaming tập trung vào khả năng tái tạo âm thanh và giao tiếp trong game.",
-        tonkho: 25,
-        thongSo: "Loại: Tai nghe gaming | Kết nối: 3.5 mm | Micro: Có | Thiết kế: Over-ear"
-    },
-    {
-        id: 8,
-        ten: "Màn hình Asus TUF Gaming 24",
-        loai: "Màn hình",
-        gia: 4290000,
-        anh: "../assets/images/AsuaTuf24.jpg",
-        moTa: "Màn hình gaming 24 inch dành cho nhu cầu giải trí và chơi game.",
-        tonkho: 25,
-        thongSo: "Kích thước: 24 inch | Loại: Màn hình gaming | Kết nối: Tùy phiên bản | Độ phân giải: Tùy phiên bản"
-    },
-    {
-        id: 9,
-        ten: "Bàn phím cơ Keychron K8 Pro",
-        loai: "Bàn phím cơ",
-        gia: 2890000,
-        anh: "../assets/images/K8Pro.jpg",
-        moTa: "Bàn phím cơ layout tiện dụng, phù hợp cả công việc và giải trí.",
-        tonkho: 25,
-        thongSo: "Loại: Bàn phím cơ | Layout: TKL | Kết nối: USB-C | Tương thích: Windows và macOS"
-    },
-    {
-        id: 10,
-        ten: "Chuột Logitech G Pro Wireless",
-        loai: "Chuột Gaming",
-        gia: 2490000,
-        anh: "../assets/images/chuot-game-khong-day-logitech-g304-trang-usb-7.jpg",
-        moTa: "Chuột gaming không dây hướng đến hiệu năng ổn định và thao tác chính xác.",
-        tonkho: 25,
-        thongSo: "Loại: Chuột gaming không dây | Kết nối: Không dây | Cảm biến: Tùy phiên bản | Thiết kế: Nhẹ"
-    },
-    {
-        id: 11,
-        ten: "Bàn phím cơ Corsair K70 RGB",
-        loai: "Bàn phím cơ",
-        gia: 3990000,
-        anh: "../assets/images/Akko3098B.jpg",
-        moTa: "Bàn phím cơ gaming với thiết kế nổi bật và trải nghiệm gõ tốt.",
-        tonkho: 25,
-        thongSo: "Loại: Bàn phím cơ gaming | Đèn nền: RGB | Kết nối: USB | Switch: Tùy phiên bản"
-    },
-    {
-        id: 12,
-        ten: "Chuột SteelSeries Rival 5",
-        loai: "Chuột Gaming",
-        gia: 1590000,
-        anh: "../assets/images/LogitechG502.jpg",
-        moTa: "Chuột gaming đa năng dành cho nhiều thể loại game.",
-        tonkho: 25,
-        thongSo: "Loại: Chuột gaming | Kết nối: USB | Nút bấm: Nhiều nút chức năng | Thiết kế: Công thái học"
-    },
-    {
-        id: 13,
-        ten: "Tai nghe Logitech G733",
-        loai: "Tai nghe",
-        gia: 3190000,
-        anh: "../assets/images/RazerBlackSharkV2.jpg",
-        moTa: "Tai nghe gaming không dây, phù hợp chơi game và giải trí.",
-        tonkho: 25,
-        thongSo: "Loại: Tai nghe gaming không dây | Kết nối: Không dây | Micro: Có | Đèn nền: RGB"
-    },
-    {
-        id: 14,
-        ten: "Màn hình Samsung Odyssey G5 27",
-        loai: "Màn hình",
-        gia: 5990000,
-        anh: "../assets/images/AsuaTuf24.jpg",
-        moTa: "Màn hình 27 inch hướng đến trải nghiệm gaming và giải trí.",
-        tonkho: 25,
-        thongSo: "Kích thước: 27 inch | Dòng sản phẩm: Odyssey G5 | Mục đích: Gaming và giải trí | Tấm nền: Tùy phiên bản"
-    },
-    {
-        id: 15,
-        ten: "Bàn phím cơ Razer BlackWidow V3",
-        loai: "Bàn phím cơ",
-        gia: 3290000,
-        anh: "../assets/images/K8Pro.jpg",
-        moTa: "Bàn phím cơ gaming với thiết kế chắc chắn và phong cách hiện đại.",
-        tonkho: 25,
-        thongSo: "Loại: Bàn phím cơ gaming | Đèn nền: RGB | Kết nối: USB | Switch: Tùy phiên bản"
-    },
-    {
-        id: 16,
-        ten: "Chuột Razer Viper V2 Pro",
-        loai: "Chuột Gaming",
-        gia: 2990000,
-        anh: "../assets/images/LogitechG502.jpg",
-        moTa: "Chuột gaming nhẹ, phù hợp cho các thao tác nhanh và chính xác.",
-        tonkho: 25,
-        thongSo: "Loại: Chuột gaming không dây | Thiết kế: Nhẹ | Kết nối: Không dây | Cảm biến: Tùy phiên bản"
-    },
-    {
-        id: 17,
-        ten: "Tai nghe SteelSeries Arctis Nova 7",
-        loai: "Tai nghe",
-        gia: 3890000,
-        anh: "../assets/images/HpHyperX3.jpg",
-        moTa: "Tai nghe gaming hướng đến trải nghiệm âm thanh và sự thoải mái.",
-        tonkho: 25,
-        thongSo: "Loại: Tai nghe gaming không dây | Kết nối: Không dây | Micro: Có | Thiết kế: Over-ear"
-    },
-    {
-        id: 18,
-        ten: "Màn hình Gigabyte G27Q 27",
-        loai: "Màn hình",
-        gia: 6790000,
-        anh: "../assets/images/AsuaTuf24.jpg",
-        moTa: "Màn hình 27 inch phù hợp cho gaming, học tập và giải trí.",
-        tonkho: 25,
-        thongSo: "Kích thước: 27 inch | Độ phân giải: 2560 × 1440 | Mục đích: Gaming và giải trí"
-    },
-    {
-        id: 19,
-        ten: "Bàn phím cơ Ducky One 3",
-        loai: "Bàn phím cơ",
-        gia: 2590000,
-        anh: "../assets/images/K8Pro.jpg",
-        moTa: "Bàn phím cơ có thiết kế gọn gàng và trải nghiệm gõ ổn định.",
-        tonkho: 25,
-        thongSo: "Loại: Bàn phím cơ | Layout: Tùy phiên bản | Kết nối: USB | Switch: Tùy phiên bản"
-    },
-    {
-        id: 20,
-        ten: "Chuột Corsair Katar Pro",
-        loai: "Chuột Gaming",
-        gia: 890000,
-        anh: "../assets/images/LogitechG502.jpg",
-        moTa: "Chuột gaming nhỏ gọn, phù hợp sử dụng hằng ngày.",
-        tonkho: 25,
-        thongSo: "Loại: Chuột gaming | Kết nối: USB | Thiết kế: Nhỏ gọn | Mục đích: Gaming và sử dụng hằng ngày"
-    }
-];
-
-
-const thamSo = new URLSearchParams(window.location.search);
-const idSanPham = Number(thamSo.get("id"));
-
-const sanPham = danhSachSanPham.find(function (item) {
-    return item.id === idSanPham;
+const CART_KEY = "gearHouseCart";
+const catalog = window.gearProductCatalog || [];
+const productId = Number(new URLSearchParams(window.location.search).get("id"));
+const currentProduct = catalog.find(function (product) {
+    return product.id === productId;
 });
 
-function taoPhanTu(tag, className, noiDung) {
-    const phanTu = document.createElement(tag);
-
-    if (className) {
-        phanTu.className = className;
-    }
-
-    if (noiDung !== undefined) {
-        phanTu.textContent = noiDung;
-    }
-
-    return phanTu;
+function makeElement(tag, className, text) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
 }
 
-function hienThiChiTiet() {
-    const khung = document.getElementById("chiTietSanPham");
+function readCart() {
+    try {
+        const cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+        return Array.isArray(cart) ? cart : [];
+    } catch (error) { return []; }
+}
 
-    if (!khung) {
-        console.error('Không tìm thấy phần tử có id="chiTietSanPham".');
-        return;
-    }
+function saveCart(cart) { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
 
-    khung.replaceChildren();
+function formatPrice(price) { return "$" + Number(price).toLocaleString("en-US"); }
 
-    if (!sanPham) {
-        const thongBao = taoPhanTu(
-            "div",
-            "san-pham-khong-ton-tai"
-        );
-
-        thongBao.append(
-            taoPhanTu("h2", "", "Không tìm thấy sản phẩm"),
-            taoPhanTu(
-                "p",
-                "",
-                "Sản phẩm bạn đang tìm kiếm không tồn tại."
-            )
-        );
-
-        const lienKet = taoPhanTu(
-            "a",
-            "",
-            "Xem danh sách sản phẩm"
-        );
-
-        lienKet.href = "List.html";
-        thongBao.appendChild(lienKet);
-        khung.appendChild(thongBao);
-
-        return;
-    }
-
-    const khungChiTiet = taoPhanTu("div", "khung-chi-tiet");
-    const khungAnh = taoPhanTu("div", "anh-san-pham");
-    const anh = document.createElement("img");
-
-    anh.src = sanPham.anh;
-    anh.alt = sanPham.ten;
-
-    khungAnh.appendChild(anh);
-
-    const thongTin = taoPhanTu("div", "thong-tin-san-pham");
-
-    thongTin.append(
-        taoPhanTu("p", "mo-ta-san-pham", sanPham.moTa),
-        taoPhanTu(
-            "p",
-            "ton-kho",
-            "Số lượng còn: " + (sanPham.tonKho ?? 10) + " sản phẩm"
-        ),
-        taoPhanTu(
-            "p",
-            "thong-so-san-pham",
-            "Thông số kỹ thuật: " + (sanPham.thongSo || "Đang cập nhật")
-        )
-    );
-
-    const duongKe = document.createElement("hr");
-    thongTin.appendChild(duongKe);
-
-    const khuVucSoLuong = taoPhanTu("div", "so-luong");
-    const nhanSoLuong = taoPhanTu("label", "", "Số lượng");
-    nhanSoLuong.htmlFor = "soLuong";
-
-    const boSoLuong = taoPhanTu("div", "bo-so-luong");
-
-    const nutGiam = taoPhanTu("button", "", "−");
-    nutGiam.type = "button";
-    nutGiam.id = "giam";
-    nutGiam.setAttribute("aria-label", "Giảm số lượng");
-
-    const inputSoLuong = document.createElement("input");
-    inputSoLuong.type = "number";
-    inputSoLuong.id = "soLuong";
-    inputSoLuong.value = "1";
-    inputSoLuong.min = "1";
-    inputSoLuong.max = "99";
-
-    const nutTang = taoPhanTu("button", "", "+");
-    nutTang.type = "button";
-    nutTang.id = "tang";
-    nutTang.setAttribute("aria-label", "Tăng số lượng");
-
-    boSoLuong.append(nutGiam, inputSoLuong, nutTang);
-    khuVucSoLuong.append(nhanSoLuong, boSoLuong);
-    thongTin.appendChild(khuVucSoLuong);
-
-    const nutThemGioHang = taoPhanTu(
-        "button",
-        "nut-gio-hang",
-        "Thêm vào giỏ hàng"
-    );
-
-    nutThemGioHang.type = "button";
-    nutThemGioHang.id = "themGioHang";
-
-    const thongBao = taoPhanTu("p", "thong-bao", "");
-    thongBao.id = "thongBao";
-    thongBao.setAttribute("role", "status");
-
-    thongTin.append(nutThemGioHang, thongBao);
-    khungChiTiet.append(khungAnh, thongTin);
-    khung.appendChild(khungChiTiet);
-
-    nutGiam.addEventListener("click", function () {
-        const soLuongHienTai = Number(inputSoLuong.value) || 1;
-        inputSoLuong.value = Math.max(1, soLuongHienTai - 1);
+function addToCart(product, quantity) {
+    if (!product || product.tonkho < 1) return false;
+    const cart = readCart();
+    const existing = cart.find(function (item) {
+        return Number(item.id) === product.id;
     });
-
-    nutTang.addEventListener("click", function () {
-        const soLuongHienTai = Number(inputSoLuong.value) || 1;
-        inputSoLuong.value = Math.min(99, soLuongHienTai + 1);
+    if (existing) existing.soLuong = Math.min(product.tonkho, 99, Number(existing.soLuong || 0) + quantity);
+    else cart.push({
+        id: product.id, soLuong: Math.min(product.tonkho, 99, quantity)
     });
+    saveCart(cart);
+    updateCartBadge();
+    return true;
+}
 
-    inputSoLuong.addEventListener("change", function () {
-        const soLuong = Number(inputSoLuong.value) || 1;
-
-        inputSoLuong.value = Math.min(
-            99,
-            Math.max(1, Math.floor(soLuong))
-        );
+function updateCartBadge() {
+    const count = readCart().reduce(function (sum, item) {
+        return sum + (Number(item.soLuong) || 0);
+    }, 0);
+    document.querySelectorAll("[data-cart-count]").forEach(function (element) {
+        element.textContent = String(count);
     });
+}
 
-    let tongSoLuongGioHang = 0;
-
-    nutThemGioHang.addEventListener("click", function () {
-        const soLuong = Math.min(
-            99,
-            Math.max(1, Math.floor(Number(inputSoLuong.value) || 1))
-        );
-
-        tongSoLuongGioHang += soLuong;
-
-        const soLuongGioHang = document.getElementById("soLuongGioHang");
-
-        if (soLuongGioHang) {
-            soLuongGioHang.textContent = tongSoLuongGioHang;
+function makeProductCard(product, label) {
+    const card = makeElement("article", "product-card");
+    const imageLink = makeElement("a", "product-card-image");
+    imageLink.href = "ChiTietSanPham.aspx?id=" + product.id;
+    const image = document.createElement("img");
+    image.src = product.anh;
+    image.alt = product.ten;
+    image.loading = "lazy";
+    imageLink.appendChild(image);
+    if (label) imageLink.appendChild(makeElement("span", "product-tag", label));
+    const body = makeElement("div", "product-card-body");
+    body.appendChild(makeElement("p", "product-card-category", product.loai + " · " + product.brand));
+    const title = makeElement("h3");
+    const titleLink = makeElement("a", "", product.ten);
+    titleLink.href = imageLink.href;
+    title.appendChild(titleLink);
+    body.appendChild(title);
+    body.appendChild(makeElement("p", "product-card-spec", product.thongSo));
+    const footer = makeElement("div", "product-card-footer");
+    footer.appendChild(makeElement("strong", "", formatPrice(product.gia)));
+    const addButton = makeElement("button", "mini-add", "Add to cart");
+    addButton.type = "button";
+    addButton.disabled = product.tonkho < 1;
+    addButton.addEventListener("click", function () {
+        if (addToCart(product, 1)) {
+            addButton.textContent = "Added";
+            window.setTimeout(function () {
+                addButton.textContent = "Add to cart";
+            }, 1300);
         }
-
-        thongBao.textContent = "Đã thêm sản phẩm vào giỏ hàng.";
     });
+    footer.appendChild(addButton);
+    body.appendChild(footer);
+    card.append(imageLink, body);
+    return card;
+}
+
+function showRecommendations() {
+    const container = document.getElementById("danhSachTuongTu");
+    const related = catalog.filter(function (product) {
+        return currentProduct && product.id !== currentProduct.id && product.loai === currentProduct.loai;
+    });
+    const remaining = catalog.filter(function (product) {
+        return product.id !== (currentProduct && currentProduct.id) && !related.some(function (item) {
+            return item.id === product.id;
+        });
+    });
+    related.concat(remaining).slice(0, 4).forEach(function (product, index) {
+        container.appendChild(makeProductCard(product, index === 0 ? "Popular" : ""));
+    });
+}
+
+function makeVariantPicker(product) {
+    const suggestions = catalog
+        .filter(function (candidate) { return candidate.id !== product.id && candidate.loai === product.loai; })
+        .sort(function (a, b) {
+            const aBrandMatch = a.brand === product.brand ? 0 : 1;
+            const bBrandMatch = b.brand === product.brand ? 0 : 1;
+            return aBrandMatch - bBrandMatch || Math.abs(a.gia - product.gia) - Math.abs(b.gia - product.gia);
+        })
+        .slice(0, 2);
+
+    if (!suggestions.length) return null;
+
+    const picker = makeElement("div", "variant-picker");
+    const button = makeElement("button", "variant-trigger", "Other options (" + suggestions.length + ")");
+    const menu = makeElement("div", "variant-menu");
+    const menuId = "variant-options-" + product.id;
+    button.type = "button";
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", menuId);
+    menu.id = menuId;
+    menu.hidden = true;
+    menu.setAttribute("role", "menu");
+
+    suggestions.forEach(function (suggestion) {
+        const option = makeElement("a", "variant-option");
+        option.href = "ChiTietSanPham.aspx?id=" + suggestion.id;
+        option.setAttribute("role", "menuitem");
+        const details = makeElement("span", "variant-option-details");
+        details.append(
+            makeElement("strong", "", suggestion.ten),
+            makeElement("small", "", suggestion.brand + " · " + suggestion.loai)
+        );
+        option.append(details, makeElement("strong", "variant-option-price", formatPrice(suggestion.gia)));
+        menu.appendChild(option);
+    });
+
+    button.addEventListener("click", function () {
+        const isOpen = button.getAttribute("aria-expanded") !== "true";
+        button.setAttribute("aria-expanded", String(isOpen));
+        menu.hidden = !isOpen;
+    });
+    picker.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            button.setAttribute("aria-expanded", "false");
+            menu.hidden = true;
+            button.focus();
+        }
+    });
+    document.addEventListener("pointerdown", function (event) {
+        if (!picker.contains(event.target)) {
+            button.setAttribute("aria-expanded", "false");
+            menu.hidden = true;
+        }
+    });
+
+    picker.append(button, menu);
+    return picker;
+}
+
+function showProduct() {
+    const root = document.getElementById("chiTietSanPham");
+    const overview = document.getElementById("productOverview");
+    const crumb = document.getElementById("crumbProduct");
+    if (!currentProduct) {
+        root.appendChild(makeElement("section", "not-found", "Product not found"));
+        overview.textContent = "Choose another component from the products catalog.";
+        showRecommendations();
+        return;
+    }
+
+    crumb.textContent = currentProduct.ten;
+    overview.textContent = currentProduct.overview;
+    const layout = makeElement("section", "product-layout");
+    const gallery = makeElement("div", "product-gallery");
+    const thumbnails = makeElement("div", "product-thumbnails");
+    const mainImageFrame = makeElement("div", "main-image-frame");
+    const mainImage = document.createElement("img");
+    mainImage.src = currentProduct.anh; mainImage.alt = currentProduct.ten;
+    mainImageFrame.appendChild(mainImage);
+
+    for (let index = 0; index < 3; index += 1) {
+        const thumbnail = makeElement("button", "product-thumbnail" + (index === 0 ? " selected" : ""));
+        thumbnail.type = "button";
+        thumbnail.setAttribute("aria-label", "Product image " + (index + 1));
+        const thumbImage = document.createElement("img");
+        thumbImage.src = currentProduct.anh; thumbImage.alt = "";
+        thumbnail.appendChild(thumbImage);
+        thumbnail.addEventListener("click", function () {
+            mainImage.src = thumbImage.src;
+            thumbnails.querySelectorAll(".product-thumbnail").forEach(function (item) { item.classList.remove("selected"); });
+            thumbnail.classList.add("selected");
+        });
+        thumbnails.appendChild(thumbnail);
+    }
+    gallery.append(thumbnails, mainImageFrame);
+
+    const info = makeElement("section", "product-info");
+    info.appendChild(makeElement("p", "product-category", currentProduct.loai + " · " + currentProduct.brand));
+    info.appendChild(makeElement("h1", "product-title", currentProduct.ten));
+    const rating = makeElement("div", "product-rating");
+    const stars = makeElement("span", "rating-stars", "★★★★★");
+    stars.setAttribute("aria-label", "Rated " + currentProduct.rating + " out of 5 stars");
+    rating.append(stars, makeElement("strong", "", currentProduct.rating), makeElement("span", "rating-count", "(" + currentProduct.reviews + " reviews)"));
+    info.appendChild(rating);
+    info.appendChild(makeElement("p", "product-price", formatPrice(currentProduct.gia)));
+    const stock = makeElement("p", "stock-status", currentProduct.tonkho > 0 ? "In stock — ships within 24 hours · " + currentProduct.tonkho + " available" : "Out of stock");
+    if (currentProduct.tonkho < 1) stock.classList.add("out-of-stock");
+    info.append(stock, makeElement("p", "product-description", currentProduct.moTa));
+
+    const specs = makeElement("div", "spec-grid");
+    currentProduct.specs.forEach(function (spec) {
+        const box = makeElement("div", "spec-box");
+        box.append(makeElement("span", "", spec.label), makeElement("strong", "", spec.value));
+        specs.appendChild(box);
+    });
+    info.appendChild(specs);
+    const variantPicker = makeVariantPicker(currentProduct);
+    if (variantPicker) info.appendChild(variantPicker);
+
+    const actions = makeElement("div", "product-actions");
+    const quantity = makeElement("div", "quantity-control");
+    const minus = makeElement("button", "", "−");
+    minus.type = "button";
+    minus.setAttribute("aria-label", "Decrease quantity");
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "1";
+    input.max = String(Math.max(1, Math.min(99, currentProduct.tonkho)));
+    input.value = "1";
+    input.setAttribute("aria-label", "Quantity");
+    const plus = makeElement("button", "", "+");
+    plus.type = "button";
+    plus.setAttribute("aria-label", "Increase quantity");
+
+    function normalizeQuantity() {
+        input.value = String(Math.min(Number(input.max), Math.max(1, Math.floor(Number(input.value) || 1))));
+    }
+
+    minus.addEventListener("click", function () {
+        input.value = String(Math.max(1, Number(input.value) - 1));
+    });
+
+    plus.addEventListener("click", function () {
+        input.value = String(Math.min(Number(input.max), Number(input.value) + 1));
+    });
+
+    input.addEventListener("change", normalizeQuantity);
+    quantity.append(minus, input, plus);
+    const addButton = makeElement("button", "add-to-cart", "Add to cart"); addButton.type = "button";
+    addButton.disabled = currentProduct.tonkho < 1;
+    actions.append(quantity, addButton);
+    const buyNow = makeElement("button", "buy-now", "Buy now"); buyNow.type = "button"; buyNow.disabled = currentProduct.tonkho < 1;
+    const message = makeElement("p", "action-message", ""); message.setAttribute("role", "status");
+    addButton.addEventListener("click", function () {
+        normalizeQuantity();
+        if (addToCart(currentProduct, Number(input.value))) message.textContent = currentProduct.ten + " added to your cart.";
+    });
+    buyNow.addEventListener("click", function () {
+        message.textContent = "Checkout is not available in this demo yet. Your cart is ready when checkout is added.";
+    });
+
+    info.append(actions, buyNow, message);
+    const service = makeElement("div", "service-points");
+    function serviceNote(label, path) {
+        const note = makeElement("p", "");
+        const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        icon.setAttribute("viewBox", "0 0 20 20"); icon.setAttribute("aria-hidden", "true");
+        const shape = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        shape.setAttribute("d", path);
+        icon.appendChild(shape);
+        note.append(icon, document.createTextNode(label));
+        return note;
+    }
+    service.append(serviceNote("Free delivery over $99", "M2 5h10v9H2z M12 8h3l3 3v3h-6z M5 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"), serviceNote("2-year limited warranty", "M10 2.5 16 5v4.4c0 3.8-2.4 6.6-6 8.1-3.6-1.5-6-4.3-6-8.1V5l6-2.5Z M7.4 9.9l1.7 1.7 3.6-3.8"));
+    info.appendChild(service);
+    layout.append(gallery, info);
+    root.appendChild(layout);
+    showRecommendations();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    hienThiChiTiet();
+    showProduct();
+    updateCartBadge();
 
-    const soLuongGioHang = document.getElementById("soLuongGioHang");
-
-    if (soLuongGioHang) {
-        soLuongGioHang.textContent = "0";
+    const searchForm = document.getElementById("formTimKiem");
+    const searchToggle = document.getElementById("nutMoTimKiem");
+    const searchInput = searchForm && searchForm.querySelector('input[type="search"]');
+    if (searchForm && searchToggle && searchInput) {
+        searchToggle.addEventListener("click", function () {
+            const isOpen = searchForm.classList.toggle("dang-mo");
+            searchToggle.setAttribute("aria-expanded", String(isOpen));
+            searchToggle.setAttribute("aria-label", isOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm");
+            if (isOpen) searchInput.focus();
+        });
+        searchInput.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                searchForm.classList.remove("dang-mo");
+                searchToggle.setAttribute("aria-expanded", "false");
+                searchToggle.focus();
+            }
+        });
     }
 });

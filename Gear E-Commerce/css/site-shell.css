@@ -1,0 +1,121 @@
+﻿.dau-trang,
+.chan-trang {
+    font-family: Arial, sans-serif;
+}
+
+    .dau-trang header {
+        width: calc(100% - 200px);
+        max-width: 1400px;
+        min-height: clamp(4rem, 6vw, 5rem);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+    }
+
+.tai-khoan .bieu-tuong-gio-hang {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 7px;
+    width: auto;
+    height: auto;
+}
+
+    .tai-khoan .bieu-tuong-gio-hang img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+    }
+
+    .tai-khoan .bieu-tuong-gio-hang span {
+        display: grid;
+        min-width: 21px;
+        height: 21px;
+        padding: 0 5px;
+        place-items: center;
+        border-radius: 50%;
+        background: #111;
+        color: #fff;
+        font-size: 11px;
+    }
+
+.chan-trang {
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
+    background: #111;
+    color: #fff;
+}
+
+    .chan-trang > .danh-sach,
+    .chan-trang .dong-cuoi {
+        width: 92%;
+        max-width: 1500px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .chan-trang > .danh-sach {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: start;
+        gap: clamp(14px, 2vw, 28px);
+    }
+
+    .chan-trang .the-san-pham {
+        min-width: 0;
+    }
+
+    .chan-trang h4 {
+        margin: 0 0 10px;
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .chan-trang .the-san-pham a,
+    .chan-trang .the-san-pham p {
+        display: block;
+        margin: 0 0 8px;
+        color: #d3d3d3;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .chan-trang .dong-cuoi {
+        margin-top: 18px;
+        padding: 14px 0 0;
+        border-top: 1px solid #333;
+        color: #aaa;
+        text-align: center;
+        font-size: 10px;
+    }
+
+@media (max-width: 850px) {
+    .dau-trang header {
+        width: 92%;
+    }
+}
+
+@media (max-width: 600px) {
+    .dau-trang header {
+        width: calc(100% - 24px);
+    }
+
+    .chan-trang > .danh-sach {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 14px;
+    }
+
+        .chan-trang > .danh-sach > :first-child {
+            grid-column: 1 / -1;
+        }
+
+    .chan-trang h4 {
+        font-size: 11px;
+    }
+
+    .chan-trang .the-san-pham a,
+    .chan-trang .the-san-pham p {
+        font-size: 10px;
+    }
+}

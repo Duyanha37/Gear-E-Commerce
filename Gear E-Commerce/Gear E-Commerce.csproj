@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="aspx\AdminMember.aspx" />
+    <Content Include="aspx\Cart.aspx" />
+    <Content Include="aspx\ChiTietSanPham.aspx" />
     <Content Include="aspx\SaveProduct.aspx" />
     <Content Include="assets\images\add.png" />
     <Content Include="assets\images\close.png" />
@@ -78,10 +80,12 @@
     <Content Include="assets\images\product.png" />
     <Content Include="assets\images\search.png" />
     <Content Include="css\AdminMember.css" />
+    <Content Include="css\site-shell.css" />
     <Content Include="Global.asax" />
     <Content Include="aspx\SignIn.aspx" />
     <Content Include="css\SignIn.css" />
     <Content Include="js\AdminMember.js" />
+    <Content Include="js\ProductCatalog.js" />
     <Content Include="js\SignIn.js" />
     <Content Include="aspx\SignUp.aspx" />
     <Content Include="css\SignUp.css" />
@@ -96,6 +100,20 @@
     </Compile>
     <Compile Include="aspx\AdminMember.aspx.designer.cs">
       <DependentUpon>AdminMember.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\ChiTietSanPham.aspx.cs">
+      <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\ChiTietSanPham.aspx.designer.cs">
+      <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
     </Compile>
     <Compile Include="aspx\SaveProduct.aspx.cs">
       <DependentUpon>SaveProduct.aspx</DependentUpon>
