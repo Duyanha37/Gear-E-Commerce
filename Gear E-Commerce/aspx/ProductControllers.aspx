@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveProduct.aspx.cs" Inherits="Gear_E_Commerce.aspx.SaveProduct" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProductControllers.aspx.cs" Inherits="Gear_E_Commerce.aspx.SaveProduct" %>
 
 <!DOCTYPE html>
 

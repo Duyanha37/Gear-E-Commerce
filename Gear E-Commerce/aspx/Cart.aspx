@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="Gear_E_Commerce.Cart" ResponseEncoding="utf-8" Culture="vi-VN" UICulture="vi-VN" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="Gear_E_Commerce.Cart" %>
 <!doctype html>
 <html lang="vi">
 <head runat="server">

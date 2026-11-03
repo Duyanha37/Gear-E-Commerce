@@ -70,8 +70,10 @@
   <ItemGroup>
     <Content Include="aspx\AdminMember.aspx" />
     <Content Include="aspx\Cart.aspx" />
+    <Content Include="aspx\CartControllers.aspx" />
     <Content Include="aspx\ChiTietSanPham.aspx" />
-    <Content Include="aspx\SaveProduct.aspx" />
+    <Content Include="aspx\MemberControllers.aspx" />
+    <Content Include="aspx\ProductControllers.aspx" />
     <Content Include="assets\images\add.png" />
     <Content Include="assets\images\close.png" />
     <Content Include="assets\images\dashboard.png" />
@@ -108,6 +110,13 @@
     <Compile Include="aspx\Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
+    <Compile Include="aspx\CartControllers.aspx.cs">
+      <DependentUpon>CartControllers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\CartControllers.aspx.designer.cs">
+      <DependentUpon>CartControllers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="aspx\ChiTietSanPham.aspx.cs">
       <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -115,17 +124,26 @@
     <Compile Include="aspx\ChiTietSanPham.aspx.designer.cs">
       <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspx\SaveProduct.aspx.cs">
-      <DependentUpon>SaveProduct.aspx</DependentUpon>
+    <Compile Include="aspx\MemberControllers.aspx.cs">
+      <DependentUpon>MemberControllers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="aspx\SaveProduct.aspx.designer.cs">
-      <DependentUpon>SaveProduct.aspx</DependentUpon>
+    <Compile Include="aspx\MemberControllers.aspx.designer.cs">
+      <DependentUpon>MemberControllers.aspx</DependentUpon>
     </Compile>
+    <Compile Include="aspx\ProductControllers.aspx.cs">
+      <DependentUpon>ProductControllers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\ProductControllers.aspx.designer.cs">
+      <DependentUpon>ProductControllers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CartItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Member.cs" />
+    <Compile Include="MemberCart.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="aspx\SignIn.aspx.cs">

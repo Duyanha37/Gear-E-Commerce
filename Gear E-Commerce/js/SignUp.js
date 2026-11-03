@@ -63,27 +63,27 @@
 
     const checkvalidateForm = (e) => {
         let isValid = true;
-        if (fullnameInput.value.trim() === '') {
+        if (fullnameInput.value.trim() === '' && !fullnameRegex.test(fullnameInput.value)) {
             fullnameError.textContent = 'Họ và tên không được để trống.';
             fullnameError.style.display = 'block';
             isValid = false;
         }
-        if (emailInput.value.trim() === '') {
+        if (emailInput.value.trim() === '' && !emailRegex.test(emailInput.value)) {
             emailError.textContent = 'Địa chỉ email không được để trống.';
             emailError.style.display = 'block';
             isValid = false;
         }
-        if (phoneInput.value.trim() === '') {
+        if (phoneInput.value.trim() === '' && !regexPhone.test(phoneInput.value)) {
             phoneError.textContent = 'Số điện thoại không được để trống.';
             phoneError.style.display = 'block';
             isValid = false;
         }
-        if (passwordInput.value.trim() === '') {
+        if (passwordInput.value.trim() === '' && !passwordRegex.test(passwordInput.value)) {
             passwordError.textContent = 'Mật khẩu không được để trống.';
             passwordError.style.display = 'block';
             isValid = false;
         }
-        if (confirmpasswordInput.value.trim() === '') {
+        if (confirmpasswordInput.value.trim() === '' && confirmpasswordInput.value !== passwordInput.value) {
             confirmpasswordError.textContent = 'Xác nhận mật khẩu không được để trống.';
             confirmpasswordError.style.display = 'block';
             isValid = false;

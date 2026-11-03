@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             username_emailError.textContent = 'Vui lòng nhập email hoặc tên đăng nhập.';
             username_emailError.style.display = 'block';
             isValid = false;
-        } else if (!emailRegex.test(username_emailVal) && !usernameRegex.test(username_emailVal) && username_emailVal !== 'admin') {
+        } else if (!emailRegex.test(username_emailVal) && !usernameRegex.test(username_emailVal)) {
             username_emailError.textContent = 'Email hoặc tên đăng nhập không hợp lệ.';
             username_emailError.style.display = 'block';
             isValid = false;
@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (passwordVal === '') {
             passwordError.textContent = 'Vui lòng nhập mật khẩu.';
+            passwordError.style.display = 'block';
+            isValid = false;
+        } else if (!passwordRegex.test(passwordVal)) {
+            passwordError.textContent = 'Mật khẩu phải có ít nhất 8 ký tự và bao gồm chữ cái và số.';
             passwordError.style.display = 'block';
             isValid = false;
         }
