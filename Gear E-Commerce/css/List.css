@@ -304,6 +304,58 @@
   min-width: 0;
 }
 
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font-family: Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.trang-list .menu-chinh {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.bieu-tuong-tai-khoan {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+}
+
+.bieu-tuong-tai-khoan svg {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.thong-bao-khong-co-san-pham {
+  display: grid;
+  grid-column: 1 / -1;
+  place-items: center;
+  min-height: 55vh;
+  margin: 0;
+  padding: 2rem 1rem;
+  color: #222;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 400;
+  text-align: center;
+}
+
 .cot-san-pham .the-san-pham {
   display: flex;
   flex-direction: column;
@@ -648,4 +700,139 @@
   .cot-san-pham > .danh-sach {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+@media (min-width: 851px) and (hover: hover) and (pointer: fine) {
+  body.trang-list .dau-trang header {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+  }
+
+  body.trang-list .dau-trang header .logo-thuong-hieu {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.trang-list .dau-trang header .menu-chinh {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    justify-content: flex-start;
+    gap: clamp(0.75rem, 1.3vw, 1.1rem);
+  }
+
+  body.trang-list .dau-trang header .tai-khoan {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 850px), (hover: none) and (pointer: coarse) {
+  body.trang-list .dau-trang header {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+  }
+
+  body.trang-list .dau-trang header .logo-thuong-hieu {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.trang-list .dau-trang header .tai-khoan {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  body.trang-list .dau-trang header .menu-chinh {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 0;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  body.trang-list .dau-trang header .menu-chinh a {
+    flex: 0 0 auto;
+    padding: 0.35rem 0;
+    white-space: nowrap;
+  }
+}
+
+/* Match Home's three header regions; List simply has no search form in the actions region. */
+body.trang-list .dau-trang header {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  grid-template-rows: auto;
+  align-items: center;
+}
+
+body.trang-list .dau-trang header .logo-thuong-hieu {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+body.trang-list .dau-trang header .menu-chinh {
+  display: flex;
+  grid-column: 2;
+  grid-row: 1;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: clamp(0.55rem, 1.3vw, 1rem);
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+body.trang-list .dau-trang header .menu-chinh a {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+body.trang-list .dau-trang header .tai-khoan {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  min-width: 0;
+  margin: 0;
+}
+
+body.trang-list .dau-trang header.nav-xuong-dong {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  flex-wrap: initial;
+}
+
+body.trang-list .dau-trang header.nav-xuong-dong .logo-thuong-hieu {
+  grid-column: 1;
+  grid-row: 1;
+  order: 0;
+}
+
+body.trang-list .dau-trang header.nav-xuong-dong .tai-khoan {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  order: 0;
+  margin: 0;
+}
+
+body.trang-list .dau-trang header.nav-xuong-dong .menu-chinh {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  order: 0;
+  flex: initial;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem clamp(0.55rem, 1.3vw, 1rem);
+  width: 100%;
 }

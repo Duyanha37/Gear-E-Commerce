@@ -354,10 +354,17 @@ function formatGiaVND(gia) {
   }).format(gia);
 }
 
-// lưu bộ lọc và trang hiện tại
-const queryValues = new URLSearchParams(window.location.search);
-const savedCategory = sessionStorage.getItem("listCategory");
-const savedPage = sessionStorage.getItem("listPage");
+// Link đến List vẫn nhận bộ lọc từ URL; Refresh luôn tải lại danh sách mặc định.
+const navigationEntries =
+  window.performance &&
+  typeof window.performance.getEntriesByType === "function"
+    ? window.performance.getEntriesByType("navigation")
+    : [];
+const isPageRefresh =
+  navigationEntries.length > 0 && navigationEntries[0].type === "reload";
+const queryValues = new URLSearchParams(
+  isPageRefresh ? "" : window.location.search,
+);
 const categoryList = [
   "All",
   "CPU",
@@ -368,14 +375,14 @@ const categoryList = [
   "Power Supply",
   "Accessories",
 ];
-const requestedCategory = queryValues.get("category") || savedCategory || "All";
+const requestedCategory = queryValues.get("category") || "All";
 const selectedCategory = categoryList.includes(requestedCategory)
   ? requestedCategory
   : "All";
 const pageState = {
   category: selectedCategory,
   keyword: queryValues.get("search") || "",
-  currentPage: Number(queryValues.get("page") || savedPage) || 1,
+  currentPage: Number(queryValues.get("page") || 1) || 1,
   sortType: "featured",
 };
 
@@ -524,7 +531,7 @@ function createProductCard(product) {
     product.Image === ""
       ? ""
       : '<img src="' + product.Image + '" alt="' + product.Name + '">';
-  const detailLink = "../html/ChiTietSanPham.html?id=" + product.productID;
+  const detailLink = "../aspx/ChiTietSanPham.aspx?id=" + product.productID;
   return (
     '<a class="the-san-pham" href="' +
     detailLink +
@@ -584,6 +591,10 @@ function showProducts() {
       return createProductCard(product);
     })
     .join("");
+  if (filteredProducts.length === 0 && pageState.keyword.trim() !== "") {
+    productContainer.innerHTML =
+      '<p class="thong-bao-khong-co-san-pham" role="status">Sản phẩm không tồn tại</p>';
+  }
   document.getElementById("soLuongSanPham").textContent =
     pageProducts.length + " sản phẩm";
   showPageButtons(pageNumbers);
@@ -609,13 +620,14 @@ function showPageButtons(pageNumbers) {
   });
 }
 
-// cập nhật địa chỉ và lưu vị trí danh sách
+// cập nhật trạng thái danh sách trên URL
 function updateSavedPage() {
-  sessionStorage.setItem("listCategory", pageState.category);
-  sessionStorage.setItem("listPage", pageState.currentPage);
   const newQuery = new URLSearchParams();
   newQuery.set("category", pageState.category);
   newQuery.set("page", pageState.currentPage);
+  if (pageState.keyword.trim() !== "") {
+    newQuery.set("search", pageState.keyword);
+  }
   window.history.replaceState(
     null,
     "",
@@ -643,7 +655,8 @@ function changeCategory() {
       pageState.category = item.dataset.category;
       pageState.keyword = "";
       pageState.currentPage = 1;
-      document.getElementById("timKiem").value = "";
+      const headerSearchInput = document.getElementById("timKiem");
+      if (headerSearchInput) headerSearchInput.value = "";
       document.getElementById("timTrongDanhMuc").value = "";
       chooseCategory();
       showProducts();
@@ -717,7 +730,8 @@ function clearFilters() {
     pageState.keyword = "";
     pageState.currentPage = 1;
     pageState.sortType = "featured";
-    document.getElementById("timKiem").value = "";
+    const headerSearchInput = document.getElementById("timKiem");
+    if (headerSearchInput) headerSearchInput.value = "";
     document.getElementById("timTrongDanhMuc").value = "";
     document.querySelector('input[name="mucGia"][value="tatCa"]').checked =
       true;
@@ -730,26 +744,102 @@ function clearFilters() {
 //  Khởi tạo giao diện
 // Dùng chung bởi trang Home và trang List.
 document.addEventListener("DOMContentLoaded", function () {
-  const searchForm = document.getElementById("formTimKiem");
-  if (!searchForm) return;
-  const searchToggle = document.getElementById("nutMoTimKiem");
-  const searchInput = searchForm.querySelector('input[type="search"]');
-  if (!searchToggle || !searchInput) return;
+  const header = document.querySelector(".dau-trang header");
+  if (!header) return;
 
-  function closeSearch() {
-    searchForm.classList.remove("dang-mo");
-    searchToggle.setAttribute("aria-expanded", "false");
-    searchToggle.setAttribute("aria-label", "Mở tìm kiếm");
+  const mainNavigation = header.querySelector(".menu-chinh");
+  const accountActions = header.querySelector(".tai-khoan");
+  const brand = header.querySelector(".logo-thuong-hieu");
+  const searchForm = document.getElementById("formTimKiem");
+  const searchToggle = searchForm && document.getElementById("nutMoTimKiem");
+  const searchInput = searchForm && searchForm.querySelector('input[type="search"]');
+  let navigationMeasureFrame = null;
+
+  function updateNavigationRow() {
+    if (!mainNavigation || !accountActions || !brand) return;
+
+    const navigationLinks = Array.from(mainNavigation.querySelectorAll("a"));
+    const linkWidth = navigationLinks.reduce(
+      (total, link) => total + link.getBoundingClientRect().width,
+      0,
+    );
+    const navigationStyle = window.getComputedStyle(mainNavigation);
+    const linkGap = parseFloat(navigationStyle.columnGap) || 0;
+    const headerStyle = window.getComputedStyle(header);
+    const headerGap = parseFloat(headerStyle.columnGap || headerStyle.gap) || 0;
+    let requiredActionsWidth = accountActions.scrollWidth;
+    if (searchForm) {
+      const compactSearchLayout = window.matchMedia(
+        "(max-width: 600px), (hover: none) and (pointer: coarse)",
+      ).matches;
+      const expectedSearchWidth = compactSearchLayout
+        ? Math.min(300, Math.max(72, window.innerWidth - 240))
+        : 300;
+      requiredActionsWidth += Math.max(
+        0,
+        expectedSearchWidth - searchForm.getBoundingClientRect().width,
+      );
+    }
+    const requiredWidth =
+      brand.getBoundingClientRect().width +
+      linkWidth +
+      linkGap * Math.max(0, navigationLinks.length - 1) +
+      requiredActionsWidth +
+      headerGap * 2;
+
+    header.classList.toggle(
+      "nav-xuong-dong",
+      requiredWidth > header.clientWidth + 1,
+    );
   }
 
+  function scheduleNavigationMeasure() {
+    if (navigationMeasureFrame !== null) {
+      window.cancelAnimationFrame(navigationMeasureFrame);
+    }
+    navigationMeasureFrame = window.requestAnimationFrame(function () {
+      navigationMeasureFrame = null;
+      updateNavigationRow();
+    });
+  }
+
+  function closeSearch() {
+    if (!searchForm) return;
+    searchForm.classList.remove("dang-mo");
+    if (header) {
+      header.classList.remove("tim-kiem-dang-mo");
+    }
+    if (searchToggle) {
+      searchToggle.setAttribute("aria-expanded", "false");
+      searchToggle.setAttribute("aria-label", "Mở tìm kiếm");
+    }
+    scheduleNavigationMeasure();
+  }
+
+  window.addEventListener("resize", scheduleNavigationMeasure);
+  if (header && "ResizeObserver" in window) {
+    const navigationObserver = new ResizeObserver(scheduleNavigationMeasure);
+    navigationObserver.observe(header);
+    if (accountActions) navigationObserver.observe(accountActions);
+    if (mainNavigation) navigationObserver.observe(mainNavigation);
+    if (searchForm) navigationObserver.observe(searchForm);
+  }
+
+  scheduleNavigationMeasure();
+
+  if (!searchForm || !searchToggle || !searchInput) return;
+
   searchToggle.addEventListener("click", function () {
-    const isOpen = searchForm.classList.toggle("dang-mo");
-    searchToggle.setAttribute("aria-expanded", String(isOpen));
-    searchToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm",
-    );
-    if (isOpen) searchInput.focus();
+    if (searchForm.classList.contains("dang-mo")) {
+      closeSearch();
+      return;
+    }
+    searchForm.classList.add("dang-mo");
+    if (header) header.classList.add("tim-kiem-dang-mo");
+    updateNavigationRow();
+    searchToggle.setAttribute("aria-expanded", "true");
+    searchToggle.setAttribute("aria-label", "Đóng tìm kiếm");
+    searchInput.focus();
   });
 
   searchInput.addEventListener("keydown", function (event) {
@@ -775,8 +865,11 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
   const searchInput = document.getElementById("timKiem");
-  searchInput.value = "";
-  document.getElementById("timTrongDanhMuc").value = "";
+  const filterSearchInput = document.getElementById("timTrongDanhMuc");
+  if (searchInput) searchInput.value = pageState.keyword;
+  if (filterSearchInput) {
+    filterSearchInput.value = searchInput ? "" : pageState.keyword;
+  }
   chooseCategory();
   searchFromHeader();
   searchFromFilter();

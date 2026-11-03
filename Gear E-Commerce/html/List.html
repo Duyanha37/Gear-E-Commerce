@@ -5,47 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Products - GearHouse</title>
     <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/List.css" />
+    <link rel="stylesheet" href="../css/List.css?v=33" />
   </head>
-  <body>
+  <body class="trang-list">
     <div class="dau-trang">
       <header>
         <div class="logo-thuong-hieu">
-          <a href="../html/home.html">G GearHouse</a>
+          <a href="../aspx/home.aspx">G GearHouse</a>
         </div>
         <nav class="menu-chinh">
-          <a href="../html/home.html">Home</a>
-          <a class="dang-chon" href="../html/List.html">Products</a>
-          <a href="../html/home.html#danh-muc">PC Builder</a>
-          <a href="../html/home.html#chan-trang">Support</a>
+          <a href="../aspx/home.aspx">Home</a>
+          <a class="dang-chon" href="../aspx/List.aspx">Products</a>
+          <a href="../aspx/home.aspx#danh-muc">PC Builder</a>
+          <a href="../aspx/home.aspx#chan-trang">Support</a>
         </nav>
         <div class="tai-khoan">
-          <form class="hop-tim-kiem" id="formTimKiem">
-            <button
-              class="nut-mo-tim-kiem"
-              id="nutMoTimKiem"
-              type="button"
-              aria-label="Mở tìm kiếm"
-              aria-expanded="false"
-            >
-              <img src="../assets/images/search.png" alt="" />
-            </button>
-            <input
-              type="search"
-              id="timKiem"
-              placeholder="Tìm kiếm"
-              aria-label="Tìm kiếm"
-            />
-          </form>
           <a
             class="bieu-tuong-gio-hang"
-            href="../html/Cart.html"
+            href="../aspx/Cart.aspx"
             aria-label="Giỏ hàng"
             ><img
               src="../assets/images-backup/shopping-cart.png"
               alt="Giỏ hàng"
           /></a>
-          <a class="nut-dang-nhap" href="../html/SignIn.html">Log in</a>
+          <a class="nut-dang-nhap" href="../aspx/SignIn.aspx">Log in</a>
         </div>
       </header>
     </div>
@@ -63,10 +46,14 @@
             <h3>Filters</h3>
             <button id="xoaBoLoc" type="button">Clear all</button>
           </div>
-          <form class="bo-loc-tim-kiem" id="formTimTrongDanhMuc">
+          <form class="bo-loc-tim-kiem" id="formTimTrongDanhMuc" autocomplete="off">
             <input
               type="search"
               id="timTrongDanhMuc"
+              name="timTrongDanhMuc"
+              autocomplete="off"
+              autocorrect="off"
+              spellcheck="false"
               placeholder="Search products"
               aria-label="Tìm trong sản phẩm"
             />
@@ -140,9 +127,9 @@
         </div>
         <div class="the-san-pham">
           <h4>Shop</h4>
-          <a href="../html/List.html">All products</a
-          ><a href="../html/List.html?category=GPU">Graphics cards</a
-          ><a href="../html/List.html?category=CPU">Processors</a>
+          <a href="../aspx/List.aspx">All products</a
+          ><a href="../aspx/List.aspx?category=GPU">Graphics cards</a
+          ><a href="../aspx/List.aspx?category=CPU">Processors</a>
         </div>
         <div class="the-san-pham">
           <h4>Support</h4>
@@ -159,6 +146,6 @@
         <p>© 2026 GearHouse, Inc. All rights reserved.</p>
       </div>
     </footer>
-    <script src="../js/List.js"></script>
+    <script src="../js/List.js?v=18"></script>
   </body>
 </html>

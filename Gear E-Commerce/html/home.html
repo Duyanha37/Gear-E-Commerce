@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GearHouse - Linh kiện máy tính</title>
     <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/home.css?v=27" />
     <link rel="stylesheet" href="../css/site-shell.css" />
 </head>
-  <body>
+  <body class="trang-home">
     <div class="dau-trang">
       <header>
         <div class="logo-thuong-hieu">
-          <a href="../html/home.html">G GearHouse</a>
+          <a href="../aspx/home.aspx">G GearHouse</a>
         </div>
         <nav class="menu-chinh">
-          <a class="dang-chon" href="../html/home.html">Home</a>
-          <a href="../html/List.html">Products</a>
+          <a class="dang-chon" href="../aspx/home.aspx">Home</a>
+          <a href="../aspx/List.aspx">Products</a>
           <a href="#danh-muc">PC Builder</a>
           <a href="#chan-trang">Support</a>
         </nav>
         <div class="tai-khoan">
-          <form class="hop-tim-kiem" id="formTimKiem">
+          <form class="hop-tim-kiem" id="formTimKiem" autocomplete="off">
             <button
               class="nut-mo-tim-kiem"
               id="nutMoTimKiem"
@@ -34,19 +34,20 @@
             <input
               type="search"
               id="oTimKiem"
+              autocomplete="off"
               placeholder="Tìm kiếm"
               aria-label="Tìm kiếm"
             />
           </form>
           <a
             class="bieu-tuong-gio-hang"
-            href="../html/Cart.html"
+            href="../aspx/Cart.aspx"
             aria-label="Giỏ hàng"
             ><img
               src="../assets/images-backup/shopping-cart.png"
               alt="Giỏ hàng"
           /></a>
-          <a class="nut-dang-nhap" href="../html/SignIn.html">Log in</a>
+          <a class="nut-dang-nhap" href="../aspx/SignIn.aspx">Log in</a>
         </div>
       </header>
     </div>
@@ -60,7 +61,7 @@
             to build without compromise.
           </p>
           <div class="nhom-nut">
-            <a href="../html/List.html">Shop components</a>
+            <a href="../aspx/List.aspx">Shop components</a>
             <a href="#san-pham-noi-bat">Explore new arrivals</a>
           </div>
         </div>
@@ -77,10 +78,10 @@
             <p class="loi-chao">START YOUR BUILD</p>
             <h2>Shop by category</h2>
           </div>
-          <a href="../html/List.html">View all ›</a>
+          <a href="../aspx/List.aspx">View all ›</a>
         </div>
         <div class="danh-sach danh-sach-danh-muc">
-          <a href="../html/List.html?category=CPU" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=CPU" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/ryzen-9-7950x3d.jpg"
@@ -90,7 +91,7 @@
             <p>CPU</p>
             <p class="mo-ta-danh-muc">Shop now ›</p></a
           >
-          <a href="../html/List.html?category=GPU" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=GPU" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/geforce-rtx-4080-super.jpg"
@@ -100,7 +101,7 @@
             <p>GPU</p>
             <p class="mo-ta-danh-muc">Shop now ›</p></a
           >
-          <a href="../html/List.html?category=RAM" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=RAM" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/vengeance-rgb-32gb.jpg"
@@ -110,7 +111,7 @@
             <p>RAM</p>
             <p class="mo-ta-danh-muc">Shop now ›</p></a
           >
-          <a href="../html/List.html?category=Motherboard" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=Motherboard" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/rog-strix-x670e-e.jpg"
@@ -120,7 +121,7 @@
             <p>Motherboard</p>
             <p class="mo-ta-danh-muc">Shop now ›</p></a
           >
-          <a href="../html/List.html?category=SSD" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=SSD" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/samsung-990-pro-2tb.jpg"
@@ -130,7 +131,7 @@
             <p>SSD</p>
             <p class="mo-ta-danh-muc">Shop now ›</p></a
           >
-          <a href="../html/List.html?category=Power Supply" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=Power Supply" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/CorsairCX650.jpg"
@@ -140,7 +141,7 @@
             <p>Power Supply</p>
             <p class="mo-ta-danh-muc">Shop now ›</p></a
           >
-          <a href="../html/List.html?category=Accessories" class="the-san-pham"
+          <a href="../aspx/List.aspx?category=Accessories" class="the-san-pham"
             ><div class="khung-anh">
               <img
                 src="../assets/images-backup/Akko3098B.jpg"
@@ -158,7 +159,7 @@
             <p class="loi-chao">CURATED FOR PERFORMANCE</p>
             <h2>Featured products</h2>
           </div>
-          <a href="../html/List.html">Shop all ›</a>
+          <a href="../aspx/List.aspx">Shop all ›</a>
         </div>
         <div
           class="danh-sach danh-sach-noi-bat"
@@ -174,7 +175,7 @@
             the next era of performance.
           </p>
           <div class="nhom-nut">
-            <a href="../html/List.html">Explore new arrivals</a>
+            <a href="../aspx/List.aspx">Explore new arrivals</a>
           </div>
         </div>
         <div class="khung-anh">
@@ -190,7 +191,7 @@
             <p class="loi-chao">JUST LANDED</p>
             <h2>New arrivals</h2>
           </div>
-          <a href="../html/List.html">Shop all ›</a>
+          <a href="../aspx/List.aspx">Shop all ›</a>
         </div>
         <div class="danh-sach danh-sach-moi" id="danhSachSanPhamMoi"></div>
       </section>
@@ -217,9 +218,9 @@
         </div>
         <div class="the-san-pham">
           <h4>Shop</h4>
-          <a href="../html/List.html">All products</a
-          ><a href="../html/List.html?category=GPU">Graphics cards</a
-          ><a href="../html/List.html?category=CPU">Processors</a>
+          <a href="../aspx/List.aspx">All products</a
+          ><a href="../aspx/List.aspx?category=GPU">Graphics cards</a
+          ><a href="../aspx/List.aspx?category=CPU">Processors</a>
         </div>
         <div class="the-san-pham">
           <h4>Support</h4>
@@ -236,7 +237,7 @@
         <p>© 2026 GearHouse, Inc. All rights reserved.</p>
       </div>
     </div>
-    <script src="../js/List.js"></script>
-    <script src="../js/home.js"></script>
+    <script src="../js/List.js?v=22"></script>
+    <script src="../js/home.js?v=3"></script>
   </body>
 </html>

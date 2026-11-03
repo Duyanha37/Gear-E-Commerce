@@ -65,13 +65,28 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   showProducts(newProducts, "danhSachSanPhamMoi", 5);
 
+  [
+    ["danhSachDanhMuc", ".bo-dieu-khien-danh-muc"],
+    ["danhSachSanPhamNoiBat", ".bo-dieu-khien-san-pham"],
+    ["danhSachSanPhamMoi", ".bo-dieu-khien-san-pham"],
+  ].forEach(function (carousel) {
+    const track = document.getElementById(carousel[0]);
+    if (track) {
+      bindHorizontalCarousel(
+        track,
+        track.closest(carousel[1]),
+        ".the-san-pham",
+      );
+    }
+  });
+
   bindSearchForm("formTimKiem", function (keyword) {
     if (keyword !== "") {
       const searchValues = new URLSearchParams();
       searchValues.set("search", keyword);
       searchValues.set("category", "All");
       searchValues.set("page", "1");
-      window.location.href = "../html/List.html?" + searchValues.toString();
+      window.location.href = "../aspx/List.aspx?" + searchValues.toString();
     }
   });
 });
