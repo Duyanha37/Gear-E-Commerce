@@ -17,16 +17,19 @@ namespace Gear_E_Commerce.aspx
         {
             if(Request.HttpMethod == "GET" && Request.Headers["Service-Name"] == "GetCartItemsByMemberID")
             {
+                isApiRequest = true;
                 GetCartItemsByMemberID();
                 return;
             }
             if(Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateCartItems")
             {
+                isApiRequest = true;
                 UpdateCartItems();
                 return;
             }
             if(Request.HttpMethod == "DELETE" && Request.Headers["Service-Name"] == "DeleteCartItem")
             {
+                isApiRequest = true;
                 DeleteCartItem();
                 return;
             }
@@ -132,6 +135,15 @@ namespace Gear_E_Commerce.aspx
                 Response.StatusCode = 404;
                 return;
             }
+        }
+
+        protected override void Render(HtmlTextWriter writer)
+        {
+            if (isApiRequest)
+            {
+                return;
+            }
+            base.Render(writer);
         }
     }
 }

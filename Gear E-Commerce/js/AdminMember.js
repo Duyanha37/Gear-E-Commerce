@@ -1,13 +1,13 @@
 ﻿const loadMembers = async () => {
     try {
-        var response = await fetch("AdminMember.aspx", {
+        var response = await fetch("MemberControllers.aspx", {
             method: "GET",
             headers: {
-                "Request-With": "Fetch"
+                "Service-Name": "GetMembers"
             }
         });
-        if (!response.ok) {
-            throw new Error("Lỗi fetch member by id")
+        if (response.status !== 200) {
+            throw new Error("Không có danh sách member")
         }
         return await response.json();
     } catch (error) {
@@ -16,7 +16,7 @@
 }
 
 const hienThiThanhVien = async () => {
-    members = await loadMembers();
+    var members = await loadMembers();
     var html = "";
     var total = 0;
     var showing = 0;
@@ -82,15 +82,18 @@ function dongModal() {
 
 const getMemberById = async (id) => {
     try {
-        const response = await fetch("AdminMember.aspx?memberID=" + id, {
+        const response = await fetch("MemberControllers.aspx?memberID=" + id, {
             method: "GET",
             headers: {
                 "Service-Name": "GetMemberByID"
             }
         });
-        return member = response.json();
+        if (response.status !== 200) {
+            throw new Error("Không tìm thấy member với id: " + id);
+        }
+        return await response.json();
     }catch (error) {
-        console.error("Loi tim member bang id:", error);
+        console.error("Lỗi lấy member bằng id:", error);
     }
 };
 
@@ -114,6 +117,7 @@ const moModalXem = async (id) => {
 
 const moModalSua = async (id) => {
     var member = await getMemberById(id);
+    document.getElementById("editId").value = member.memberID;
     document.getElementById("editName").value = member.FullName;
     document.getElementById("editEmail").value = member.Email;
     document.getElementById("editPhone").value = member.Phone;
@@ -123,33 +127,52 @@ const moModalSua = async (id) => {
     document.body.style.overflow = "hidden";
 }
 
-function luuSuaThanhVien() {
-    var name = document.getElementById("editName").value.trim();
+const updateMember = async (member) => {
+    try {
+        const response = await fetch("MemberControllers.aspx", {
+            method: "POST",
+            headers: {
+                "Service-Name": "UpdateMember"
+            },
+            body: JSON.stringify(member)
+        });
+        if (response.status !== 200) {
+            throw new Error("Lỗi cập nhật member");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Lỗi cập nhật member:", error);
+    }
+};
+
+const luuSuaThanhVien = async () => {
+    var memberID = document.getElementById("editId").value;
+    var fullname = document.getElementById("editName").value.trim();
     var email = document.getElementById("editEmail").value.trim();
     var phone = document.getElementById("editPhone").value.trim();
     var status = document.getElementById("editStatus").value;
+    var member = await getMemberById(memberID);
+    var members = await loadMembers();
 
-    if (name == "" || email == "" || phone == "") {
+    if (fullname == "" || email == "" || phone == "") {
         alert("Vui lòng điền đầy đủ thông tin!");
         return;
     }
 
-    for (var i = 0; i < members.length; i++) {
-        if (i != editingIndex &&
-            members[i].isDeleted == false &&
-            members[i].email.toLowerCase() == email.toLowerCase()) {
-            alert("Email already exists!");
-            return;
-        }
+    var exits = members.some(m => (m.Email.toLowerCase() === email.toLowerCase() || m.Phone === phone) && m.id !== memberID);
+    if (exits) {
+        alert("Thông tin đã tồn tại!");
+        return;
+    }else{
+        member.FullName = fullname;
+        member.Email = email;
+        member.Phone = phone;
+        member.Status = status;
+        updateMember(member);
+        hienThiThanhVien();
+        dongModal();
+        alert("Cập nhật thành viên thành công!");
     }
-    members[editingIndex].FullName = name;
-    members[editingIndex].Email = email;
-    members[editingIndex].Phone = phone;
-    members[editingIndex].Status = status;
-    luuDuLieu();
-    hienThiThanhVien();
-    dongModal();
-    alert("Cập nhật thành viên thành công!");
 }
 function moModalThem() {
     document.getElementById("addName").value = "";
@@ -160,61 +183,77 @@ function moModalThem() {
     document.getElementById("addModal").style.display = "block";
     document.body.style.overflow = "hidden";
 }
-function themThanhVien() {
-    var name = document.getElementById("addName").value.trim();
+
+const addMember = async (member) => {
+    try{
+        const response = await fetch("MemberControllers.aspx", {
+            method: "POST",
+            headers: {
+                "Service-Name": "AddMember"
+            },
+            body: JSON.stringify(member)
+        });
+        if (response.status !== 200) {
+            throw new Error("Lỗi thêm member");
+        }
+    } catch (error) {
+        console.error("Lỗi thêm member:", error);
+    }
+}
+const themThanhVien = async () => {
+    var fullname = document.getElementById("addName").value.trim();
     var email = document.getElementById("addEmail").value.trim();
     var phone = document.getElementById("addPhone").value.trim();
     var status = document.getElementById("addStatus").value;
-    if (name == "" || email == "" || phone == "") {
+    if (fullname == "" || email == "" || phone == "") {
         alert("Vui lòng thêm đầy đủ thông tin!");
         return;
     }
-    for (var i = 0; i < members.length; i++) {
 
-        if (members[i].isDeleted == false &&
-            members[i].Email.toLowerCase() == email.toLowerCase()) {
-
-            alert("Tài khoản gmail đã tồn tại!");
-            return;
-        }
-    }
-    var maxId = 1023;
-    for (var i = 0; i < members.length; i++) {
-        var number = parseInt(members[i].id.replace("GH-", ""));
-        if (number > maxId) {
-            maxId = number;
-        }
+    var members = await loadMembers();
+    var maxID = Math.max(...members.map(m => parseInt(m.memberID)));
+    if (members.some(m => m.Email.toLowerCase() === email.toLowerCase())) {
+        alert("Email đã tồn tại!");
+        return;
     }
 
     var newMember = {
-        id: "GH-" + (maxId + 1),
-        name: name,
-        email: email,
-        phone: phone,
-        status: status,
-        isDeleted: false
+        memberID: (maxID + 1),
+        Role: "User",
+        FullName: fullname,
+        Email: email,
+        Phone: phone,
+        Status: status
     };
-
-    members.push(newMember);
-
-    luuDuLieu();
+    addMember(newMember);
     hienThiThanhVien();
     dongModal();
-
     alert("Thêm thành viên thành công!");
 }
 
-function xoaThanhVien(i) {
+const deleteMember = async (memberID) => {
+    try{
+        const response = await fetch("MemberControllers.aspx?memberID=" + memberID, {
+            method: "POST",
+            headers: {
+                "Service-Name": "DeleteMember"
+            }
+        });
+        console.log(memberID);
+        if (response.status !== 200) {
+            throw new Error("Không tìm thấy member");
+        }
+    } catch (error) {
+        console.error("Lỗi xóa member:", error);
+    }
+}
+function xoaThanhVien(memberID) {
 
     var result = confirm("Bạn có chắc chắn muốn xóa thành viên này không?");
 
     if (result == true) {
-
-        members[i].isDeleted = true;
-
-        luuDuLieu();
+        deleteMember(memberID);
         hienThiThanhVien();
-
         alert("Xóa thành viên thành công!");
     }
 }

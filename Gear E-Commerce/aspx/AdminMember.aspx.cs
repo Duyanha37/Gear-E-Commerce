@@ -10,7 +10,6 @@ namespace Gear_E_Commerce
 {
     public partial class AdminMember : System.Web.UI.Page
     {
-        private bool isApiRequest = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -19,53 +18,6 @@ namespace Gear_E_Commerce
                 adminName.InnerHtml = username;
                 adminAvatar.InnerHtml = username.Substring(0, 1).ToUpper();
             }
-
-            if(Request.HttpMethod == "GET" && Request.Headers["Request-With"] == "Fetch")
-            {
-                LoadMemberList();
-                return;
-            }
-            if(Request.HttpMethod == "GET" && Request.Headers["Service-Name"] == "GetMemberByID")
-            {
-                LoadMemberByID();
-                return;
-            }
-        }
-        
-        private void LoadMemberList()
-        {
-            isApiRequest = true;
-            Response.Clear();
-            Response.ContentType = "application/json";
-
-            List<Member> members = (List<Member>)Application["MemberList"];
-            JavaScriptSerializer seri = new JavaScriptSerializer();
-            Response.Write(seri.Serialize(members));
-            Context.ApplicationInstance.CompleteRequest();
-            return;
-        }
-
-        private void LoadMemberByID()
-        {
-            isApiRequest = true;
-            string memberID = Request.QueryString["memberID"];
-            Response.Clear();
-            Response.ContentType = "application/json";
-            List<Member> members = (List<Member>)Application["MemberList"];
-            Member member = members.FirstOrDefault(m => m.memberID == memberID);
-            JavaScriptSerializer seri = new JavaScriptSerializer();
-            Response.Write(seri.Serialize(member));
-            Context.ApplicationInstance.CompleteRequest();
-            return;
-        }
-
-        protected override void Render(HtmlTextWriter writer)
-        {
-            if (isApiRequest)
-            {
-                return;
-            }
-            base.Render(writer);
         }
     }
 }

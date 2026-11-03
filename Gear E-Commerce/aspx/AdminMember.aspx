@@ -148,6 +148,7 @@
         </div>
         <form id="editForm"
               onsubmit="luuSuaThanhVien(); return false;">
+            <input type="hidden" id="editId" />
             <div class="modal-body">
                 <div class="form-grid">
                     <div class="form-group">

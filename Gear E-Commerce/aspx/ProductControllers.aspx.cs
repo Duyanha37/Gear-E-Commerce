@@ -17,21 +17,25 @@ namespace Gear_E_Commerce.aspx
         {
             if(Request.HttpMethod == "GET" && Request.Headers["Service-Name"] == "GetProducts")
             {
+                isApiRequest = true;
                 GetProducts();
                 return;
             }
             if(Request.HttpMethod == "GET" && Request.Headers["Service-Name"] == "GetProductByID")
             {
+                isApiRequest = true;
                 GetProductByID();
                 return;
             }
             if(Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateProduct")
             {
+                isApiRequest = true;
                 UpdateProduct();
                 return;
             }
             if(Request.HttpMethod == "DELETE" && Request.Headers["Service-Name"] == "DeleteProduct")
             {
+                isApiRequest = true;
                 DeleteProduct();
                 return;
             }
@@ -112,6 +116,15 @@ namespace Gear_E_Commerce.aspx
             {
                 Response.StatusCode = 404;
             }
+        }
+
+        protected override void Render(HtmlTextWriter writer)
+        {
+            if (isApiRequest)
+            {
+                return;
+            }
+            base.Render(writer);
         }
     }
 }
