@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tất cả sản phẩm - GearHouse</title>
     <link rel="stylesheet" href="../css/global.css?v=19" />
-    <link rel="stylesheet" href="../css/List.css?v=33" />
+    <link rel="stylesheet" href="../css/List.css?v=36" />
 </head>
 <body class="trang-list">
     <div class="dau-trang">

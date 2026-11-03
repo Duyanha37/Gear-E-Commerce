@@ -1,6 +1,8 @@
 .trang-san-pham {
   box-sizing: border-box;
-  width: var(--content-width);
+  width: min(var(--content-width), 100%);
+  min-width: 0;
+  max-width: 100%;
   margin: clamp(1.25rem, 2.5vw, 2.25rem) auto 3.5rem;
 }
 
@@ -318,11 +320,6 @@
   line-height: 1;
 }
 
-.trang-list .menu-chinh {
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
 .bieu-tuong-tai-khoan {
   display: inline-flex;
   align-items: center;
@@ -464,16 +461,24 @@
 
 @media (max-width: 850px) {
   .trang-san-pham {
-    width: var(--content-width);
+    width: calc(100% - var(--mobile-gutter));
+    margin-block: 1rem 2rem;
   }
 
   .khu-vuc-noi-dung {
-    grid-template-columns: minmax(10rem, 24%) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .cot-danh-muc,
   .cot-san-pham {
-    grid-column: auto;
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .cot-danh-muc {
+    position: static;
+    top: auto;
+    z-index: auto;
   }
 
   .cot-san-pham > .danh-sach {
@@ -496,13 +501,13 @@
   }
 
   .khu-vuc-noi-dung {
-    grid-template-columns: minmax(9rem, 40%) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.5rem;
   }
 
   .cot-danh-muc,
   .cot-san-pham {
-    grid-column: auto;
+    grid-column: 1;
     min-width: 0;
     padding: clamp(8px, 2vw, 12px);
   }
@@ -559,7 +564,7 @@
 
 @media (max-width: 360px) {
   .khu-vuc-noi-dung {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 6px;
   }
 
@@ -702,71 +707,6 @@
   }
 }
 
-@media (min-width: 851px) and (hover: hover) and (pointer: fine) {
-  body.trang-list .dau-trang header {
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr) max-content;
-  }
-
-  body.trang-list .dau-trang header .logo-thuong-hieu {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  body.trang-list .dau-trang header .menu-chinh {
-    grid-column: 2;
-    grid-row: 1;
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-    justify-content: flex-start;
-    gap: clamp(0.75rem, 1.3vw, 1.1rem);
-  }
-
-  body.trang-list .dau-trang header .tai-khoan {
-    grid-column: 3;
-    grid-row: 1;
-  }
-}
-
-@media (max-width: 850px), (hover: none) and (pointer: coarse) {
-  body.trang-list .dau-trang header {
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    align-items: center;
-  }
-
-  body.trang-list .dau-trang header .logo-thuong-hieu {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  body.trang-list .dau-trang header .tai-khoan {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-  }
-
-  body.trang-list .dau-trang header .menu-chinh {
-    display: flex;
-    grid-column: 1 / -1;
-    grid-row: 2;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.25rem 0;
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-  }
-
-  body.trang-list .dau-trang header .menu-chinh a {
-    flex: 0 0 auto;
-    padding: 0.35rem 0;
-    white-space: nowrap;
-  }
-}
-
 /* Match Home's three header regions; List simply has no search form in the actions region. */
 body.trang-list .dau-trang header {
   display: grid;
@@ -835,4 +775,54 @@ body.trang-list .dau-trang header.nav-xuong-dong .menu-chinh {
   justify-content: space-between;
   gap: 0.25rem clamp(0.55rem, 1.3vw, 1rem);
   width: 100%;
+}
+
+@media (max-width: 850px), (hover: none) and (pointer: coarse) {
+  body.trang-list {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  body.trang-list .dau-trang header {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    width: calc(100% - var(--mobile-gutter));
+    min-height: 0;
+    padding-block: 10px;
+    gap: 8px;
+  }
+
+  body.trang-list .dau-trang header .logo-thuong-hieu {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.trang-list .dau-trang header .tai-khoan {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    margin: 0;
+  }
+
+  body.trang-list .dau-trang header .menu-chinh {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 0;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  body.trang-list .dau-trang header .menu-chinh a {
+    flex: 0 0 auto;
+    padding: 0.35rem 0;
+    white-space: nowrap;
+  }
+
 }
