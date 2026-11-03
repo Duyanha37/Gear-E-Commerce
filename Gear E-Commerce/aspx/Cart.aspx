@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="Gear_E_Commerce.Cart" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="Gear_E_Commerce.Cart" ResponseEncoding="utf-8" Culture="vi-VN" UICulture="vi-VN" %>
 <!doctype html>
 <html lang="vi">
 <head runat="server">
@@ -67,7 +67,7 @@
             <aside class="tong-ket"><h2>Order summary</h2>
                 <div class="dong-tong">
                     <span>Subtotal</span>
-                    <span id="tamTinh">$0</span>
+                    <span id="tamTinh">0 ₫</span>
                 </div>
                 <div class="dong-tong">
                     <span>Shipping</span>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="dong-tong cuoi">
                     <span>Total</span>
-                    <strong id="tongCong">$0</strong>
+                    <strong id="tongCong">0 ₫</strong>
                 </div>
                 <button class="nut-thanh-toan" id="thanhToan" type="button">
                     Tiến hành thanh toán

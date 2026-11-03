@@ -1,21 +1,32 @@
-const CART_KEY = "gearHouseCart";
 const FEATURED_IDS = [1, 2, 3, 4];
 const catalog = window.gearProductCatalog || [];
 
-function readCart() {
-    try {
-        const stored = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
-        if (!Array.isArray(stored)) return [];
-        return stored.filter(function (item) {
-            return catalog.some(function (product) { return product.id === Number(item.id); });
-        }).map(function (item) {
-            return { id: Number(item.id), soLuong: Math.max(1, Math.min(99, Math.floor(Number(item.soLuong) || 1))) };
-        });
-    } catch (error) { return []; }
+async function readCart() {
+    const response = await fetch("Cart.aspx?api=cart", { credentials: "same-origin" });
+    if (!response.ok) throw new Error("Could not load the cart.");
+    const stored = await response.json();
+    if (!Array.isArray(stored)) return [];
+    return stored.filter(function (item) {
+        return catalog.some(function (product) { return product.id === Number(item.id); });
+    }).map(function (item) {
+        return { id: Number(item.id), soLuong: Math.max(1, Math.min(99, Math.floor(Number(item.soLuong) || 1))) };
+    });
 }
 
-function saveCart(cart) { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
-function formatPrice(price) { return "$" + Number(price).toLocaleString("en-US"); }
+async function sendCartAction(action, id, quantity) {
+    const response = await fetch("Cart.aspx?api=cart", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: action, id: id, quantity: quantity })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Could not update the cart.");
+    return result;
+}
+function formatPrice(price) {
+    return Number(price).toLocaleString("vi-VN") + " ₫";
+}
 
 function makeProductCard(product, label) {
     const card = document.createElement("article");
@@ -57,16 +68,22 @@ function makeProductCard(product, label) {
     add.className = "mini-add";
     add.textContent = product.tonkho > 0 ? "Add to cart" : "Out of stock";
     add.disabled = product.tonkho < 1;
-    add.addEventListener("click", function () {
-        const cart = readCart();
-        const existing = cart.find(function (item) {
-            return item.id === product.id;
-        });
-        if (existing) existing.soLuong = Math.min(product.tonkho, 99, existing.soLuong + 1);
-        else cart.push({ id: product.id, soLuong: 1 });
-        saveCart(cart); updateCart(cart);
-        add.textContent = "Added";
-        window.setTimeout(function () { add.textContent = "Add to cart"; }, 1200);
+    add.addEventListener("click", async function () {
+        try {
+            const cart = await readCart();
+            const existing = cart.find(function (item) {
+                return item.id === product.id;
+            });
+            const currentQuantity = existing ? existing.soLuong : 0;
+            if (currentQuantity >= product.tonkho || currentQuantity >= 99) return;
+            const items = await sendCartAction("add", product.id, 1);
+            updateCart(items);
+            add.textContent = "Added";
+            window.setTimeout(function () { add.textContent = "Add to cart"; }, 1200);
+        } catch (error) {
+            add.textContent = "Try again";
+            window.setTimeout(function () { add.textContent = "Add to cart"; }, 1500);
+        }
     });
     footer.append(price, add);
     body.append(category, title, spec, footer);
@@ -127,12 +144,23 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("tongCong").textContent = formatPrice(subtotal);
     }
 
-    function renderCart() {
-        const items = readCart();
+    async function renderCart() {
+        let items;
+        try {
+            items = await readCart();
+        } catch (error) {
+            cartContent.hidden = true;
+            emptyState.hidden = false;
+            emptyState.querySelector("h2").textContent = "Cart unavailable";
+            emptyState.querySelector("p").textContent = "Could not connect to the application cart. Please try again.";
+            return;
+        }
         cartList.replaceChildren();
         const hasItems = items.length > 0;
         cartContent.hidden = !hasItems;
         emptyState.hidden = hasItems;
+        emptyState.querySelector("h2").textContent = "Your cart is empty";
+        emptyState.querySelector("p").textContent = "Tìm các linh kiện phù hợp cho bộ máy (build) tiếp theo của bạn.";
         if (hasItems) {
             items.forEach(function (item) {
                 const product = products.find(function (candidate) { return candidate.id === item.id; });
@@ -196,22 +224,31 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCart(items);
     }
 
-    cartList.addEventListener("click", function (event) {
+    cartList.addEventListener("click", async function (event) {
         const button = event.target.closest("button");
         if (!button) return;
         const row = button.closest(".cart-item");
         const id = Number(row.dataset.productId);
-        let items = readCart();
-        const item = items.find(function (entry) {
-            return entry.id === id;
-        });
-        if (button.classList.contains("remove-item")) items = items.filter(function (entry) { return entry.id !== id; });
-        else if (item && button.dataset.action === "increase") {
-            const product = products.find(function (candidate) { return candidate.id === id; });
-            item.soLuong = Math.min(99, product.tonkho, item.soLuong + 1);
+        try {
+            const items = await readCart();
+            const item = items.find(function (entry) { return entry.id === id; });
+            if (button.classList.contains("remove-item")) await sendCartAction("remove", id, 0);
+            else if (item && button.dataset.action === "increase") {
+                const product = products.find(function (candidate) { return candidate.id === id; });
+                if (product && item.soLuong < product.tonkho && item.soLuong < 99) {
+                    await sendCartAction("add", id, 1);
+                }
+            }
+            else if (item && button.dataset.action === "decrease" && item.soLuong > 1) {
+                await sendCartAction("set", id, item.soLuong - 1);
+            }
+            await renderCart();
         }
-        else if (item && button.dataset.action === "decrease") item.soLuong = Math.max(1, item.soLuong - 1);
-        saveCart(items); renderCart();
+        catch (error) {
+            const message = document.getElementById("checkoutMessage");
+            message.textContent = "Could not update your cart. Please try again.";
+            message.hidden = false;
+        }
     });
 
     document.getElementById("thanhToan").addEventListener("click", function () {

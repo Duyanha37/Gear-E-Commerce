@@ -1,4 +1,3 @@
-const CART_KEY = "gearHouseCart";
 const catalog = window.gearProductCatalog || [];
 const productId = Number(new URLSearchParams(window.location.search).get("id"));
 const currentProduct = catalog.find(function (product) {
@@ -12,34 +11,46 @@ function makeElement(tag, className, text) {
     return element;
 }
 
-function readCart() {
-    try {
-        const cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
-        return Array.isArray(cart) ? cart : [];
-    } catch (error) { return []; }
+async function readCart() {
+    const response = await fetch("Cart.aspx?api=cart", { credentials: "same-origin" });
+    if (!response.ok) throw new Error("Could not load the cart.");
+    const cart = await response.json();
+    return Array.isArray(cart) ? cart : [];
 }
 
-function saveCart(cart) { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+async function sendCartAction(action, productId, quantity) {
+    const response = await fetch("Cart.aspx?api=cart", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: action, id: productId, quantity: quantity })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Could not update the cart.");
+    return result;
+}
 
-function formatPrice(price) { return "$" + Number(price).toLocaleString("en-US"); }
+function formatPrice(price) {
+    return Number(price).toLocaleString("vi-VN") + " ₫";
+}
 
-function addToCart(product, quantity) {
+async function addToCart(product, quantity) {
     if (!product || product.tonkho < 1) return false;
-    const cart = readCart();
+    const cart = await readCart();
     const existing = cart.find(function (item) {
         return Number(item.id) === product.id;
     });
-    if (existing) existing.soLuong = Math.min(product.tonkho, 99, Number(existing.soLuong || 0) + quantity);
-    else cart.push({
-        id: product.id, soLuong: Math.min(product.tonkho, 99, quantity)
-    });
-    saveCart(cart);
-    updateCartBadge();
+    const currentQuantity = existing ? Number(existing.soLuong) || 0 : 0;
+    const safeQuantity = Math.min(Math.floor(Number(quantity) || 0), product.tonkho - currentQuantity, 99 - currentQuantity);
+    if (safeQuantity < 1) return false;
+    await sendCartAction("add", product.id, safeQuantity);
+    await updateCartBadge();
     return true;
 }
 
-function updateCartBadge() {
-    const count = readCart().reduce(function (sum, item) {
+async function updateCartBadge() {
+    const cart = await readCart();
+    const count = cart.reduce(function (sum, item) {
         return sum + (Number(item.soLuong) || 0);
     }, 0);
     document.querySelectorAll("[data-cart-count]").forEach(function (element) {
@@ -70,12 +81,17 @@ function makeProductCard(product, label) {
     const addButton = makeElement("button", "mini-add", "Add to cart");
     addButton.type = "button";
     addButton.disabled = product.tonkho < 1;
-    addButton.addEventListener("click", function () {
-        if (addToCart(product, 1)) {
-            addButton.textContent = "Added";
-            window.setTimeout(function () {
-                addButton.textContent = "Add to cart";
-            }, 1300);
+    addButton.addEventListener("click", async function () {
+        try {
+            if (await addToCart(product, 1)) {
+                addButton.textContent = "Added";
+                window.setTimeout(function () {
+                    addButton.textContent = "Add to cart";
+                }, 1300);
+            }
+        } catch (error) {
+            addButton.textContent = "Try again";
+            window.setTimeout(function () { addButton.textContent = "Add to cart"; }, 1500);
         }
     });
     footer.appendChild(addButton);
@@ -99,9 +115,11 @@ function showRecommendations() {
     });
 }
 
-function makeVariantPicker(product) {
+function makeVariantPicker(product, selectedSpec) {
     const suggestions = catalog
-        .filter(function (candidate) { return candidate.id !== product.id && candidate.loai === product.loai; })
+        .filter(function (candidate) {
+            return candidate.id !== product.id && candidate.loai === product.loai;
+        })
         .sort(function (a, b) {
             const aBrandMatch = a.brand === product.brand ? 0 : 1;
             const bBrandMatch = b.brand === product.brand ? 0 : 1;
@@ -112,10 +130,16 @@ function makeVariantPicker(product) {
     if (!suggestions.length) return null;
 
     const picker = makeElement("div", "variant-picker");
-    const button = makeElement("button", "variant-trigger", "Other options (" + suggestions.length + ")");
+    const button = makeElement("button", "spec-box variant-trigger");
     const menu = makeElement("div", "variant-menu");
+    const selectedValue = makeElement("strong", "", selectedSpec.value);
     const menuId = "variant-options-" + product.id;
     button.type = "button";
+    button.append(
+        makeElement("span", "", selectedSpec.label),
+        selectedValue
+    );
+    button.setAttribute("aria-label", selectedSpec.label + ": " + selectedSpec.value + ". Show two demo options.");
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-controls", menuId);
     menu.id = menuId;
@@ -123,15 +147,24 @@ function makeVariantPicker(product) {
     menu.setAttribute("role", "menu");
 
     suggestions.forEach(function (suggestion) {
-        const option = makeElement("a", "variant-option");
-        option.href = "ChiTietSanPham.aspx?id=" + suggestion.id;
+        const option = makeElement("button", "variant-option");
+        option.type = "button";
         option.setAttribute("role", "menuitem");
         const details = makeElement("span", "variant-option-details");
+        const optionSpec = suggestion.specs.find(function (item) {
+            return item.label === selectedSpec.label;
+        }) || suggestion.specs[0];
         details.append(
-            makeElement("strong", "", suggestion.ten),
-            makeElement("small", "", suggestion.brand + " · " + suggestion.loai)
+            makeElement("strong", "", optionSpec.label + ": " + optionSpec.value),
+            makeElement("small", "", "Demo option")
         );
-        option.append(details, makeElement("strong", "variant-option-price", formatPrice(suggestion.gia)));
+        option.appendChild(details);
+        option.addEventListener("click", function () {
+            selectedValue.textContent = optionSpec.value;
+            button.setAttribute("aria-label", selectedSpec.label + ": " + optionSpec.value + ". Show two demo options.");
+            button.setAttribute("aria-expanded", "false");
+            menu.hidden = true;
+        });
         menu.appendChild(option);
     });
 
@@ -209,14 +242,16 @@ function showProduct() {
     info.append(stock, makeElement("p", "product-description", currentProduct.moTa));
 
     const specs = makeElement("div", "spec-grid");
-    currentProduct.specs.forEach(function (spec) {
+    currentProduct.specs.forEach(function (spec, index) {
+        if (index === 0) {
+            specs.appendChild(makeVariantPicker(currentProduct, spec));
+            return;
+        }
         const box = makeElement("div", "spec-box");
         box.append(makeElement("span", "", spec.label), makeElement("strong", "", spec.value));
         specs.appendChild(box);
     });
     info.appendChild(specs);
-    const variantPicker = makeVariantPicker(currentProduct);
-    if (variantPicker) info.appendChild(variantPicker);
 
     const actions = makeElement("div", "product-actions");
     const quantity = makeElement("div", "quantity-control");
@@ -252,9 +287,14 @@ function showProduct() {
     actions.append(quantity, addButton);
     const buyNow = makeElement("button", "buy-now", "Buy now"); buyNow.type = "button"; buyNow.disabled = currentProduct.tonkho < 1;
     const message = makeElement("p", "action-message", ""); message.setAttribute("role", "status");
-    addButton.addEventListener("click", function () {
+    addButton.addEventListener("click", async function () {
         normalizeQuantity();
-        if (addToCart(currentProduct, Number(input.value))) message.textContent = currentProduct.ten + " added to your cart.";
+        try {
+            if (await addToCart(currentProduct, Number(input.value))) message.textContent = currentProduct.ten + " added to your cart.";
+            else message.textContent = "The requested quantity is not available.";
+        } catch (error) {
+            message.textContent = "Could not update your cart. Please try again.";
+        }
     });
     buyNow.addEventListener("click", function () {
         message.textContent = "Checkout is not available in this demo yet. Your cart is ready when checkout is added.";
@@ -272,7 +312,7 @@ function showProduct() {
         note.append(icon, document.createTextNode(label));
         return note;
     }
-    service.append(serviceNote("Free delivery over $99", "M2 5h10v9H2z M12 8h3l3 3v3h-6z M5 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"), serviceNote("2-year limited warranty", "M10 2.5 16 5v4.4c0 3.8-2.4 6.6-6 8.1-3.6-1.5-6-4.3-6-8.1V5l6-2.5Z M7.4 9.9l1.7 1.7 3.6-3.8"));
+    service.append(serviceNote("Free delivery over 2.475.000 ₫", "M2 5h10v9H2z M12 8h3l3 3v3h-6z M5 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"), serviceNote("2-year limited warranty", "M10 2.5 16 5v4.4c0 3.8-2.4 6.6-6 8.1-3.6-1.5-6-4.3-6-8.1V5l6-2.5Z M7.4 9.9l1.7 1.7 3.6-3.8"));
     info.appendChild(service);
     layout.append(gallery, info);
     root.appendChild(layout);
@@ -281,7 +321,7 @@ function showProduct() {
 
 document.addEventListener("DOMContentLoaded", function () {
     showProduct();
-    updateCartBadge();
+    updateCartBadge().catch(function () { });
 
     const searchForm = document.getElementById("formTimKiem");
     const searchToggle = document.getElementById("nutMoTimKiem");
