@@ -72,6 +72,8 @@
     <Content Include="aspx\Cart.aspx" />
     <Content Include="aspx\CartControllers.aspx" />
     <Content Include="aspx\ChiTietSanPham.aspx" />
+    <Content Include="aspx\home.aspx" />
+    <Content Include="aspx\List.aspx" />
     <Content Include="aspx\MemberControllers.aspx" />
     <Content Include="aspx\ProductControllers.aspx" />
     <Content Include="assets\images\add.png" />
@@ -82,6 +84,9 @@
     <Content Include="assets\images\product.png" />
     <Content Include="assets\images\search.png" />
     <Content Include="css\AdminMember.css" />
+    <Content Include="css\global.css" />
+    <Content Include="css\home.css" />
+    <Content Include="css\List.css" />
     <Content Include="css\site-shell.css" />
     <Content Include="Global.asax" />
     <Content Include="aspx\SignIn.aspx" />
@@ -123,6 +128,20 @@
     </Compile>
     <Compile Include="aspx\ChiTietSanPham.aspx.designer.cs">
       <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
     </Compile>
     <Compile Include="aspx\MemberControllers.aspx.cs">
       <DependentUpon>MemberControllers.aspx</DependentUpon>
