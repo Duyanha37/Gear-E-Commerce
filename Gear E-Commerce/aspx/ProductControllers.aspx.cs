@@ -33,7 +33,7 @@ namespace Gear_E_Commerce.aspx
                 UpdateProduct();
                 return;
             }
-            if(Request.HttpMethod == "DELETE" && Request.Headers["Service-Name"] == "DeleteProduct")
+            if(Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "DeleteProduct")
             {
                 isApiRequest = true;
                 DeleteProduct();

@@ -27,7 +27,13 @@ namespace Gear_E_Commerce.aspx
                 UpdateCartItems();
                 return;
             }
-            if(Request.HttpMethod == "DELETE" && Request.Headers["Service-Name"] == "DeleteCartItem")
+            if(Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "AddCartItem")
+            {
+                isApiRequest = true;
+                AddCartItem();
+                return;
+            }
+            if (Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "DeleteCartItem")
             {
                 isApiRequest = true;
                 DeleteCartItem();
@@ -57,6 +63,36 @@ namespace Gear_E_Commerce.aspx
             }
         }
 
+        private void AddCartItem()
+        {
+            string memberID = Request.QueryString["memberID"];
+            List<CartMember> cartMembers = (List<CartMember>)Application["CartMembers"];
+            CartMember cartMember = cartMembers.FirstOrDefault(cm => cm.MemberID == memberID);
+            Response.Clear();
+            Response.ContentType = "application/json";
+            if (cartMember != null)
+            {
+                string requestBody;
+                using (StreamReader reader = new StreamReader(Request.InputStream))
+                {
+                    requestBody = reader.ReadToEnd();
+                }
+                JavaScriptSerializer seri = new JavaScriptSerializer();
+                CartItem newItem = seri.Deserialize<CartItem>(requestBody);
+                cartMember.AddItem(newItem);
+                Application["CartMembers"] = cartMembers;
+                Response.StatusCode = 200;
+                Response.Write(seri.Serialize(cartMember.Items));
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+            else
+            {
+                Response.StatusCode = 404;
+                return;
+            }
+        }
+
         private void UpdateCartItems()
         {
             string memberID = Request.QueryString["memberID"];
@@ -72,28 +108,16 @@ namespace Gear_E_Commerce.aspx
                     requestBody = reader.ReadToEnd();
                 }
                 JavaScriptSerializer seri = new JavaScriptSerializer();
-                CartItem updatedItems = seri.Deserialize<CartItem>(requestBody);
-                CartItem cartItem = cartMember.Items.FirstOrDefault(item => item.CartItemID == updatedItems.CartItemID);
+                CartItem updatedItem = seri.Deserialize<CartItem>(requestBody);
+                CartItem cartItem = cartMember.Items.FirstOrDefault(item => item.CartID == updatedItem.CartID && item.ProductID == updatedItem.ProductID);
                 if (cartItem != null)
                 {
-                    List<Product> products = (List<Product>)Application["Products"];
-                    Product product = products.FirstOrDefault(p => p.productID == updatedItems.ProductID);
-                    if(product.Stock < updatedItems.Quantity)
-                    {
-                        Response.StatusCode = 400;
-                        Response.Write(seri.Serialize(new { message = "Số lượng hàng không đủ" }));
-                        Context.ApplicationInstance.CompleteRequest();
-                        return;
-                    }
-                    else
-                    {
-                        cartItem = updatedItems;
-                        Application["CartMembers"] = cartMembers;
-                        Response.StatusCode = 200;
-                        Response.Write(seri.Serialize(cartMember.Items));
-                        Context.ApplicationInstance.CompleteRequest();
-                        return;
-                    }
+                    cartItem.Quantity = updatedItem.Quantity;
+                    Application["CartMembers"] = cartMembers;
+                    Response.StatusCode = 200;
+                    Response.Write(seri.Serialize(cartMember.Items));
+                    Context.ApplicationInstance.CompleteRequest();
+                    return;
                 }
                 else
                 {
@@ -116,7 +140,7 @@ namespace Gear_E_Commerce.aspx
             CartMember cartMember = cartMembers.FirstOrDefault(cm => cm.MemberID == memberID);
             if (cartMember != null)
             {
-                CartItem cartItem = cartMember.Items.FirstOrDefault(item => item.CartItemID == cartItemID);
+                CartItem cartItem = cartMember.Items.FirstOrDefault(item => item.CartID == cartItemID && item.ProductID == Request.QueryString["productID"]);
                 if (cartItem != null)
                 {
                     cartMember.Items.Remove(cartItem);

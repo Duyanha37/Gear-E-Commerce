@@ -7,7 +7,7 @@ namespace Gear_E_Commerce
 {
     public class CartItem
     {
-        public String CartItemID { get; set; }
+        public String CartID { get; set; }
         public String ProductID { get; set; }
         public int Quantity { get; set; }
 
@@ -15,9 +15,9 @@ namespace Gear_E_Commerce
         {
         }
 
-        public CartItem(String cartItemID, String productID, int quantity)
+        public CartItem(String cartID, String productID, int quantity)
         {
-            CartItemID = cartItemID;
+            CartID = cartID;
             ProductID = productID;
             Quantity = quantity;
         }
