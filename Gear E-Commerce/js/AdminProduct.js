@@ -201,7 +201,19 @@ const luuSuaSanPham = async () => {
     }
 
 const addProduct = async () => {
-    
+    try {
+        const response = await fetch("ProductControllers.aspx", {
+            method: "POST",
+            headers: {
+                "Service-Name": "AddProduct"
+            }
+        });
+        if (response.status !== 200) {
+            throw new Error("Không thể thêm sản phẩm");
+        }
+    } catch (error) {
+        console.error("Lỗi khi thêm sản phẩm:", error);
+    }
 }
 
 const themSanPham = async () => {
@@ -232,27 +244,35 @@ const themSanPham = async () => {
             Price: price,
             Stock: stock,
             Category: category,
-            image: addImageData,
+            Image: addImageData,
             isDeleted: false
         };
-        products.push(newProduct);
-        if (luuDuLieu() == false) {
-            products.pop();
-            return;
-        }
+        addProduct(newProduct);
         hienThiSanPham();
         dongModal();
         alert("Sản phẩm đã được thêm thành công!");
 }
 
-    function xoaSanPham(i) {
+const deleteProduct = async (productID) => {
+    try {
+        const response = await fetch("ProductControllers.aspx?productID=" + productID, {
+            method: "POST",
+            headers: {
+                "Service-Name": "DeleteProduct"
+            }
+        });
+        if (response.status !== 200) {
+            throw new Error("Không thể xóa sản phẩm");
+        }
+    } catch (error) {
+        console.error("Lỗi khi xóa sản phẩm:", error);
+    }
+}
+
+    function xoaSanPham(productID) {
         var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
         if (result == true) {
-            products[i].isDeleted = true;
-            if (luuDuLieu() == false) {
-                products[i].isDeleted = false;
-                return;
-            }
+            deleteProduct(productID);
             hienThiSanPham();
             alert("Sản phẩm đã được xóa thành công!");
         }
