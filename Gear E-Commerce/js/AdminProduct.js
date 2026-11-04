@@ -1,121 +1,4 @@
-﻿var products = [
-    {
-        id: 1,
-        name: "GeForce RTX 4080 Super",
-        brand: "NVIDIA",
-        category: "GPU",
-        price: 999,
-        stock: 18,
-        description: "16GB GDDR6X - 2.55GHz",
-        image: "../assets/images/gpu.png",
-        isDeleted: false
-    },
-    {
-        id: 2,
-        name: "Ryzen 9 7950X3D",
-        brand: "AMD",
-        category: "CPU",
-        price: 599,
-        stock: 32,
-        description: "16 cores - 32 threads",
-        image: "../assets/images/cpu.png",
-        isDeleted: false
-    },
-    {
-        id: 3,
-        name: "ROG Strix X670E-E",
-        brand: "ASUS",
-        category: "Motherboard",
-        price: 469,
-        stock: 12,
-        description: "AMD AM5 - ATX Motherboard",
-        image: "../assets/images/motherboard.png",
-        isDeleted: false
-    },
-    {
-        id: 4,
-        name: "Vengeance RGB 32GB",
-        brand: "Corsair",
-        category: "RAM",
-        price: 129,
-        stock: 44,
-        description: "DDR5 RGB Memory 32GB",
-        image: "../assets/images/ram.png",
-        isDeleted: false
-    },
-    {
-        id: 5,
-        name: "990 PRO NVMe 2TB",
-        brand: "Samsung",
-        category: "SSD",
-        price: 179,
-        stock: 27,
-        description: "PCIe 4.0 NVMe SSD",
-        image: "../assets/images/NVME.png",
-        isDeleted: false
-    },
-    {
-        id: 6,
-        name: "RM1000x Shift",
-        brand: "Corsair",
-        category: "Power Supply",
-        price: 209,
-        stock: 21,
-        description: "1000W 80 Plus Gold",
-        image: "../assets/images/psu.jpg",
-        isDeleted: false
-    },
-    {
-        id: 7,
-        name: "Core i9-14900K",
-        brand: "Intel",
-        category: "CPU",
-        price: 549,
-        stock: 8,
-        description: "24 cores - 32 threads",
-        image: "../assets/images/cpu.png",
-        isDeleted: false
-    },
-    {
-        id: 8,
-        name: "GeForce RTX 4070 Ti",
-        brand: "ASUS",
-        category: "GPU",
-        price: 799,
-        stock: 15,
-        description: "12GB GDDR6X",
-        image: "../assets/images/gpu.png",
-        isDeleted: false
-    }
-];
-
-const luudulieu = async (product) => {
-    var formData = new FormData();
-    formData.append("productID", product.productID);
-    formData.append("Name", product.Name);
-    formData.append("Brand", product.Brand);
-    formData.append("Description", product.Description);
-    formData.append("Price", product.Price);
-    formData.append("Stock", product.Stock);
-    formData.append("Category", product.Category);
-    formData.append("Image", product.Image);
-    formData.append("isDelete", product.isDeleted);
-
-    const response = await fetch("SaveProduct.aspx", {
-        method: "POST",
-        body: formData
-    });
-    if (!response.ok) {
-        return false;
-    }
-    return true;
-};
-
-var editingIndex = -1;
-var addImageData = "";
-var editImageData = "";
-
-function maHoa(text) {
+﻿function maHoa(text) {
     var value = String(text);
 
     value = value.replace(/&/g, "&amp;");
@@ -126,6 +9,14 @@ function maHoa(text) {
 
     return value;
 }
+
+const getProduct = async () => {
+    const response = await fetch("GetProduct.aspx");
+    if (!response.ok) {
+        return false;
+    }
+    return response.json();
+};
 
 function hienThiSanPham() {
     var html = "";

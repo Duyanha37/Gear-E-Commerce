@@ -102,6 +102,10 @@ namespace Gear_E_Commerce.aspx
             if(newMember != null)
             {
                 members.Add(newMember);
+                List<CartMember> cartMembers = (List<CartMember>)Application["CartMemberList"];
+                CartMember newCartMember = new CartMember((cartMembers.Max(cm => int.Parse(cm.CartID))+1).ToString(), newMember.memberID);
+                cartMembers.Add(newCartMember);
+                Application["CartMemberList"] = cartMembers;
                 Response.StatusCode = 200;
                 Application["MemberList"] = members;
                 return;

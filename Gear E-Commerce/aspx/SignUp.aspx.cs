@@ -58,9 +58,13 @@ namespace Gear_E_Commerce
                     return;
                 }else
                 {
-                    Member newMember = new Member((memberList.Count + 1).ToString(), "Member", fullname, username, password, email, phone);
+                    Member newMember = new Member((memberList.Max(m => int.Parse(m.memberID))+1).ToString(), "Member", fullname, username, password, email, phone);
                     memberList.Add(newMember);
                     Application["MemberList"] = memberList;
+                    List<CartMember> cartMembers = (List<CartMember>)Application["CartMemberList"];
+                    CartMember newCartMember = new CartMember((cartMembers.Max(cm => int.Parse(cm.CartID))+1).ToString(), newMember.memberID);
+                    cartMembers.Add(newCartMember);
+                    Application["CartMemberList"] = cartMembers;
                     Response.Redirect("SignIn.aspx");
                 }
             }
