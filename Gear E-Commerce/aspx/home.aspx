@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GearHouse - Linh kiện máy tính</title>
     <link rel="stylesheet" href="../css/global.css?v=19" />
-    <link rel="stylesheet" href="../css/home.css?v=29" />
+    <link rel="stylesheet" href="../css/home.css?v=30" />
 </head>
 <body class="trang-home">
     <div class="dau-trang">
@@ -36,7 +36,7 @@
                     </button>
                     <input
                         type="search"
-                        id="oTimKiem"
+                        id="timKiem"
                         autocomplete="off"
                         placeholder="Tìm kiếm"
                         aria-label="Tìm kiếm" />
@@ -286,7 +286,7 @@
     <script>
         window.gearHouseApplicationProducts = <%= ProductListJson %>;
     </script>
-    <script src="../js/List.js?v=23"></script>
-    <script src="../js/home.js?v=4"></script>
+    <script src="../js/List.js?v=24"></script>
+    <script src="../js/home.js?v=5"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+// Dữ liệu dùng chung cho Home và List.
 let productList = [];
 window.gearHouseProductListPromise = fetch("../aspx/ProductControllers.aspx", {
   headers: { "Service-Name": "GetProducts" },
@@ -25,6 +26,7 @@ window.gearHouseProductListPromise = fetch("../aspx/ProductControllers.aspx", {
 
 const PRODUCTS_PER_PAGE = 16;
 
+// Hàm tiện ích dùng chung.
 function formatGiaVND(gia) {
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -68,7 +70,7 @@ const pageState = {
   sortType: "featured",
 };
 
-//  Tìm kiếm
+// Tìm kiếm và carousel dùng chung.
 function bindSearchForm(formId, onSearch) {
   const form = document.getElementById(formId);
   if (!form) return;
@@ -172,7 +174,7 @@ function bindHorizontalCarousel(track, controls, itemSelector) {
   updateControls();
 }
 
-// lọc sản phẩm
+// Lọc và hiển thị sản phẩm trên List.
 function filterProducts() {
   const filteredProducts = [];
   const mucGia = document.querySelector('input[name="mucGia"]:checked').value;
@@ -310,8 +312,7 @@ function updateSavedPage() {
   );
 }
 
-//  Điều khiển danh mục, tìm kiếm và bộ lọc
-// đánh dấu danh mục đang chọn
+// Sự kiện tìm kiếm, danh mục, sắp xếp và khoảng giá trên List.
 function chooseCategory() {
   document.querySelectorAll(".muc-danh-muc").forEach(function (item) {
     if (item.dataset.category === pageState.category) {
@@ -322,7 +323,6 @@ function chooseCategory() {
   });
 }
 
-// chọn một danh mục
 function changeCategory() {
   document.querySelectorAll(".muc-danh-muc").forEach(function (item) {
     item.addEventListener("click", function (event) {
@@ -339,16 +339,13 @@ function changeCategory() {
   });
 }
 
-// tìm kiếm từ thanh công cụ
 function searchFromHeader() {
   bindSearchForm("formTimKiem", runSearch);
 }
-// tìm kiếm ở khung bộ lọc
 function searchFromFilter() {
   bindSearchForm("formTimTrongDanhMuc", runSearch);
 }
 
-// tìm kiếm và chọn danh mục tương ứng
 function runSearch(keyword) {
   pageState.keyword = keyword;
   const foundCategories = [];
@@ -372,7 +369,6 @@ function runSearch(keyword) {
   showProducts();
 }
 
-// thay đổi cách sắp xếp
 function changeSort() {
   document.getElementById("sapXep").addEventListener("change", function () {
     pageState.sortType = document.getElementById("sapXep").value;
@@ -381,7 +377,6 @@ function changeSort() {
   });
 }
 
-// lọc theo khoảng giá
 function changePrice() {
   document.querySelectorAll('input[name="mucGia"]').forEach(function (input) {
     input.addEventListener("change", function () {
@@ -392,7 +387,6 @@ function changePrice() {
   });
 }
 
-// xóa bộ lọc
 function clearFilters() {
   document.getElementById("xoaBoLoc").addEventListener("click", function () {
     pageState.category = "All";
@@ -410,9 +404,8 @@ function clearFilters() {
   });
 }
 
-//  Khởi tạo giao diện
-// Dùng chung bởi trang Home và trang List.
-document.addEventListener("DOMContentLoaded", function () {
+// Gắn sự kiện header dùng chung trên Home và List.
+function initializeHeader() {
   const header = document.querySelector(".dau-trang header");
   if (!header) return;
 
@@ -525,35 +518,40 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   searchForm.addEventListener("submit", closeSearch);
-});
-// hiển thị trang khi tải
+}
+
+// Gắn sự kiện List sau khi dữ liệu sản phẩm đã tải xong.
+function initializeListPage(products) {
+  productList = products;
+  const searchInput = document.getElementById("timKiem");
+  const filterSearchInput = document.getElementById("timTrongDanhMuc");
+  if (searchInput) searchInput.value = pageState.keyword;
+  if (filterSearchInput) {
+    filterSearchInput.value = searchInput ? "" : pageState.keyword;
+  }
+  chooseCategory();
+  searchFromHeader();
+  searchFromFilter();
+  changeCategory();
+  changeSort();
+  changePrice();
+  clearFilters();
+  bindHorizontalCarousel(
+    document.getElementById("danhSachDanhMucBoLoc"),
+    document.querySelector(".bo-dieu-khien-danh-muc-bo-loc"),
+    ".muc-danh-muc",
+  );
+  showProducts();
+}
+
+// Khởi tạo giao diện dùng chung và giao diện List.
 document.addEventListener("DOMContentLoaded", function () {
+  initializeHeader();
   const productContainer = document.getElementById("danhSachSanPham");
   if (!productContainer) return;
 
   window.gearHouseProductListPromise
-    .then(function (products) {
-      productList = products;
-      const searchInput = document.getElementById("timKiem");
-      const filterSearchInput = document.getElementById("timTrongDanhMuc");
-      if (searchInput) searchInput.value = pageState.keyword;
-      if (filterSearchInput) {
-        filterSearchInput.value = searchInput ? "" : pageState.keyword;
-      }
-      chooseCategory();
-      searchFromHeader();
-      searchFromFilter();
-      changeCategory();
-      changeSort();
-      changePrice();
-      clearFilters();
-      bindHorizontalCarousel(
-        document.getElementById("danhSachDanhMucBoLoc"),
-        document.querySelector(".bo-dieu-khien-danh-muc-bo-loc"),
-        ".muc-danh-muc",
-      );
-      showProducts();
-    })
+    .then(initializeListPage)
     .catch(function (error) {
       console.error(error);
       productContainer.innerHTML =

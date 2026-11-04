@@ -580,6 +580,12 @@ main {
 }
 
 /* Header uses the same three regions at every size; JS moves only the nav row when space runs out. */
+body.trang-home .dau-trang {
+  position: static;
+  top: auto;
+  z-index: auto;
+}
+
 body.trang-home .dau-trang header {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;

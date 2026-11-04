@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tất cả sản phẩm - GearHouse</title>
     <link rel="stylesheet" href="../css/global.css?v=19" />
-    <link rel="stylesheet" href="../css/List.css?v=37" />
+    <link rel="stylesheet" href="../css/List.css?v=38" />
 </head>
 <body class="trang-list">
     <div class="dau-trang">
@@ -25,6 +25,22 @@
                 <a href="home.aspx#chan-trang">Hỗ trợ</a>
             </nav>
             <div class="tai-khoan">
+                <form class="hop-tim-kiem" id="formTimKiem" autocomplete="off">
+                    <button
+                        class="nut-mo-tim-kiem"
+                        id="nutMoTimKiem"
+                        type="button"
+                        aria-label="Mở tìm kiếm"
+                        aria-expanded="false">
+                        <img src="../assets/images/search.png" alt="" />
+                    </button>
+                    <input
+                        type="search"
+                        id="timKiem"
+                        autocomplete="off"
+                        placeholder="Tìm kiếm"
+                        aria-label="Tìm kiếm" />
+                </form>
                 <a
                     class="bieu-tuong-gio-hang"
                     href="Cart.aspx"
@@ -185,6 +201,6 @@
     <script>
         window.gearHouseApplicationProducts = <%= ProductListJson %>;
     </script>
-    <script src="../js/List.js?v=19"></script>
+    <script src="../js/List.js?v=20"></script>
 </body>
 </html>

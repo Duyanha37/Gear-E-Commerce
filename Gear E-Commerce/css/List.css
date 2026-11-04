@@ -678,6 +678,12 @@
 }
 
 /* Match Home's three header regions; List simply has no search form in the actions region. */
+body.trang-list .dau-trang {
+  position: static;
+  top: auto;
+  z-index: auto;
+}
+
 body.trang-list .dau-trang header {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;

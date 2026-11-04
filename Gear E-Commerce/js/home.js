@@ -44,49 +44,61 @@ function showProducts(products, containerID, numberToShow) {
     .join("");
 }
 
-//  Khởi tạo sản phẩm và tìm kiếm trên Home
+// Kết xuất sản phẩm của Home.
+function renderHomeProducts(products) {
+  const featuredProducts = products.filter(function (product) {
+    return featuredProductIDs.includes(product.productID);
+  });
+  showProducts(featuredProducts, "danhSachSanPhamNoiBat", 5);
+  showProducts(products.slice(-5), "danhSachSanPhamMoi", 5);
+  initializeHomeCarousels();
+  initializeHomeSearch();
+}
+
+// Gắn điều khiển cho các danh sách kéo ngang trên Home.
+function initializeHomeCarousels() {
+  [
+    ["danhSachDanhMuc", ".bo-dieu-khien-danh-muc"],
+    ["danhSachSanPhamNoiBat", ".bo-dieu-khien-san-pham"],
+    ["danhSachSanPhamMoi", ".bo-dieu-khien-san-pham"],
+  ].forEach(function (carousel) {
+    const track = document.getElementById(carousel[0]);
+    if (track) {
+      bindHorizontalCarousel(
+        track,
+        track.closest(carousel[1]),
+        ".the-san-pham",
+      );
+    }
+  });
+}
+
+// Gắn tìm kiếm trên Home.
+function initializeHomeSearch() {
+  bindSearchForm("formTimKiem", function (keyword) {
+    if (keyword === "") return;
+    const searchValues = new URLSearchParams();
+    searchValues.set("search", keyword);
+    searchValues.set("category", "All");
+    searchValues.set("page", "1");
+    window.location.href = "../aspx/List.aspx?" + searchValues.toString();
+  });
+}
+
+function showHomeProductError(error) {
+  console.error(error);
+  ["danhSachSanPhamNoiBat", "danhSachSanPhamMoi"].forEach(function (id) {
+    const container = document.getElementById(id);
+    if (container) {
+      container.innerHTML =
+        '<p role="alert">Không tải được sản phẩm. Vui lòng thử lại.</p>';
+    }
+  });
+}
+
+// Khởi tạo các chức năng Home sau khi tải xong dữ liệu.
 document.addEventListener("DOMContentLoaded", function () {
   window.gearHouseProductListPromise
-    .then(function (products) {
-      const featuredProducts = products.filter(function (product) {
-        return featuredProductIDs.includes(product.productID);
-      });
-      showProducts(featuredProducts, "danhSachSanPhamNoiBat", 5);
-      showProducts(products.slice(-5), "danhSachSanPhamMoi", 5);
-
-      [
-        ["danhSachDanhMuc", ".bo-dieu-khien-danh-muc"],
-        ["danhSachSanPhamNoiBat", ".bo-dieu-khien-san-pham"],
-        ["danhSachSanPhamMoi", ".bo-dieu-khien-san-pham"],
-      ].forEach(function (carousel) {
-        const track = document.getElementById(carousel[0]);
-        if (track) {
-          bindHorizontalCarousel(
-            track,
-            track.closest(carousel[1]),
-            ".the-san-pham",
-          );
-        }
-      });
-
-      bindSearchForm("formTimKiem", function (keyword) {
-        if (keyword !== "") {
-          const searchValues = new URLSearchParams();
-          searchValues.set("search", keyword);
-          searchValues.set("category", "All");
-          searchValues.set("page", "1");
-          window.location.href = "../aspx/List.aspx?" + searchValues.toString();
-        }
-      });
-    })
-    .catch(function (error) {
-      console.error(error);
-      ["danhSachSanPhamNoiBat", "danhSachSanPhamMoi"].forEach(function (id) {
-        const container = document.getElementById(id);
-        if (container) {
-          container.innerHTML =
-            '<p role="alert">Không tải được sản phẩm. Vui lòng thử lại.</p>';
-        }
-      });
-    });
+    .then(renderHomeProducts)
+    .catch(showHomeProductError);
 });
