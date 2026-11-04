@@ -44,7 +44,7 @@ namespace Gear_E_Commerce.aspx
         private void GetCartItemsByMemberID()
         {
             string memberID = Request.QueryString["memberID"];
-            List<CartMember> cartMembers = (List<CartMember>)Application["CartMembers"];
+            List<CartMember> cartMembers = (List<CartMember>)Application["CartMemberList"];
             CartMember cartMember = cartMembers.FirstOrDefault(cm => cm.MemberID == memberID);
             if (cartMember != null)
             {
@@ -66,7 +66,7 @@ namespace Gear_E_Commerce.aspx
         private void AddCartItem()
         {
             string memberID = Request.QueryString["memberID"];
-            List<CartMember> cartMembers = (List<CartMember>)Application["CartMembers"];
+            List<CartMember> cartMembers = (List<CartMember>)Application["CartMemberList"];
             CartMember cartMember = cartMembers.FirstOrDefault(cm => cm.MemberID == memberID);
             Response.Clear();
             Response.ContentType = "application/json";
@@ -80,7 +80,7 @@ namespace Gear_E_Commerce.aspx
                 JavaScriptSerializer seri = new JavaScriptSerializer();
                 CartItem newItem = seri.Deserialize<CartItem>(requestBody);
                 cartMember.AddItem(newItem);
-                Application["CartMembers"] = cartMembers;
+                Application["CartMemberList"] = cartMembers;
                 Response.StatusCode = 200;
                 Response.Write(seri.Serialize(cartMember.Items));
                 Context.ApplicationInstance.CompleteRequest();
@@ -96,7 +96,7 @@ namespace Gear_E_Commerce.aspx
         private void UpdateCartItems()
         {
             string memberID = Request.QueryString["memberID"];
-            List<CartMember> cartMembers = (List<CartMember>)Application["CartMembers"];
+            List<CartMember> cartMembers = (List<CartMember>)Application["CartMemberList"];
             CartMember cartMember = cartMembers.FirstOrDefault(cm => cm.MemberID == memberID);
             Response.Clear();
             Response.ContentType = "application/json";
@@ -113,7 +113,7 @@ namespace Gear_E_Commerce.aspx
                 if (cartItem != null)
                 {
                     cartItem.Quantity = updatedItem.Quantity;
-                    Application["CartMembers"] = cartMembers;
+                    Application["CartMemberList"] = cartMembers;
                     Response.StatusCode = 200;
                     Response.Write(seri.Serialize(cartMember.Items));
                     Context.ApplicationInstance.CompleteRequest();
@@ -136,7 +136,7 @@ namespace Gear_E_Commerce.aspx
         {
             string memberID = Request.QueryString["memberID"];
             string cartItemID = Request.QueryString["cartItemID"];
-            List<CartMember> cartMembers = (List<CartMember>)Application["CartMembers"];
+            List<CartMember> cartMembers = (List<CartMember>)Application["CartMemberList"];
             CartMember cartMember = cartMembers.FirstOrDefault(cm => cm.MemberID == memberID);
             if (cartMember != null)
             {
@@ -144,7 +144,7 @@ namespace Gear_E_Commerce.aspx
                 if (cartItem != null)
                 {
                     cartMember.Items.Remove(cartItem);
-                    Application["CartMembers"] = cartMembers;
+                    Application["CartMemberList"] = cartMembers;
                     Response.StatusCode = 200;
                     return;
                 }

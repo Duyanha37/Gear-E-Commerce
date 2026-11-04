@@ -43,7 +43,7 @@ namespace Gear_E_Commerce.aspx
         
         private void GetProducts()
         {
-            List<Product> products = (List<Product>)Application["Products"];
+            List<Product> products = (List<Product>)Application["ProductList"];
             Response.Clear();
             Response.ContentType = "application/json";
             JavaScriptSerializer seri = new JavaScriptSerializer();
@@ -56,7 +56,7 @@ namespace Gear_E_Commerce.aspx
         private void GetProductByID()
         {
             string productID = Request.QueryString["productID"];
-            List<Product> products = (List<Product>)Application["Products"];
+            List<Product> products = (List<Product>)Application["ProductList"];
             Response.Clear();
             Response.ContentType = "application/json";
             Product product = products.FirstOrDefault(p => p.productID == productID);
@@ -76,7 +76,7 @@ namespace Gear_E_Commerce.aspx
 
         private void UpdateProduct()
         {
-            List<Product> products = (List<Product>)Application["Products"];
+            List<Product> products = (List<Product>)Application["ProductList"];
             string requestBody;
             using (StreamReader reader = new StreamReader(Request.InputStream))
             {
@@ -89,7 +89,7 @@ namespace Gear_E_Commerce.aspx
             {
                 product = updatedProduct;
                 Response.StatusCode = 200;
-                Application["Products"] = products;
+                Application["ProductList"] = products;
                 Context.ApplicationInstance.CompleteRequest();
                 return;
             }
@@ -101,14 +101,14 @@ namespace Gear_E_Commerce.aspx
 
         private void DeleteProduct()
         {
-            List<Product> products = (List<Product>)Application["Products"];
+            List<Product> products = (List<Product>)Application["ProductList"];
             string productID = Request.QueryString["productID"];
             Product product = products.FirstOrDefault(p => p.productID == productID);
             if (product != null)
             {
                 products.Remove(product);
                 Response.StatusCode = 200;
-                Application["Products"] = products;
+                Application["ProductList"] = products;
                 Context.ApplicationInstance.CompleteRequest();
                 return;
             }
