@@ -11,16 +11,25 @@
 }
 
 const getProduct = async () => {
-    const response = await fetch("GetProduct.aspx");
-    if (!response.ok) {
-        return false;
+    try {
+        const response = await fetch("ProductControllers.aspx", {
+            method: "GET",
+            headers: {
+                "Service-Name": "GetProducts"
+            }
+        });
+        if (response.status !== 200) {
+            throw new Error("Không có danh sách sản phẩm");
+        }
+        return await response.json();
+    }catch(error) {
+        console.error("Lỗi khi lấy sản phẩm:", error);
     }
-    return response.json();
 };
 
-function hienThiSanPham() {
+const hienThiSanPham = async () => {
+    var products = await getProduct();
     var html = "";
-
     var search = document.getElementById("searchInput").value.toLowerCase();
     var category = document.getElementById("categoryFilter").value;
     var stockFilter = document.getElementById("stockFilter").value;
@@ -30,17 +39,17 @@ function hienThiSanPham() {
         if (product.isDeleted == true) {
             continue;
         }
-        if (product.name.toLowerCase().indexOf(search) == -1 &&
-            product.brand.toLowerCase().indexOf(search) == -1) {
+        if (product.Name.toLowerCase().indexOf(search) == -1 &&
+            product.Brand.toLowerCase().indexOf(search) == -1) {
             continue;
         }
-        if (category != "All" && product.category != category) {
+        if (category != "All" && product.Category != category) {
             continue;
         }
         var status = "";
-        if (product.stock == 0) {
+        if (product.Stock == 0) {
             status = "Out of stock";
-        } else if (product.stock < 15) {
+        } else if (product.Stock < 15) {
             status = "Low stock";
         } else {
             status = "In stock";
@@ -52,16 +61,16 @@ function hienThiSanPham() {
         html += "<tr>";
         html += "<td>";
         html += "<div class='product-info'>";
-        html += "<img class='product-image' src='" + maHoa(product.image) + "' />";
+        html += "<img class='product-image' src='" + maHoa(product.Image) + "' />";
         html += "<div class='product-text'>";
-        html += "<strong>" + maHoa(product.name) + "</strong>";
-        html += "<small>" + maHoa(product.brand) + "</small>";
+        html += "<strong>" + maHoa(product.Name) + "</strong>";
+        html += "<small>" + maHoa(product.Brand) + "</small>";
         html += "</div>";
         html += "</div>";
         html += "</td>";
-        html += "<td>" + maHoa(product.category) + "</td>";
-        html += "<td class='price-cell'>$" + product.price + "</td>";
-        html += "<td>" + product.stock + " units</td>";
+        html += "<td>" + maHoa(product.Category) + "</td>";
+        html += "<td class='price-cell'>$" + product.Price + "</td>";
+        html += "<td>" + product.Stock + " units</td>";
         if (status == "In stock") {
             html += "<td><span class='status status-in'>In stock</span></td>";
         } else if (status == "Low stock") {
@@ -70,9 +79,9 @@ function hienThiSanPham() {
             html += "<td><span class='status status-out'>Out of stock</span></td>";
         }
         html += "<td><div class='action-buttons'>";
-        html += "<button type='button' class='btn-action' onclick='moModalXem(" + i + ")'>View</button>";
-        html += "<button type='button' class='btn-action' onclick='moModalSua(" + i + ")'>Edit</button>";
-        html += "<button type='button' class='btn-action btn-delete' onclick='xoaSanPham(" + i + ")'>Delete</button>";
+        html += "<button type='button' class='btn-action' onclick='moModalXem(" + products[i].productID + ")'>View</button>";
+        html += "<button type='button' class='btn-action' onclick='moModalSua(" + products[i].productID + ")'>Edit</button>";
+        html += "<button type='button' class='btn-action btn-delete' onclick='xoaSanPham(" + products[i].productID + ")'>Delete</button>";
         html += "</div></td>";
         html += "</tr>";
     }
@@ -90,36 +99,55 @@ function hienThiSanPham() {
         document.getElementById("editModal").style.display = "none";
         document.getElementById("addModal").style.display = "none";
         document.body.style.overflow = "";
-    }
-    function moModalXem(i) {
-        var product = products[i];
-        document.getElementById("viewImage").src = product.image;
-        document.getElementById("viewName").innerText = product.name;
-        document.getElementById("viewCategory").innerText = product.category;
-        document.getElementById("viewBrand").innerText = product.brand;
-        document.getElementById("viewPrice").innerText = "$" + product.price;
-        document.getElementById("viewStock").innerText = product.stock;
-        document.getElementById("viewDescription").innerText = product.description;
+}
+
+const getProductById = async (id) => {
+    try {
+        const response = await fetch("ProductControllers.aspx?productID=" + id, {
+            method: "GET",
+            headers: {
+                "Service-Name": "GetProductByID"
+            }
+        });
+        if (response.status !== 200) {
+            throw new Error("Không có sản phẩm");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Lỗi khi lấy sản phẩm:", error);
+    } 
+}
+
+const moModalXem = async (productID) => {
+    var product = await getProductById(productID);
+        document.getElementById("viewImage").src = product.Image;
+        document.getElementById("viewName").innerText = product.Name;
+        document.getElementById("viewCategory").innerText = product.Category;
+        document.getElementById("viewBrand").innerText = product.Brand;
+        document.getElementById("viewPrice").innerText = "$" + product.Price;
+        document.getElementById("viewStock").innerText = product.Stock;
+        document.getElementById("viewDescription").innerText = product.Description;
         document.getElementById("modalOverlay").style.display = "block";
         document.getElementById("viewModal").style.display = "block";
         document.body.style.overflow = "hidden";
-    }
-    function moModalSua(i) {
-        editingIndex = i;
-        document.getElementById("editName").value = products[i].name;
-        document.getElementById("editCategory").value = products[i].category;
-        document.getElementById("editBrand").value = products[i].brand;
-        document.getElementById("editPrice").value = products[i].price;
-        document.getElementById("editStock").value = products[i].stock;
-        document.getElementById("editDescription").value = products[i].description;
+}
+
+const moModalSua = async (productID) => {
+    var product = await getProductById(productID);
+        document.getElementById("editName").value = product.Name;
+        document.getElementById("editCategory").value = product.Category;
+        document.getElementById("editBrand").value = product.Brand;
+        document.getElementById("editPrice").value = product.Price;
+        document.getElementById("editStock").value = product.Stock;
+        document.getElementById("editDescription").value = product.Description;
         editImageData = "";
         document.getElementById("editImage").value = "";
         document.getElementById("editFileName").innerText = "Current image";
         document.getElementById("modalOverlay").style.display = "block";
         document.getElementById("editModal").style.display = "block";
         document.body.style.overflow = "hidden";
-    }
-    function luuSuaSanPham() {
+}
+const luuSuaSanPham = () => {
         var name = document.getElementById("editName").value.trim();
         var category = document.getElementById("editCategory").value;
         var brand = document.getElementById("editBrand").value.trim();
