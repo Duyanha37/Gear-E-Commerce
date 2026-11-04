@@ -15,22 +15,19 @@ function createProductCard(product) {
     '">' +
     imageContent +
     "</a>" +
-    '<p class="loai-san-pham">' +
-    product.Category +
-    " · GearHouse</p>" +
     '<h3><a href="' +
     detailLink +
     '">' +
     product.Name +
     "</a></h3>" +
     '<p class="thong-so-san-pham">' +
-    product.Description +
+    getVietnameseProductDescription(product) +
     "</p>" +
     '<div class="dong-gia"><b>$' +
     product.Price +
     '</b><a href="' +
     detailLink +
-    '">View product</a></div>' +
+    '">Xem sản phẩm</a></div>' +
     "</div>"
   );
 }
