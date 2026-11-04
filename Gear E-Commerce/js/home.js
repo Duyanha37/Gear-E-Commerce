@@ -82,8 +82,7 @@ function initializeHomeSearch() {
   });
 }
 
-function showHomeProductError(error) {
-  console.error(error);
+function showHomeProductError() {
   ["danhSachSanPhamNoiBat", "danhSachSanPhamMoi"].forEach(function (id) {
     const container = document.getElementById(id);
     if (container) {
@@ -93,9 +92,34 @@ function showHomeProductError(error) {
   });
 }
 
-// Khởi tạo các chức năng Home sau khi tải xong dữ liệu.
-document.addEventListener("DOMContentLoaded", function () {
-  window.gearHouseProductListPromise
-    .then(renderHomeProducts)
-    .catch(showHomeProductError);
+const loadHomeProducts = async () => {
+  try {
+    var response = await fetch("ProductControllers.aspx", {
+      method: "GET",
+      headers: {
+        "Service-Name": "GetProducts",
+      },
+    });
+    if (response.status !== 200) {
+      throw new Error("Không có danh sách sản phẩm.");
+    }
+    var products = await response.json();
+    if (!Array.isArray(products)) {
+      throw new Error("Controller không trả về danh sách sản phẩm hợp lệ.");
+    }
+    return products;
+  } catch (error) {
+    console.error("Có lỗi khi lấy sản phẩm:", error);
+    return null;
+  }
+};
+
+// Khởi tạo Home sau khi nhận danh sách từ ProductControllers.
+document.addEventListener("DOMContentLoaded", async function () {
+  const products = await loadHomeProducts();
+  if (Array.isArray(products)) {
+    renderHomeProducts(products);
+  } else {
+    showHomeProductError();
+  }
 });

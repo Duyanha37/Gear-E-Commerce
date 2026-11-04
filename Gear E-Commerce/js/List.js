@@ -1,28 +1,27 @@
 // Dữ liệu dùng chung cho Home và List.
 let productList = [];
-window.gearHouseProductListPromise = fetch("../aspx/ProductControllers.aspx", {
-  headers: { "Service-Name": "GetProducts" },
-})
-  .then(function (response) {
-    if (!response.ok) throw new Error("Không tải được danh sách sản phẩm.");
-    return response.json();
-  })
-  .then(function (products) {
+
+const loadProductList = async () => {
+  try {
+    var response = await fetch("ProductControllers.aspx", {
+      method: "GET",
+      headers: {
+        "Service-Name": "GetProducts",
+      },
+    });
+    if (response.status !== 200) {
+      throw new Error("Không có danh sách sản phẩm.");
+    }
+    var products = await response.json();
     if (!Array.isArray(products)) {
       throw new Error("Controller không trả về danh sách sản phẩm hợp lệ.");
     }
-    productList = products;
     return products;
-  })
-  .catch(function (error) {
-    const applicationProducts = window.gearHouseApplicationProducts;
-    if (Array.isArray(applicationProducts)) {
-      console.warn("Dùng dữ liệu Application do controller chưa trả về danh sách.", error);
-      productList = applicationProducts;
-      return productList;
-    }
-    throw error;
-  });
+  } catch (error) {
+    console.error("Có lỗi khi lấy sản phẩm:", error);
+    return null;
+  }
+};
 
 const PRODUCTS_PER_PAGE = 16;
 
@@ -585,11 +584,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const productContainer = document.getElementById("danhSachSanPham");
   if (!productContainer) return;
 
-  window.gearHouseProductListPromise
-    .then(initializeListPage)
-    .catch(function (error) {
-      console.error(error);
+  loadProductList().then(function (products) {
+    if (!Array.isArray(products)) {
       productContainer.innerHTML =
         '<p class="thong-bao-khong-co-san-pham" role="alert">Không tải được sản phẩm. Vui lòng thử lại.</p>';
-    });
+      return;
+    }
+    initializeListPage(products);
+  });
 });
