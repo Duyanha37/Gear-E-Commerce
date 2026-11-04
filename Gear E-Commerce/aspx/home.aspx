@@ -8,14 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GearHouse - Linh kiện máy tính</title>
     <link rel="stylesheet" href="../css/global.css?v=19" />
-    <link rel="stylesheet" href="../css/home.css?v=31" />
+    <link rel="stylesheet" href="../css/home.css?v=41" />
 </head>
 <body class="trang-home">
     <div class="dau-trang">
         <header>
             <div class="logo-thuong-hieu">
                 <a href="home.aspx" aria-label="GearHouse - Trang chủ">
-                    <span class="logo-mark" aria-hidden="true">G</span>
+                    <img class="logo-mark" src="../assets/images/Logo-White.png" alt="" aria-hidden="true" />
+                    <span class="ten-thuong-hieu">GearHouse</span>
                 </a>
             </div>
             <nav class="menu-chinh" id="menuChinh">
