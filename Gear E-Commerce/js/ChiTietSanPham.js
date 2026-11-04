@@ -1,97 +1,315 @@
-const catalog = window.gearProductCatalog || [];
-const productId = Number(new URLSearchParams(window.location.search).get("id"));
-const currentProduct = catalog.find(function (product) {
-    return product.id === productId;
-});
+function layMemberID() {
+    var memberID = document.body.getAttribute("data-member-id") ||
+        document.documentElement.getAttribute("data-member-id");
 
-function makeElement(tag, className, text) {
-    const element = document.createElement(tag);
+    if (!memberID && window.gearMemberID !== undefined) {
+        memberID = window.gearMemberID;
+    }
+
+    if (!memberID) {
+        var memberInput = document.getElementById("memberID");
+        if (memberInput) {
+            memberID = memberInput.value;
+        }
+    }
+
+    return memberID ? String(memberID).trim() : "";
+}
+
+function chuanHoaSanPham(product) {
+    return {
+        productID: String(product.productID),
+        Name: product.Name || "",
+        Brand: product.Brand || "",
+        Description: product.Description || "",
+        Price: Number(product.Price) || 0,
+        Stock: Number(product.Stock) || 0,
+        Category: product.Category || "",
+        Image: product.Image || "",
+        isDelete: product.isDelete === true || product.isDeleted === true
+    };
+}
+
+const getProductByID = async (productID) => {
+    // TODO: ProductControllers.aspx.cs đang đọc Application["Products"],
+    // trong khi Global.asax.cs khởi tạo Application["ProductList"].
+    // Cần thống nhất khóa phía controller để API chi tiết trả sản phẩm.
+    try {
+        var response = await fetch("ProductControllers.aspx?productID=" + encodeURIComponent(productID), {
+            method: "GET",
+            headers: {
+                "Service-Name": "GetProductByID"
+            },
+            credentials: "same-origin"
+        });
+
+        if (!response.ok) {
+            throw new Error("Không tìm thấy sản phẩm.");
+        }
+
+        var product = await response.json();
+        if (!product || product.isDelete === true || product.isDeleted === true) {
+            throw new Error("Sản phẩm không tồn tại.");
+        }
+
+        return chuanHoaSanPham(product);
+    } catch (error) {
+        console.error("Lỗi lấy sản phẩm theo mã:", error);
+        throw error;
+    }
+};
+
+const getProducts = async () => {
+    var response = await fetch("ProductControllers.aspx", {
+        method: "GET",
+        headers: {
+            "Service-Name": "GetProducts"
+        },
+        credentials: "same-origin"
+    });
+
+    if (!response.ok) {
+        throw new Error("Không thể lấy danh sách sản phẩm.");
+    }
+
+    var products = await response.json();
+    if (!Array.isArray(products)) {
+        throw new Error("API không trả về danh sách sản phẩm.");
+    }
+
+    return products.map(chuanHoaSanPham).filter(product => !product.isDelete);
+};
+
+const getCartByMember = async (memberID) => {
+    // TODO: CartControllers.aspx.cs đang đọc Application["CartMembers"],
+    // trong khi Global.asax.cs khởi tạo Application["CartMemberList"].
+    // Cần thống nhất khóa phía controller để API thành viên hoạt động.
+    var response = await fetch("CartControllers.aspx?memberID=" + encodeURIComponent(memberID), {
+        method: "GET",
+        headers: {
+            "Service-Name": "GetCartItemsByMemberID"
+        },
+        credentials: "same-origin"
+    });
+
+    if (!response.ok) {
+        throw new Error("Không thể lấy giỏ hàng của thành viên.");
+    }
+
+    var items = await response.json();
+    if (!Array.isArray(items)) {
+        throw new Error("API không trả về danh sách giỏ hàng.");
+    }
+
+    return items.map(item => ({
+        CartID: String(item.CartID),
+        ProductID: String(item.ProductID),
+        Quantity: Math.max(0, Number(item.Quantity) || 0)
+    }));
+};
+
+const getCartBySession = async () => {
+    var response = await fetch("Cart.aspx?api=cart", {
+        method: "GET",
+        credentials: "same-origin"
+    });
+
+    if (!response.ok) {
+        throw new Error("Không thể lấy giỏ hàng.");
+    }
+
+    var items = await response.json();
+    if (!Array.isArray(items)) {
+        throw new Error("API không trả về danh sách giỏ hàng.");
+    }
+
+    return items.map(item => ({
+        ProductID: String(item.id),
+        Quantity: Math.max(0, Number(item.soLuong) || 0)
+    }));
+};
+
+const getCart = async () => {
+    var memberID = layMemberID();
+
+    if (memberID) {
+        return {
+            items: await getCartByMember(memberID),
+            memberID: memberID,
+            isMemberCart: true
+        };
+    }
+
+    // TODO: ChiTietSanPham.aspx hiện chưa render memberID từ Session vào HTML.
+    // Khi trang cung cấp memberID, nhánh trên sẽ dùng CartControllers.aspx.
+    // Tạm thời dùng API session hiện có để giỏ hàng vẫn hoạt động.
+    return {
+        items: await getCartBySession(),
+        memberID: "",
+        isMemberCart: false
+    };
+};
+
+const guiLenhGioHangSession = async (action, productID, quantity) => {
+    var response = await fetch("Cart.aspx?api=cart", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: action,
+            id: Number(productID),
+            quantity: quantity
+        })
+    });
+
+    var result = await response.json();
+    if (!response.ok) {
+        throw new Error(result.error || "Không thể cập nhật giỏ hàng.");
+    }
+
+    return result;
+};
+
+const guiLenhGioHangThanhVien = async (action, memberID, item, quantity) => {
+    var method = "POST";
+    var serviceName = "";
+    var url = "CartControllers.aspx?memberID=" + encodeURIComponent(memberID);
+    var body = null;
+
+    if (action === "add") {
+        serviceName = "AddCartItem";
+        body = JSON.stringify({
+            CartID: item.CartID || memberID,
+            ProductID: item.ProductID,
+            Quantity: quantity
+        });
+    } else if (action === "update") {
+        serviceName = "UpdateCartItems";
+        method = "PUT";
+        body = JSON.stringify({
+            CartID: item.CartID,
+            ProductID: item.ProductID,
+            Quantity: quantity
+        });
+    } else if (action === "remove") {
+        serviceName = "DeleteCartItem";
+        url += "&cartItemID=" + encodeURIComponent(item.CartID) +
+            "&productID=" + encodeURIComponent(item.ProductID);
+    }
+
+    var options = {
+        method: method,
+        headers: {
+            "Service-Name": serviceName
+        },
+        credentials: "same-origin"
+    };
+
+    if (body) {
+        options.headers["Content-Type"] = "application/json";
+        options.body = body;
+    }
+
+    var response = await fetch(url, options);
+    if (!response.ok) {
+        throw new Error("Không thể cập nhật giỏ hàng thành viên.");
+    }
+
+    return response;
+};
+
+const formatPrice = (price) => Number(price).toLocaleString("vi-VN") + " ₫";
+
+const taoThe = (tag, className, text) => {
+    var element = document.createElement(tag);
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
     return element;
-}
+};
 
-async function readCart() {
-    const response = await fetch("Cart.aspx?api=cart", { credentials: "same-origin" });
-    if (!response.ok) throw new Error("Could not load the cart.");
-    const cart = await response.json();
-    return Array.isArray(cart) ? cart : [];
-}
+async function capNhatSoLuongGio() {
+    var cart = await getCart();
+    var totalItems = cart.items.reduce(function (total, item) {
+        return total + item.Quantity;
+    }, 0);
 
-async function sendCartAction(action, productId, quantity) {
-    const response = await fetch("Cart.aspx?api=cart", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: action, id: productId, quantity: quantity })
+    document.querySelectorAll("[data-cart-count]").forEach(function (element) {
+        element.textContent = String(totalItems);
     });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Could not update the cart.");
-    return result;
 }
 
-function formatPrice(price) {
-    return Number(price).toLocaleString("vi-VN") + " ₫";
-}
-
-async function addToCart(product, quantity) {
-    if (!product || product.tonkho < 1) return false;
-    const cart = await readCart();
-    const existing = cart.find(function (item) {
-        return Number(item.id) === product.id;
+async function themVaoGio(product, requestedQuantity) {
+    var cart = await getCart();
+    var item = cart.items.find(function (cartItem) {
+        return cartItem.ProductID === product.productID;
     });
-    const currentQuantity = existing ? Number(existing.soLuong) || 0 : 0;
-    const safeQuantity = Math.min(Math.floor(Number(quantity) || 0), product.tonkho - currentQuantity, 99 - currentQuantity);
-    if (safeQuantity < 1) return false;
-    await sendCartAction("add", product.id, safeQuantity);
-    await updateCartBadge();
+    var currentQuantity = item ? item.Quantity : 0;
+    var availableQuantity = Math.min(product.Stock - currentQuantity, 99 - currentQuantity);
+    var quantity = Math.min(Math.floor(Number(requestedQuantity) || 0), availableQuantity);
+
+    if (quantity < 1) {
+        throw new Error("Số lượng yêu cầu vượt quá tồn kho.");
+    }
+
+    if (cart.isMemberCart && item) {
+        await guiLenhGioHangThanhVien("update", cart.memberID, item, currentQuantity + quantity);
+    } else if (cart.isMemberCart) {
+        await guiLenhGioHangThanhVien("add", cart.memberID, {
+            CartID: cart.memberID,
+            ProductID: product.productID
+        }, quantity);
+    } else {
+        await guiLenhGioHangSession("add", product.productID, quantity);
+    }
+
+    await capNhatSoLuongGio();
     return true;
 }
 
-async function updateCartBadge() {
-    const cart = await readCart();
-    const count = cart.reduce(function (sum, item) {
-        return sum + (Number(item.soLuong) || 0);
-    }, 0);
-    document.querySelectorAll("[data-cart-count]").forEach(function (element) {
-        element.textContent = String(count);
-    });
-}
+function taoTheGoiY(product, label) {
+    var card = taoThe("article", "product-card");
+    var imageLink = taoThe("a", "product-card-image");
+    imageLink.href = "ChiTietSanPham.aspx?id=" + encodeURIComponent(product.productID);
 
-function makeProductCard(product, label) {
-    const card = makeElement("article", "product-card");
-    const imageLink = makeElement("a", "product-card-image");
-    imageLink.href = "ChiTietSanPham.aspx?id=" + product.id;
-    const image = document.createElement("img");
-    image.src = product.anh;
-    image.alt = product.ten;
-    image.loading = "lazy";
-    imageLink.appendChild(image);
-    if (label) imageLink.appendChild(makeElement("span", "product-tag", label));
-    const body = makeElement("div", "product-card-body");
-    body.appendChild(makeElement("p", "product-card-category", product.loai + " · " + product.brand));
-    const title = makeElement("h3");
-    const titleLink = makeElement("a", "", product.ten);
+    if (product.Image) {
+        var image = document.createElement("img");
+        image.src = product.Image;
+        image.alt = product.Name;
+        image.loading = "lazy";
+        imageLink.appendChild(image);
+    }
+    if (label) imageLink.appendChild(taoThe("span", "product-tag", label));
+
+    var body = taoThe("div", "product-card-body");
+    body.appendChild(taoThe("p", "product-card-category", product.Brand
+        ? product.Category + " · " + product.Brand
+        : product.Category));
+
+    var title = taoThe("h3");
+    var titleLink = taoThe("a", "", product.Name);
     titleLink.href = imageLink.href;
     title.appendChild(titleLink);
-    body.appendChild(title);
-    body.appendChild(makeElement("p", "product-card-spec", product.thongSo));
-    const footer = makeElement("div", "product-card-footer");
-    footer.appendChild(makeElement("strong", "", formatPrice(product.gia)));
-    const addButton = makeElement("button", "mini-add", "Add to cart");
+    body.append(title, taoThe("p", "product-card-spec", product.Description));
+
+    var footer = taoThe("div", "product-card-footer");
+    footer.appendChild(taoThe("strong", "", formatPrice(product.Price)));
+    var addButton = taoThe("button", "mini-add", product.Stock > 0 ? "Thêm vào giỏ" : "Hết hàng");
     addButton.type = "button";
-    addButton.disabled = product.tonkho < 1;
+    addButton.disabled = product.Stock < 1;
     addButton.addEventListener("click", async function () {
         try {
-            if (await addToCart(product, 1)) {
-                addButton.textContent = "Added";
-                window.setTimeout(function () {
-                    addButton.textContent = "Add to cart";
-                }, 1300);
-            }
+            await themVaoGio(product, 1);
+            addButton.textContent = "Đã thêm";
+            window.setTimeout(function () {
+                addButton.textContent = "Thêm vào giỏ";
+            }, 1200);
         } catch (error) {
-            addButton.textContent = "Try again";
-            window.setTimeout(function () { addButton.textContent = "Add to cart"; }, 1500);
+            addButton.textContent = "Thử lại";
+            window.setTimeout(function () {
+                addButton.textContent = "Thêm vào giỏ";
+            }, 1500);
         }
     });
     footer.appendChild(addButton);
@@ -100,245 +318,146 @@ function makeProductCard(product, label) {
     return card;
 }
 
-function showRecommendations() {
-    const container = document.getElementById("danhSachTuongTu");
-    const related = catalog.filter(function (product) {
-        return currentProduct && product.id !== currentProduct.id && product.loai === currentProduct.loai;
+function hienThiGoiY(products, currentProduct) {
+    var container = document.getElementById("danhSachTuongTu");
+    if (!container) return;
+
+    container.replaceChildren();
+    var relatedProducts = products.filter(function (product) {
+        return product.productID !== currentProduct.productID &&
+            product.Category === currentProduct.Category;
     });
-    const remaining = catalog.filter(function (product) {
-        return product.id !== (currentProduct && currentProduct.id) && !related.some(function (item) {
-            return item.id === product.id;
-        });
+    var otherProducts = products.filter(function (product) {
+        return product.productID !== currentProduct.productID &&
+            product.Category !== currentProduct.Category;
     });
-    related.concat(remaining).slice(0, 4).forEach(function (product, index) {
-        container.appendChild(makeProductCard(product, index === 0 ? "Popular" : ""));
+
+    relatedProducts.concat(otherProducts).slice(0, 4).forEach(function (product, index) {
+        container.appendChild(taoTheGoiY(product, index === 0 ? "Gợi ý" : ""));
     });
 }
 
-function makeVariantPicker(product, selectedSpec) {
-    const suggestions = catalog
-        .filter(function (candidate) {
-            return candidate.id !== product.id && candidate.loai === product.loai;
-        })
-        .sort(function (a, b) {
-            const aBrandMatch = a.brand === product.brand ? 0 : 1;
-            const bBrandMatch = b.brand === product.brand ? 0 : 1;
-            return aBrandMatch - bBrandMatch || Math.abs(a.gia - product.gia) - Math.abs(b.gia - product.gia);
-        })
-        .slice(0, 2);
+function hienThiChiTiet(product, products) {
+    var root = document.getElementById("chiTietSanPham");
+    var overview = document.getElementById("productOverview");
+    var crumb = document.getElementById("crumbProduct");
+    if (!root) return;
 
-    if (!suggestions.length) return null;
+    root.replaceChildren();
+    if (crumb) crumb.textContent = product.Name;
+    if (overview) overview.textContent = product.Description;
 
-    const picker = makeElement("div", "variant-picker");
-    const button = makeElement("button", "spec-box variant-trigger");
-    const menu = makeElement("div", "variant-menu");
-    const selectedValue = makeElement("strong", "", selectedSpec.value);
-    const menuId = "variant-options-" + product.id;
-    button.type = "button";
-    button.append(
-        makeElement("span", "", selectedSpec.label),
-        selectedValue
-    );
-    button.setAttribute("aria-label", selectedSpec.label + ": " + selectedSpec.value + ". Show two demo options.");
-    button.setAttribute("aria-expanded", "false");
-    button.setAttribute("aria-controls", menuId);
-    menu.id = menuId;
-    menu.hidden = true;
-    menu.setAttribute("role", "menu");
+    var layout = taoThe("section", "product-layout");
+    var gallery = taoThe("div", "product-gallery");
+    var imageFrame = taoThe("div", "main-image-frame");
 
-    suggestions.forEach(function (suggestion) {
-        const option = makeElement("button", "variant-option");
-        option.type = "button";
-        option.setAttribute("role", "menuitem");
-        const details = makeElement("span", "variant-option-details");
-        const optionSpec = suggestion.specs.find(function (item) {
-            return item.label === selectedSpec.label;
-        }) || suggestion.specs[0];
-        details.append(
-            makeElement("strong", "", optionSpec.label + ": " + optionSpec.value),
-            makeElement("small", "", "Demo option")
-        );
-        option.appendChild(details);
-        option.addEventListener("click", function () {
-            selectedValue.textContent = optionSpec.value;
-            button.setAttribute("aria-label", selectedSpec.label + ": " + optionSpec.value + ". Show two demo options.");
-            button.setAttribute("aria-expanded", "false");
-            menu.hidden = true;
-        });
-        menu.appendChild(option);
-    });
-
-    button.addEventListener("click", function () {
-        const isOpen = button.getAttribute("aria-expanded") !== "true";
-        button.setAttribute("aria-expanded", String(isOpen));
-        menu.hidden = !isOpen;
-    });
-    picker.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-            button.setAttribute("aria-expanded", "false");
-            menu.hidden = true;
-            button.focus();
-        }
-    });
-    document.addEventListener("pointerdown", function (event) {
-        if (!picker.contains(event.target)) {
-            button.setAttribute("aria-expanded", "false");
-            menu.hidden = true;
-        }
-    });
-
-    picker.append(button, menu);
-    return picker;
-}
-
-function showProduct() {
-    const root = document.getElementById("chiTietSanPham");
-    const overview = document.getElementById("productOverview");
-    const crumb = document.getElementById("crumbProduct");
-    if (!currentProduct) {
-        root.appendChild(makeElement("section", "not-found", "Product not found"));
-        overview.textContent = "Choose another component from the products catalog.";
-        showRecommendations();
-        return;
+    if (product.Image) {
+        var image = document.createElement("img");
+        image.src = product.Image;
+        image.alt = product.Name;
+        imageFrame.appendChild(image);
     }
+    gallery.appendChild(imageFrame);
 
-    crumb.textContent = currentProduct.ten;
-    overview.textContent = currentProduct.overview;
-    const layout = makeElement("section", "product-layout");
-    const gallery = makeElement("div", "product-gallery");
-    const thumbnails = makeElement("div", "product-thumbnails");
-    const mainImageFrame = makeElement("div", "main-image-frame");
-    const mainImage = document.createElement("img");
-    mainImage.src = currentProduct.anh; mainImage.alt = currentProduct.ten;
-    mainImageFrame.appendChild(mainImage);
+    var info = taoThe("section", "product-info");
+    var categoryText = product.Brand
+        ? product.Category + " · " + product.Brand
+        : product.Category;
+    info.appendChild(taoThe("p", "product-category", categoryText));
+    info.appendChild(taoThe("h1", "product-title", product.Name));
+    info.appendChild(taoThe("p", "product-price", formatPrice(product.Price)));
 
-    for (let index = 0; index < 3; index += 1) {
-        const thumbnail = makeElement("button", "product-thumbnail" + (index === 0 ? " selected" : ""));
-        thumbnail.type = "button";
-        thumbnail.setAttribute("aria-label", "Product image " + (index + 1));
-        const thumbImage = document.createElement("img");
-        thumbImage.src = currentProduct.anh; thumbImage.alt = "";
-        thumbnail.appendChild(thumbImage);
-        thumbnail.addEventListener("click", function () {
-            mainImage.src = thumbImage.src;
-            thumbnails.querySelectorAll(".product-thumbnail").forEach(function (item) { item.classList.remove("selected"); });
-            thumbnail.classList.add("selected");
-        });
-        thumbnails.appendChild(thumbnail);
-    }
-    gallery.append(thumbnails, mainImageFrame);
+    var stockText = product.Stock > 0
+        ? "Còn hàng · " + product.Stock + " sản phẩm"
+        : "Hết hàng";
+    var stock = taoThe("p", "stock-status", stockText);
+    if (product.Stock < 1) stock.classList.add("out-of-stock");
+    info.append(stock, taoThe("p", "product-description", product.Description));
 
-    const info = makeElement("section", "product-info");
-    info.appendChild(makeElement("p", "product-category", currentProduct.loai + " · " + currentProduct.brand));
-    info.appendChild(makeElement("h1", "product-title", currentProduct.ten));
-    const rating = makeElement("div", "product-rating");
-    const stars = makeElement("span", "rating-stars", "★★★★★");
-    stars.setAttribute("aria-label", "Rated " + currentProduct.rating + " out of 5 stars");
-    rating.append(stars, makeElement("strong", "", currentProduct.rating), makeElement("span", "rating-count", "(" + currentProduct.reviews + " reviews)"));
-    info.appendChild(rating);
-    info.appendChild(makeElement("p", "product-price", formatPrice(currentProduct.gia)));
-    const stock = makeElement("p", "stock-status", currentProduct.tonkho > 0 ? "In stock — ships within 24 hours · " + currentProduct.tonkho + " available" : "Out of stock");
-    if (currentProduct.tonkho < 1) stock.classList.add("out-of-stock");
-    info.append(stock, makeElement("p", "product-description", currentProduct.moTa));
-
-    const specs = makeElement("div", "spec-grid");
-    currentProduct.specs.forEach(function (spec, index) {
-        if (index === 0) {
-            specs.appendChild(makeVariantPicker(currentProduct, spec));
-            return;
-        }
-        const box = makeElement("div", "spec-box");
-        box.append(makeElement("span", "", spec.label), makeElement("strong", "", spec.value));
-        specs.appendChild(box);
-    });
-    info.appendChild(specs);
-
-    const actions = makeElement("div", "product-actions");
-    const quantity = makeElement("div", "quantity-control");
-    const minus = makeElement("button", "", "−");
+    var actions = taoThe("div", "product-actions");
+    var quantity = taoThe("div", "quantity-control");
+    var minus = taoThe("button", "", "−");
     minus.type = "button";
-    minus.setAttribute("aria-label", "Decrease quantity");
-    const input = document.createElement("input");
+    minus.setAttribute("aria-label", "Giảm số lượng");
+
+    var input = document.createElement("input");
     input.type = "number";
     input.min = "1";
-    input.max = String(Math.max(1, Math.min(99, currentProduct.tonkho)));
+    input.max = String(Math.max(1, Math.min(99, product.Stock)));
     input.value = "1";
-    input.setAttribute("aria-label", "Quantity");
-    const plus = makeElement("button", "", "+");
-    plus.type = "button";
-    plus.setAttribute("aria-label", "Increase quantity");
+    input.setAttribute("aria-label", "Số lượng");
 
-    function normalizeQuantity() {
+    var plus = taoThe("button", "", "+");
+    plus.type = "button";
+    plus.setAttribute("aria-label", "Tăng số lượng");
+
+    const chuanHoaSoLuong = () => {
         input.value = String(Math.min(Number(input.max), Math.max(1, Math.floor(Number(input.value) || 1))));
-    }
+    };
 
     minus.addEventListener("click", function () {
         input.value = String(Math.max(1, Number(input.value) - 1));
     });
-
     plus.addEventListener("click", function () {
         input.value = String(Math.min(Number(input.max), Number(input.value) + 1));
     });
-
-    input.addEventListener("change", normalizeQuantity);
+    input.addEventListener("change", chuanHoaSoLuong);
     quantity.append(minus, input, plus);
-    const addButton = makeElement("button", "add-to-cart", "Add to cart"); addButton.type = "button";
-    addButton.disabled = currentProduct.tonkho < 1;
+
+    var addButton = taoThe("button", "add-to-cart", "Thêm vào giỏ");
+    addButton.type = "button";
+    addButton.disabled = product.Stock < 1;
     actions.append(quantity, addButton);
-    const buyNow = makeElement("button", "buy-now", "Buy now"); buyNow.type = "button"; buyNow.disabled = currentProduct.tonkho < 1;
-    const message = makeElement("p", "action-message", ""); message.setAttribute("role", "status");
+
+    var buyNow = taoThe("button", "buy-now", "Mua ngay");
+    buyNow.type = "button";
+    buyNow.disabled = product.Stock < 1;
+    var message = taoThe("p", "action-message", "");
+    message.setAttribute("role", "status");
+
     addButton.addEventListener("click", async function () {
-        normalizeQuantity();
+        chuanHoaSoLuong();
         try {
-            if (await addToCart(currentProduct, Number(input.value))) message.textContent = currentProduct.ten + " added to your cart.";
-            else message.textContent = "The requested quantity is not available.";
+            await themVaoGio(product, Number(input.value));
+            message.textContent = "Đã thêm sản phẩm vào giỏ hàng.";
         } catch (error) {
-            message.textContent = "Could not update your cart. Please try again.";
+            message.textContent = "Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.";
         }
     });
+
     buyNow.addEventListener("click", function () {
-        message.textContent = "Checkout is not available in this demo yet. Your cart is ready when checkout is added.";
+        message.textContent = "Chức năng thanh toán chưa có trong bản demo.";
     });
 
     info.append(actions, buyNow, message);
-    const service = makeElement("div", "service-points");
-    function serviceNote(label, path) {
-        const note = makeElement("p", "");
-        const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        icon.setAttribute("viewBox", "0 0 20 20"); icon.setAttribute("aria-hidden", "true");
-        const shape = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        shape.setAttribute("d", path);
-        icon.appendChild(shape);
-        note.append(icon, document.createTextNode(label));
-        return note;
-    }
-    service.append(serviceNote("Free delivery over 2.475.000 ₫", "M2 5h10v9H2z M12 8h3l3 3v3h-6z M5 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"), serviceNote("2-year limited warranty", "M10 2.5 16 5v4.4c0 3.8-2.4 6.6-6 8.1-3.6-1.5-6-4.3-6-8.1V5l6-2.5Z M7.4 9.9l1.7 1.7 3.6-3.8"));
-    info.appendChild(service);
     layout.append(gallery, info);
     root.appendChild(layout);
-    showRecommendations();
+    hienThiGoiY(products, product);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    showProduct();
-    updateCartBadge().catch(function () { });
+document.addEventListener("DOMContentLoaded", async function () {
+    var productID = new URLSearchParams(window.location.search).get("id");
+    var root = document.getElementById("chiTietSanPham");
+    var overview = document.getElementById("productOverview");
+    var product;
+    var products;
 
-    const searchForm = document.getElementById("formTimKiem");
-    const searchToggle = document.getElementById("nutMoTimKiem");
-    const searchInput = searchForm && searchForm.querySelector('input[type="search"]');
-    if (searchForm && searchToggle && searchInput) {
-        searchToggle.addEventListener("click", function () {
-            const isOpen = searchForm.classList.toggle("dang-mo");
-            searchToggle.setAttribute("aria-expanded", String(isOpen));
-            searchToggle.setAttribute("aria-label", isOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm");
-            if (isOpen) searchInput.focus();
-        });
-        searchInput.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                searchForm.classList.remove("dang-mo");
-                searchToggle.setAttribute("aria-expanded", "false");
-                searchToggle.focus();
-            }
-        });
+    if (!root) return;
+
+    try {
+        if (!productID) {
+            throw new Error("Thiếu mã sản phẩm.");
+        }
+
+        product = await getProductByID(productID);
+        products = await getProducts();
+        hienThiChiTiet(product, products);
+        await capNhatSoLuongGio();
+    } catch (error) {
+        root.replaceChildren(taoThe("section", "not-found", "Không tải được sản phẩm."));
+        if (overview) {
+            overview.textContent = "Vui lòng thử lại sau hoặc quay về danh sách sản phẩm.";
+        }
+        console.error("Lỗi tải trang chi tiết sản phẩm:", error);
     }
 });
