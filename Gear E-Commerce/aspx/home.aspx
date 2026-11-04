@@ -283,7 +283,10 @@
             <p>© 2026 GearHouse. Đã đăng ký bản quyền.</p>
         </div>
     </div>
-    <script src="../js/List.js?v=22"></script>
-    <script src="../js/home.js?v=3"></script>
+    <script>
+        window.gearHouseApplicationProducts = <%= ProductListJson %>;
+    </script>
+    <script src="../js/List.js?v=23"></script>
+    <script src="../js/home.js?v=4"></script>
 </body>
 </html>

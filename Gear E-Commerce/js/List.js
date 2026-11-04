@@ -1,348 +1,27 @@
-const productList = [
-  {
-    productID: "1",
-    Name: "GeForce RTX 4080 Super",
-    Description: "16GB GDDR6X graphics card",
-    Price: 24975000,
-    Stock: 12,
-    Category: "GPU",
-    Image: "../assets/images-backup/geforce-rtx-4080-super.jpg",
-  },
-  {
-    productID: "2",
-    Name: "Ryzen 9 7950X3D",
-    Description: "16-Core processor for high performance",
-    Price: 14975000,
-    Stock: 18,
-    Category: "CPU",
-    Image: "../assets/images-backup/ryzen-9-7950x3d.jpg",
-  },
-  {
-    productID: "3",
-    Name: "ROG Strix X670E-E",
-    Description: "AM5 motherboard with Wi-Fi 6E",
-    Price: 11725000,
-    Stock: 9,
-    Category: "Motherboard",
-    Image: "../assets/images-backup/rog-strix-x670e-e.jpg",
-  },
-  {
-    productID: "4",
-    Name: "Vengeance RGB 32GB",
-    Description: "DDR5 6000MHz memory kit",
-    Price: 3225000,
-    Stock: 30,
-    Category: "RAM",
-    Image: "../assets/images-backup/vengeance-rgb-32gb.jpg",
-  },
-  {
-    productID: "5",
-    Name: "990 PRO NVMe 2TB",
-    Description: "7450MB/s PCIe 4.0 storage",
-    Price: 4475000,
-    Stock: 16,
-    Category: "SSD",
-    Image: "../assets/images-backup/samsung-990-pro-2tb.jpg",
-  },
-  {
-    productID: "6",
-    Name: "RM1000x Shift",
-    Description: "1000W 80 Plus Gold power supply",
-    Price: 5225000,
-    Stock: 14,
-    Category: "Power Supply",
-    Image: "../assets/images-backup/corsair-rm1000x-shift.jpg",
-  },
-  {
-    productID: "7",
-    Name: "RGB Gaming Fan 120mm",
-    Description: "Quiet cooling fan with RGB light",
-    Price: 725000,
-    Stock: 40,
-    Category: "Accessories",
-    Image: "../assets/images-backup/RGB-fan-white.png",
-  },
-  {
-    productID: "8",
-    Name: "Intel Core i9-14900K",
-    Description: "24-Core processor for gaming and work",
-    Price: 13725000,
-    Stock: 11,
-    Category: "CPU",
-    Image: "../assets/images-backup/intel-core-i9-14900k.jpg",
-  },
-  {
-    productID: "9",
-    Name: "GeForce RTX 4070 Ti",
-    Description: "12GB GDDR6X graphics card",
-    Price: 19975000,
-    Stock: 8,
-    Category: "GPU",
-    Image: "../assets/images-backup/geforce-rtx-4070-ti.jpg",
-  },
-  {
-    productID: "10",
-    Name: "Fury Beast DDR5 32GB",
-    Description: "DDR5 memory kit 5600MHz",
-    Price: 2725000,
-    Stock: 24,
-    Category: "RAM",
-    Image: "../assets/images-backup/kingston-fury-beast-ddr5-32gb.jpg",
-  },
-  {
-    productID: "11",
-    Name: "B650 AORUS Elite AX",
-    Description: "AM5 motherboard with Wi-Fi",
-    Price: 5725000,
-    Stock: 13,
-    Category: "Motherboard",
-    Image: "../assets/images-backup/b650-aorus-elite-ax.jpg",
-  },
-  {
-    productID: "12",
-    Name: "Crucial P3 Plus 1TB",
-    Description: "PCIe 4.0 NVMe storage",
-    Price: 1975000,
-    Stock: 35,
-    Category: "SSD",
-    Image: "../assets/images-backup/crucial-p3-plus-1tb.jpg",
-  },
-  {
-    productID: "13",
-    Name: "ROG Thor 850W Platinum",
-    Description: "850W modular power supply",
-    Price: 4725000,
-    Stock: 7,
-    Category: "Power Supply",
-    Image: "../assets/images-backup/rog-thor-850w-platinum.jpg",
-  },
-  {
-    productID: "14",
-    Name: "Thermal Paste Kit",
-    Description: "Thermal paste for CPU cooling",
-    Price: 300000,
-    Stock: 50,
-    Category: "Accessories",
-    Image: "../assets/images-backup/thermal-paste-kit.jpg",
-  },
-  {
-    productID: "15",
-    Name: "Ryzen 7 7800X3D",
-    Description: "8-Core processor for gaming",
-    Price: 9725000,
-    Stock: 15,
-    Category: "CPU",
-    Image: "../assets/images-backup/ryzen-7-7800x3d.jpg",
-  },
-  {
-    productID: "16",
-    Name: "Radeon RX 7900 XTX",
-    Description: "24GB graphics card for 4K gaming",
-    Price: 22475000,
-    Stock: 6,
-    Category: "GPU",
-    Image: "../assets/images-backup/radeon-rx-7900-xtx.jpg",
-  },
-  {
-    productID: "17",
-    Name: "Dominator Titanium 64GB",
-    Description: "DDR5 memory kit 6400MHz",
-    Price: 5475000,
-    Stock: 10,
-    Category: "RAM",
-    Image: "../assets/images-backup/dominator-titanium-64gb.jpg",
-  },
-  {
-    productID: "18",
-    Name: "MAG B760 Tomahawk",
-    Description: "Intel motherboard with Wi-Fi",
-    Price: 4975000,
-    Stock: 12,
-    Category: "Motherboard",
-    Image: "../assets/images-backup/msi-mag-b760-tomahawk.jpg",
-  },
-  {
-    productID: "19",
-    Name: "WD Black SN850X 2TB",
-    Description: "High speed PCIe 4.0 NVMe storage",
-    Price: 3975000,
-    Stock: 21,
-    Category: "SSD",
-    Image: "../assets/images-backup/wd-black-sn850x-2tb.jpg",
-  },
-  {
-    productID: "20",
-    Name: "Focus GX 750W",
-    Description: "750W 80 Plus Gold power supply",
-    Price: 2975000,
-    Stock: 19,
-    Category: "Power Supply",
-    Image: "../assets/images-backup/seasonic-focus-gx-750.jpg",
-  },
-  {
-    productID: "21",
-    Name: "ARGB Extension Cable",
-    Description: "Sleeved cable for clean PC builds",
-    Price: 600000,
-    Stock: 28,
-    Category: "Accessories",
-    Image: "../assets/images-backup/ARGB-extension-cable-white.jpg",
-  },
-  {
-    productID: "22",
-    Name: "Intel Core i5-14600K",
-    Description: "14-Core processor for gaming",
-    Price: 7975000,
-    Stock: 20,
-    Category: "CPU",
-    Image: "../assets/images-backup/intel-core-i5-14600k-v2.jpg",
-  },
-  {
-    productID: "23",
-    Name: "GeForce RTX 4060",
-    Description: "8GB graphics card for 1080p gaming",
-    Price: 7475000,
-    Stock: 17,
-    Category: "GPU",
-    Image: "../assets/images-backup/geforce-rtx-4060.jpg",
-  },
-  {
-    productID: "24",
-    Name: "T-Force Delta RGB 16GB",
-    Description: "DDR5 memory kit 6000MHz",
-    Price: 1725000,
-    Stock: 32,
-    Category: "RAM",
-    Image: "../assets/images-backup/t-force-delta-rgb-16gb.jpg",
-  },
-  {
-    productID: "25",
-    Name: "Prime B760M-A",
-    Description: "Micro ATX Intel motherboard",
-    Price: 3475000,
-    Stock: 16,
-    Category: "Motherboard",
-    Image: "../assets/images-backup/asus-prime-b760m-a-v2.jpg",
-  },
-  {
-    productID: "26",
-    Name: "Kingston NV2 1TB",
-    Description: "PCIe 4.0 NVMe storage",
-    Price: 1475000,
-    Stock: 26,
-    Category: "SSD",
-    Image: "../assets/images-backup/kingston-nv2-1tb.jpg",
-  },
-  {
-    productID: "27",
-    Name: "CX650 650W",
-    Description: "650W power supply for gaming PCs",
-    Price: 1975000,
-    Stock: 23,
-    Category: "Power Supply",
-    Image: "../assets/images-backup/CorsairCX650.jpg",
-  },
-  {
-    productID: "28",
-    Name: "Case Dust Filter Set",
-    Description: "Dust filters for desktop case",
-    Price: 375000,
-    Stock: 45,
-    Category: "Accessories",
-    Image: "../assets/images-backup/CaseDustFilters.jpg",
-  },
-  {
-    productID: "29",
-    Name: "ASUS TUF Gaming VG249Q1A",
-    Description: "23.8-inch Full HD gaming monitor, 165Hz",
-    Price: 4725000,
-    Stock: 10,
-    Category: "Accessories",
-    Image: "../assets/images-backup/AsusTUF-VG249Q1A-clean.png",
-  },
-  {
-    productID: "30",
-    Name: "Akko 3098B Mechanical Keyboard",
-    Description: "Compact mechanical keyboard for gaming and work",
-    Price: 2225000,
-    Stock: 14,
-    Category: "Accessories",
-    Image: "../assets/images-backup/Akko3098B.jpg",
-  },
-  {
-    productID: "31",
-    Name: "Logitech G502 HERO",
-    Description: "Wired gaming mouse with adjustable weights",
-    Price: 1225000,
-    Stock: 20,
-    Category: "Accessories",
-    Image: "../assets/images-backup/LogitechG502.jpg",
-  },
-  {
-    productID: "32",
-    Name: "Logitech G PRO Wireless",
-    Description: "Lightweight wireless gaming mouse",
-    Price: 2475000,
-    Stock: 12,
-    Category: "Accessories",
-    Image: "../assets/images-backup/LogitechGPro-white.jpg",
-  },
-  {
-    productID: "33",
-    Name: "Logitech G304 LIGHTSPEED",
-    Description: "Wireless gaming mouse with optical sensor",
-    Price: 975000,
-    Stock: 22,
-    Category: "Accessories",
-    Image: "../assets/images-backup/LogitechG304.jpg",
-  },
-  {
-    productID: "34",
-    Name: "Logitech Wireless Mouse",
-    Description: "Comfortable everyday wireless mouse",
-    Price: 625000,
-    Stock: 25,
-    Category: "Accessories",
-    Image: "../assets/images-backup/LogitechM185.jpg",
-  },
-  {
-    productID: "35",
-    Name: "Razer DeathAdder V3 Pro",
-    Description: "Ergonomic wireless esports gaming mouse",
-    Price: 2975000,
-    Stock: 9,
-    Category: "Accessories",
-    Image: "../assets/images-backup/deathAdderV3pro.jpg",
-  },
-  {
-    productID: "36",
-    Name: "Razer BlackShark V2",
-    Description: "Over-ear gaming headset with clear audio",
-    Price: 2475000,
-    Stock: 11,
-    Category: "Accessories",
-    Image: "../assets/images-backup/RazerBlackSharkV2-white.jpg",
-  },
-  {
-    productID: "37",
-    Name: "HyperX Cloud III Gaming Headset",
-    Description: "Over-ear headset for gaming and voice chat",
-    Price: 1975000,
-    Stock: 15,
-    Category: "Accessories",
-    Image:
-      "../assets/images-backup/HpHyperX3.jpg",
-  },
-  {
-    productID: "38",
-    Name: "Keychron K8 Pro Keyboard",
-    Description: "Wireless mechanical keyboard with RGB lighting",
-    Price: 2725000,
-    Stock: 8,
-    Category: "Accessories",
-    Image: "../assets/images-backup/K8Pro.jpg",
-  },
-];
+let productList = [];
+window.gearHouseProductListPromise = fetch("../aspx/ProductControllers.aspx", {
+  headers: { "Service-Name": "GetProducts" },
+})
+  .then(function (response) {
+    if (!response.ok) throw new Error("Không tải được danh sách sản phẩm.");
+    return response.json();
+  })
+  .then(function (products) {
+    if (!Array.isArray(products)) {
+      throw new Error("Controller không trả về danh sách sản phẩm hợp lệ.");
+    }
+    productList = products;
+    return products;
+  })
+  .catch(function (error) {
+    const applicationProducts = window.gearHouseApplicationProducts;
+    if (Array.isArray(applicationProducts)) {
+      console.warn("Dùng dữ liệu Application do controller chưa trả về danh sách.", error);
+      productList = applicationProducts;
+      return productList;
+    }
+    throw error;
+  });
 
 const PRODUCTS_PER_PAGE = 16;
 
@@ -358,7 +37,6 @@ function getProductSearchText(product) {
   return (product.Name + " " + product.Description + " " + product.Category).toLowerCase();
 }
 
-// Link đến List vẫn nhận bộ lọc từ URL; Refresh luôn tải lại danh sách mặc định.
 const navigationEntries =
   window.performance &&
   typeof window.performance.getEntriesByType === "function"
@@ -390,7 +68,7 @@ const pageState = {
   sortType: "featured",
 };
 
-//  Tìm kiếm dùng chung
+//  Tìm kiếm
 function bindSearchForm(formId, onSearch) {
   const form = document.getElementById(formId);
   if (!form) return;
@@ -494,7 +172,7 @@ function bindHorizontalCarousel(track, controls, itemSelector) {
   updateControls();
 }
 
-// lọc sản phẩm theo các điều kiện
+// lọc sản phẩm
 function filterProducts() {
   const filteredProducts = [];
   const mucGia = document.querySelector('input[name="mucGia"]:checked').value;
@@ -850,26 +528,35 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // hiển thị trang khi tải
 document.addEventListener("DOMContentLoaded", function () {
-  if (document.getElementById("danhSachSanPham") === null) {
-    return;
-  }
-  const searchInput = document.getElementById("timKiem");
-  const filterSearchInput = document.getElementById("timTrongDanhMuc");
-  if (searchInput) searchInput.value = pageState.keyword;
-  if (filterSearchInput) {
-    filterSearchInput.value = searchInput ? "" : pageState.keyword;
-  }
-  chooseCategory();
-  searchFromHeader();
-  searchFromFilter();
-  changeCategory();
-  changeSort();
-  changePrice();
-  clearFilters();
-  bindHorizontalCarousel(
-    document.getElementById("danhSachDanhMucBoLoc"),
-    document.querySelector(".bo-dieu-khien-danh-muc-bo-loc"),
-    ".muc-danh-muc",
-  );
-  showProducts();
+  const productContainer = document.getElementById("danhSachSanPham");
+  if (!productContainer) return;
+
+  window.gearHouseProductListPromise
+    .then(function (products) {
+      productList = products;
+      const searchInput = document.getElementById("timKiem");
+      const filterSearchInput = document.getElementById("timTrongDanhMuc");
+      if (searchInput) searchInput.value = pageState.keyword;
+      if (filterSearchInput) {
+        filterSearchInput.value = searchInput ? "" : pageState.keyword;
+      }
+      chooseCategory();
+      searchFromHeader();
+      searchFromFilter();
+      changeCategory();
+      changeSort();
+      changePrice();
+      clearFilters();
+      bindHorizontalCarousel(
+        document.getElementById("danhSachDanhMucBoLoc"),
+        document.querySelector(".bo-dieu-khien-danh-muc-bo-loc"),
+        ".muc-danh-muc",
+      );
+      showProducts();
+    })
+    .catch(function (error) {
+      console.error(error);
+      productContainer.innerHTML =
+        '<p class="thong-bao-khong-co-san-pham" role="alert">Không tải được sản phẩm. Vui lòng thử lại.</p>';
+    });
 });
