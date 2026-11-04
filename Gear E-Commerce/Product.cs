@@ -7,6 +7,10 @@ namespace Gear_E_Commerce
 {
     public class Product
     {
+        public Product()
+        {
+        }
+
         public Product(string productID, string Name,string Brand, string Description, long Price, int Stock, string Category, string Image)
         {
             this.productID = productID;

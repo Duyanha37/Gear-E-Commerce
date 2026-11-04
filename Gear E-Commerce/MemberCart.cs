@@ -11,6 +11,9 @@ namespace Gear_E_Commerce
         public String MemberID { get; set; }
         public List<CartItem> Items { get; set; }
 
+        public CartMember()
+        {
+        }
         public CartMember(String cartID, String memberID)
         {
             CartID = cartID;
