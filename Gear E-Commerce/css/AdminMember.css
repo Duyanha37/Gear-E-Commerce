@@ -292,9 +292,6 @@ a {
         background: #333333;
     }
 
-
-/* ========== MEMBER TABLE ========== */
-
 .table-card {
     background: #FFFFFF;
     border: 1px solid #E5E5E7;
@@ -784,5 +781,175 @@ tbody tr:hover {
 }
 
     .error-label[hidden] {
+        display: none;
+    }
+
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.success-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 360px;
+    padding: 30px 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    text-align: center;
+    z-index: 2001;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+    .success-overlay[hidden],
+    .success-modal[hidden] {
+        display: none;
+    }
+
+    .success-modal h2 {
+        font-size: 22px;
+        color: #111111;
+        margin-bottom: 10px;
+    }
+
+    .success-modal p {
+        font-size: 14px;
+        color: #666666;
+        line-height: 1.5;
+        margin-bottom: 22px;
+    }
+
+.success-button {
+    width: 100%;
+    padding: 12px;
+    background: #111111;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+    .success-button:hover {
+        background: #333333;
+    }
+
+.form-group .error-label {
+    display: block;
+    color: #e53935;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+    .form-group .error-label[hidden] {
+        display: none;
+    }
+
+.delete-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.delete-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 380px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    z-index: 2001;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+    .delete-overlay[hidden],
+    .delete-modal[hidden] {
+        display: none;
+    }
+
+    .delete-modal h2 {
+        font-size: 22px;
+        color: #111111;
+        margin-bottom: 10px;
+    }
+
+    .delete-modal p {
+        font-size: 14px;
+        color: #666666;
+        line-height: 1.5;
+        margin-bottom: 24px;
+    }
+
+.delete-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.delete-cancel,
+.delete-confirm {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.delete-cancel {
+    background: #f0f0f0;
+    color: #111111;
+}
+
+.delete-confirm {
+    background: #e53935;
+    color: #ffffff;
+}
+
+    .delete-confirm:hover {
+        background: #c62828;
+    }
+
+.delete-icon,
+.success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .delete-icon img,
+    .success-icon img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+    }
+
+#addModal,
+#editModal {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-group .error-label {
+    color: #e53935;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+    .form-group .error-label[hidden] {
         display: none;
     }
