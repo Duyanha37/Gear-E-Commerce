@@ -15,6 +15,10 @@
             this.isDeleted = false;
         }
 
+        public Member()
+        {
+        }
+
         public string memberID { get; set; }
         public string Role { get; set; }
         public string FullName { get; set; }
@@ -22,7 +26,7 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Status { get; set; }
-        public bool isDeleted { get; set; }
+        public string Status { get; set; } = "Active";
+        public bool isDeleted { get; set; } = false;
     }
 }
