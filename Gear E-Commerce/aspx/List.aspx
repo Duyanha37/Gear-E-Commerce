@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tất cả sản phẩm - GearHouse</title>
     <link rel="stylesheet" href="../css/global.css?v=19" />
-    <link rel="stylesheet" href="../css/List.css?v=38" />
+    <link rel="stylesheet" href="../css/List.css?v=40" />
 </head>
 <body class="trang-list">
     <div class="dau-trang">
@@ -201,6 +201,6 @@
     <script>
         window.gearHouseApplicationProducts = <%= ProductListJson %>;
     </script>
-    <script src="../js/List.js?v=20"></script>
+    <script src="../js/List.js?v=22"></script>
 </body>
 </html>

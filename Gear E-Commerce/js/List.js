@@ -39,6 +39,50 @@ function getProductSearchText(product) {
   return (product.Name + " " + product.Description + " " + product.Category).toLowerCase();
 }
 
+const productDescriptionTranslations = {
+  "16GB GDDR6X graphics card": "Card đồ họa 16GB GDDR6X",
+  "16-Core processor for high performance": "Bộ xử lý 16 nhân hiệu năng cao",
+  "AM5 motherboard with Wi-Fi 6E": "Bo mạch chủ AM5 tích hợp Wi-Fi 6E",
+  "DDR5 6000MHz memory kit": "Bộ nhớ DDR5 6000MHz",
+  "7450MB/s PCIe 4.0 storage": "Ổ lưu trữ PCIe 4.0 tốc độ 7450MB/s",
+  "1000W 80 Plus Gold power supply": "Bộ nguồn 1000W chuẩn 80 Plus Gold",
+  "Quiet cooling fan with RGB light": "Quạt tản nhiệt êm, có đèn RGB",
+  "24-Core processor for gaming and work": "Bộ xử lý 24 nhân cho chơi game và công việc",
+  "12GB GDDR6X graphics card": "Card đồ họa 12GB GDDR6X",
+  "DDR5 memory kit 5600MHz": "Bộ nhớ DDR5 5600MHz",
+  "AM5 motherboard with Wi-Fi": "Bo mạch chủ AM5 tích hợp Wi-Fi",
+  "PCIe 4.0 NVMe storage": "Ổ lưu trữ NVMe PCIe 4.0",
+  "850W modular power supply": "Bộ nguồn modular 850W",
+  "Thermal paste for CPU cooling": "Keo tản nhiệt cho CPU",
+  "8-Core processor for gaming": "Bộ xử lý 8 nhân dành cho chơi game",
+  "24GB graphics card for 4K gaming": "Card đồ họa 24GB cho chơi game 4K",
+  "DDR5 memory kit 6400MHz": "Bộ nhớ DDR5 6400MHz",
+  "Intel motherboard with Wi-Fi": "Bo mạch chủ Intel tích hợp Wi-Fi",
+  "High speed PCIe 4.0 NVMe storage": "Ổ lưu trữ NVMe PCIe 4.0 tốc độ cao",
+  "750W 80 Plus Gold power supply": "Bộ nguồn 750W chuẩn 80 Plus Gold",
+  "Sleeved cable for clean PC builds": "Cáp bọc lưới giúp bố trí PC gọn gàng",
+  "14-Core processor for gaming": "Bộ xử lý 14 nhân dành cho chơi game",
+  "8GB graphics card for 1080p gaming": "Card đồ họa 8GB cho chơi game 1080p",
+  "DDR5 memory kit 6000MHz": "Bộ nhớ DDR5 6000MHz",
+  "Micro ATX Intel motherboard": "Bo mạch chủ Intel chuẩn Micro ATX",
+  "650W power supply for gaming PCs": "Bộ nguồn 650W cho PC chơi game",
+  "Dust filters for desktop case": "Bộ lọc bụi cho thùng máy tính",
+  "23.8-inch Full HD gaming monitor, 165Hz": "Màn hình chơi game Full HD 23,8 inch, 165Hz",
+  "Compact mechanical keyboard for gaming and work": "Bàn phím cơ nhỏ gọn cho chơi game và làm việc",
+  "Wired gaming mouse with adjustable weights": "Chuột chơi game có dây, điều chỉnh được trọng lượng",
+  "Lightweight wireless gaming mouse": "Chuột chơi game không dây nhẹ",
+  "Wireless gaming mouse with optical sensor": "Chuột chơi game không dây với cảm biến quang học",
+  "Comfortable everyday wireless mouse": "Chuột không dây thoải mái cho nhu cầu hằng ngày",
+  "Ergonomic wireless esports gaming mouse": "Chuột esports không dây thiết kế công thái học",
+  "Over-ear gaming headset with clear audio": "Tai nghe chụp tai chơi game với âm thanh rõ nét",
+  "Over-ear gaming headset for gaming and voice chat": "Tai nghe chụp tai cho chơi game và trò chuyện thoại",
+  "Wireless mechanical keyboard with RGB lighting": "Bàn phím cơ không dây có đèn RGB",
+};
+
+function getVietnameseProductDescription(product) {
+  return productDescriptionTranslations[product.Description] || product.Description;
+}
+
 const navigationEntries =
   window.performance &&
   typeof window.performance.getEntriesByType === "function"
@@ -198,12 +242,6 @@ function filterProducts() {
 
 // tạo thẻ sản phẩm
 function createProductCard(product) {
-  const categoryNames = {
-    Motherboard: "Bo mạch chủ",
-    "Power Supply": "Nguồn",
-    Accessories: "Phụ kiện",
-  };
-  const categoryLabel = categoryNames[product.Category] || product.Category;
   const imageContent =
     product.Image === ""
       ? ""
@@ -215,14 +253,11 @@ function createProductCard(product) {
     '"><span class="khung-anh">' +
     imageContent +
     "</span>" +
-    '<p class="loai-san-pham">' +
-    categoryLabel +
-    " · GearHouse</p>" +
     "<h3>" +
     product.Name +
     "</h3>" +
     '<p class="mo-ta-san-pham">' +
-    product.Description +
+    getVietnameseProductDescription(product) +
     "</p>" +
     '<div class="dong-gia"><b>' +
     formatGiaVND(product.Price) +

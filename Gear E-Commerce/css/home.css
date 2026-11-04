@@ -277,13 +277,6 @@ main {
   border-color: #ccc;
 }
 
-.loai-san-pham {
-  min-height: 1.4em;
-  margin: 0 0 0.65rem;
-  color: #777;
-  font-size: clamp(0.68rem, 0.72vw, 0.8rem);
-}
-
 .khu-vuc-san-pham .the-san-pham h3 {
   display: -webkit-box;
   min-height: 2.8em;
@@ -465,7 +458,6 @@ main {
     scroll-snap-align: start;
   }
 
-  .khu-vuc-san-pham .loai-san-pham,
   .khu-vuc-san-pham .thong-so-san-pham {
     font-size: clamp(0.76rem, 2.8vw, 0.86rem);
   }
@@ -551,13 +543,6 @@ main {
 
   .khu-vuc-san-pham .khung-anh img {
     object-fit: contain;
-  }
-
-  .khu-vuc-san-pham .loai-san-pham {
-    min-height: 1.35em;
-    margin: 0 0 0.35rem;
-    font-size: clamp(0.58rem, 0.68vw, 0.7rem);
-    line-height: 1.35;
   }
 
   .khu-vuc-san-pham .the-san-pham h3 {
