@@ -5,24 +5,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Shopping Cart - GearHouse</title>
-    <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/Cart.css" />
-    <link rel="stylesheet" href="../css/site-shell.css" />
+    <link rel="stylesheet" href="../css/site-shell.css?v=1" />
+    <link rel="stylesheet" href="../css/global.css?v=1" />
+    <link rel="stylesheet" href="../css/Cart.css?v=5" />
 </head>
 <body>
     <div class="dau-trang">
         <header>
         <div class="logo-thuong-hieu">
-            <a href="../html/home.html">G GearHouse</a>
+            <a href="../aspx/home.aspx">G</a>
         </div>
-        <nav class="menu-chinh">
-            <a href="../html/home.html">Home</a>
-            <a class="dang-chon" href="../html/List.html">Products</a>
-            <a href="../html/List.html">PC Builder</a>
-            <a href="#chan-trang">Support</a>
+        <nav class="menu-chinh" id="menuChinh">
+            <a href="../aspx/home.aspx">Trang chủ</a>
+            <a class="dang-chon" href="../aspx/List.aspx">Sản phẩm</a>
+            <a href="../aspx/List.aspx">Lắp ráp PC</a>
+            <a href="#chan-trang">Hỗ trợ</a>
         </nav>
         <div class="tai-khoan">
-            <form class="hop-tim-kiem" id="formTimKiem" action="../html/List.html">
+            <form class="hop-tim-kiem" id="formTimKiem" action="../aspx/List.aspx">
                 <button class="nut-mo-tim-kiem" id="nutMoTimKiem" type="button" aria-label="Mở tìm kiếm" aria-expanded="false">
                     <img src="../assets/images/search.png" alt="" />
                 </button>
@@ -33,14 +33,14 @@
                 <img src="../assets/images-backup/shopping-cart.png" alt="" />
                 <span data-cart-count="">0</span>
             </a>
-            <a class="nut-dang-nhap" href="../html/SignIn.html">Log in</a>
+            <a class="nut-dang-nhap" href="../aspx/SignIn.aspx">Đăng nhập</a>
         </div>
         </header>
     </div>
 
     <main class="trang-gio-hang">
         <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="../html/home.html">Home</a>
+            <a href="../aspx/home.aspx">Home</a>
             <span>/</span>
             <span>Shopping Cart</span>
         </nav>
@@ -57,12 +57,12 @@
             </div>
             <h2>Your cart is empty</h2>
             <p>Tìm các linh kiện phù hợp cho bộ máy (build) tiếp theo của bạn.</p>
-            <a class="nut-chinh" href="../html/List.html">Continue shopping</a>
+            <a class="nut-chinh" href="../aspx/List.aspx">Tiếp tục mua sắm</a>
         </section>
         <div id="noiDungGioHang" class="bo-gio-hang" hidden>
             <section class="khu-vuc-danh-sach" aria-label="Các sản phẩm trong giỏ hàng của bạn">
                 <div id="danhSachGioHang" class="danh-sach-gio-hang"></div>
-                <a class="continue-shopping" href="../html/List.html">← Continue shopping</a>
+                <a class="continue-shopping" href="../aspx/List.aspx">← Tiếp tục mua sắm</a>
             </section>
             <aside class="tong-ket"><h2>Order summary</h2>
                 <div class="dong-tong">
@@ -101,7 +101,7 @@
                     <h2>Featured products</h2>
                     <p>Khám phá thêm các linh kiện cho bộ máy (build) tiếp theo của bạn.</p>
                 </div>
-                <a href="../html/List.html">
+                <a href="../aspx/List.aspx">
                     View all 
                     <span aria-hidden="true">↗</span>
                 </a>
@@ -118,9 +118,9 @@
         </div>
         <div class="the-san-pham">
             <h4>Shop</h4>
-            <a href="../html/List.html">All products</a>
-            <a href="../html/List.html?category=GPU">Graphics cards</a>
-            <a href="../html/List.html?category=CPU">Processors</a>
+            <a href="../aspx/List.aspx">All products</a>
+            <a href="../aspx/List.aspx?category=GPU">Graphics cards</a>
+            <a href="../aspx/List.aspx?category=CPU">Processors</a>
         </div>
         <div class="the-san-pham">
             <h4>Support</h4>
