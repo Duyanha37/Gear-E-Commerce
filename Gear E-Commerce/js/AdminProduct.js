@@ -134,6 +134,7 @@ const moModalXem = async (productID) => {
 
 const moModalSua = async (productID) => {
     var product = await getProductById(productID);
+    document.getElementById("productID").value = productID;
         document.getElementById("editName").value = product.Name;
         document.getElementById("editCategory").value = product.Category;
         document.getElementById("editBrand").value = product.Brand;
@@ -147,7 +148,26 @@ const moModalSua = async (productID) => {
         document.getElementById("editModal").style.display = "block";
         document.body.style.overflow = "hidden";
 }
-const luuSuaSanPham = () => {
+
+const updateProduct = async (product) => {
+    try {
+        const response = await fetch("ProductControllers.aspx", {
+            method: "PUT",
+            headers: {
+                "Service-Name": "UpdateProduct"
+            },
+            body: JSON.stringify(product)
+        });
+        if (response.status !== 200) {
+            throw new Error("Không thể cập nhật sản phẩm");
+        }
+    } catch (error) {
+        console.error("Lỗi khi cập nhật sản phẩm:", error);
+    }
+}
+
+const luuSuaSanPham = async () => {
+    var productID = document.getElementById("productID").value;
         var name = document.getElementById("editName").value.trim();
         var category = document.getElementById("editCategory").value;
         var brand = document.getElementById("editBrand").value.trim();
@@ -161,29 +181,14 @@ const luuSuaSanPham = () => {
             alert("Vui lòng điền thông tin hợp lệ!");
             return;
         }
-        var oldProduct = products[editingIndex];
-        var newProduct = {
-            id: oldProduct.id,
-            name: name,
-            brand: brand,
-            category: category,
-            price: price,
-            stock: stock,
-            description: description,
-            image: oldProduct.image,
-            isDeleted: false
-        };
-        if (editImageData != "") {
-            newProduct.image = editImageData;
-        }
-        products[editingIndex] = newProduct;
-        if(luudulieu(products[editingIndex]) == false) {
-            products[editingIndex] = oldProduct;
-            return;
-        }
-        hienThiSanPham();
-        dongModal();
-        alert("Sản phẩm đã được cập nhật thành công!");
+    var product = await getProductById(product);
+    if (editImageData != "") {
+            product.Image = editImageData;
+    }
+    updateProduct(product);
+    hienThiSanPham();
+    dongModal();
+    alert("Sản phẩm đã được cập nhật thành công!");
     }
 
     function moModalThem() {
@@ -195,7 +200,12 @@ const luuSuaSanPham = () => {
         document.body.style.overflow = "hidden";
     }
 
-    function themSanPham() {
+const addProduct = async () => {
+    
+}
+
+const themSanPham = async () => {
+    var products = await getProduct();
         var name = document.getElementById("addName").value.trim();
         var category = document.getElementById("addCategory").value;
         var brand = document.getElementById("addBrand").value.trim();
@@ -213,20 +223,15 @@ const luuSuaSanPham = () => {
             alert("Vui lòng chọn một hình ảnh sản phẩm!");
             return;
         }
-        var maxId = 0;
-        for (var i = 0; i < products.length; i++) {
-            if (products[i].id > maxId) {
-                maxId = products[i].id;
-            }
-        }
+        var maxID = Math.Max(...products.map(p => p.productID), 0);
         var newProduct = {
-            id: maxId + 1,
-            name: name,
-            brand: brand,
-            category: category,
-            price: price,
-            stock: stock,
-            description: description,
+            id: maxID + 1,
+            Name: name,
+            Brand: brand,
+            Description: description,
+            Price: price,
+            Stock: stock,
+            Category: category,
             image: addImageData,
             isDeleted: false
         };
@@ -238,7 +243,8 @@ const luuSuaSanPham = () => {
         hienThiSanPham();
         dongModal();
         alert("Sản phẩm đã được thêm thành công!");
-    }
+}
+
     function xoaSanPham(i) {
         var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
         if (result == true) {

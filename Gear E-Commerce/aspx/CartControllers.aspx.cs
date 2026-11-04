@@ -79,6 +79,13 @@ namespace Gear_E_Commerce.aspx
                 }
                 JavaScriptSerializer seri = new JavaScriptSerializer();
                 CartItem newItem = seri.Deserialize<CartItem>(requestBody);
+                if(cartMember.Items.Any(item => item.ProductID == newItem.ProductID))
+                {
+                    Response.StatusCode = 400;
+                    Response.Write("Sản phẩm đã tồn tại trong giỏ hàng.");
+                    Context.ApplicationInstance.CompleteRequest();
+                    return;
+                }
                 cartMember.AddItem(newItem);
                 Application["CartMemberList"] = cartMembers;
                 Response.StatusCode = 200;

@@ -173,6 +173,7 @@
             </button>
         </div>
         <form id="editForm" novalidate onsubmit="luuSuaSanPham(); return false;">
+            <input type="hidden" id="productID" />
             <div class="modal-body">
                 <div class="form-grid">
                     <div class="form-group">

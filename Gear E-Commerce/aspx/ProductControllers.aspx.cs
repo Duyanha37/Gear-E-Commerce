@@ -27,7 +27,13 @@ namespace Gear_E_Commerce.aspx
                 GetProductByID();
                 return;
             }
-            if(Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateProduct")
+            if(Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "AddProduct")
+            {
+                isApiRequest = true;
+                AddProduct();
+                return;
+            }
+            if (Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateProduct")
             {
                 isApiRequest = true;
                 UpdateProduct();
@@ -74,6 +80,30 @@ namespace Gear_E_Commerce.aspx
             }
         }
 
+        private void AddProduct()
+        {
+            List<Product> products = (List<Product>)Application["ProductList"];
+            string requestBody;
+            using(StreamReader reader = new StreamReader(Request.InputStream))
+            {
+                requestBody = reader.ReadToEnd();
+            }
+            JavaScriptSerializer seri = new JavaScriptSerializer();
+            Product newProduct = seri.Deserialize<Product>(requestBody);
+            if (newProduct != null)
+            {
+                products.Add(newProduct);
+                Application["ProductList"] = products;
+                Response.StatusCode = 200;
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+            {
+                Response.StatusCode = 404;
+            }
+
+        }
+
         private void UpdateProduct()
         {
             List<Product> products = (List<Product>)Application["ProductList"];
@@ -87,7 +117,7 @@ namespace Gear_E_Commerce.aspx
             Product product = products.FirstOrDefault(p => p.productID == updatedProduct.productID);
             if (product != null)
             {
-                product = updatedProduct;
+                products[products.IndexOf(product)] = updatedProduct;
                 Response.StatusCode = 200;
                 Application["ProductList"] = products;
                 Context.ApplicationInstance.CompleteRequest();
