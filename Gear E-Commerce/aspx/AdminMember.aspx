@@ -10,7 +10,8 @@
 </head>
 <body>
     <div id="sidebarOverlay" class="sidebar-overlay"
-         onclick="dongSidebar()"></div>
+        onclick="dongSidebar()">
+    </div>
     <div class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-box">G</div>
@@ -39,7 +40,7 @@
         <div class="header">
             <div class="header-left">
                 <button type="button" class="menu-toggle"
-                        onclick="moSidebar()">
+                    onclick="moSidebar()">
                     <img src="../assets/images/menu.png" alt="Menu" />
                 </button>
                 <div>
@@ -62,13 +63,14 @@
                     <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên hoặc email" oninput="locThanhVien()" />
                 </div>
                 <select id="statusFilter"
-                        onchange="locThanhVien()">
+                    onchange="locThanhVien()">
                     <option value="All">All statuses</option>
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                 </select>
                 <button type="button" class="btn-add" onclick="moModalThem()">
-                    <img src="../assets/images/add.png" alt="" /> Add member
+                    <img src="../assets/images/add.png" alt="" />
+                    Add member
                 </button>
             </div>
             <div class="table-card">
@@ -91,10 +93,11 @@
         </div>
     </div>
     <div class="modal-overlay" id="modalOverlay"
-         onclick="dongModal()"></div>
+        onclick="dongModal()">
+    </div>
     <div class="modal" id="viewModal"
-         role="dialog" aria-modal="true"
-         aria-labelledby="viewTitle">
+        role="dialog" aria-modal="true"
+        aria-labelledby="viewTitle">
         <div class="modal-header">
             <div>
                 <p>MEMBER MANAGEMENT</p>
@@ -114,7 +117,7 @@
                 <div class="view-field">
                     <small>Full name</small>
                     <strong id="viewName"></strong>
-               </div>
+                </div>
                 <div class="view-field">
                     <small>Email address</small>
                     <strong id="viewEmail"></strong>
@@ -131,12 +134,13 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn-cancel"
-                    onclick="dongModal()">Close</button>
+                onclick="dongModal()">
+                Close</button>
         </div>
     </div>
     <div class="modal" id="editModal"
-         role="dialog" aria-modal="true"
-         aria-labelledby="editTitle">
+        role="dialog" aria-modal="true"
+        aria-labelledby="editTitle">
         <div class="modal-header">
             <div>
                 <p>MEMBER MANAGEMENT</p>
@@ -146,23 +150,31 @@
                 <img src="../assets/images/close.png" alt="Close" />
             </button>
         </div>
-        <form id="editForm"
-              onsubmit="luuSuaThanhVien(); return false;">
+
+        <form id="editForm" novalidate onsubmit="luuSuaThanhVien(); return false;">
             <input type="hidden" id="editId" />
+
             <div class="modal-body">
                 <div class="form-grid">
+
                     <div class="form-group">
                         <label for="editName">Full name</label>
-                        <input type="text" id="editName" required />
+                        <input type="text" id="editName" />
+                        <label id="errorEditName" class="error-label" hidden></label>
                     </div>
+
                     <div class="form-group">
                         <label for="editEmail">Email address</label>
-                        <input type="email" id="editEmail" required />
+                        <input type="email" id="editEmail" />
+                        <label id="errorEditEmail" class="error-label" hidden></label>
                     </div>
+
                     <div class="form-group">
                         <label for="editPhone">Phone number</label>
-                        <input type="tel" id="editPhone" required />
+                        <input type="tel" id="editPhone" />
+                        <label id="errorEditPhone" class="error-label" hidden></label>
                     </div>
+
                     <div class="form-group">
                         <label for="editStatus">Account status</label>
                         <select id="editStatus">
@@ -170,15 +182,22 @@
                             <option value="Inactive">Inactive</option>
                         </select>
                     </div>
+
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn-cancel"
-                        onclick="dongModal()">Cancel</button>
-                <button type="submit" class="btn-save">Lưu thay đổi
+                    onclick="dongModal()">
+                    Cancel
+                </button>
+
+                <button type="submit" class="btn-save">
+                    Save changes
                 </button>
             </div>
         </form>
+
     </div>
     <div class="modal" id="addModal" role="dialog" aria-modal="true" aria-labelledby="addTitle">
         <div class="modal-header">
@@ -188,38 +207,53 @@
             </div>
 
             <button type="button" class="btn-close"
-                    onclick="dongModal()">
+                onclick="dongModal()">
                 <img src="../assets/images/close.png" alt="Close" />
             </button>
         </div>
-        <form id="addForm"
-              onsubmit="themThanhVien(); return false;">
+
+        <form id="addForm" novalidate onsubmit="themThanhVien(); return false;">
             <div class="modal-body">
                 <div class="form-grid">
+
                     <div class="form-group">
                         <label for="addName">Full name</label>
-                        <input type="text" id="addName" placeholder="Điền đầy đủ họ và tên" required />
+                        <input type="text" id="addName"
+                            placeholder="Enter full name" />
+                        <label id="errorAddName" class="error-label" hidden></label>
                     </div>
+
                     <div class="form-group">
                         <label for="addEmail">Email address</label>
-                        <input type="email" id="addEmail" placeholder="name@example.com" required />
+                        <input type="email" id="addEmail"
+                            placeholder="Enter email" />
+                        <label id="errorAddEmail" class="error-label" hidden></label>
                     </div>
+
                     <div class="form-group">
                         <label for="addPhone">Phone number</label>
-                        <input type="tel" id="addPhone" placeholder="Điền số điện thoại" required />
+                        <input type="tel" id="addPhone"
+                            placeholder="Enter phone number" />
+                        <label id="errorAddPhone" class="error-label" hidden></label>
                     </div>
+
                     <div class="form-group">
                         <label for="addStatus">Account status</label>
                         <select id="addStatus">
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </select>
-                   </div>
+                    </div>
+
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn-cancel"
-                        onclick="dongModal()">Cancel</button>
+                    onclick="dongModal()">
+                    Cancel
+                </button>
+
                 <button type="submit" class="btn-save">
                     Add member
                 </button>

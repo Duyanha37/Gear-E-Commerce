@@ -4,13 +4,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-        <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Management - GearHouse</title>
     <link rel="stylesheet" href="../css/AdminProduct.css" />
 </head>
 <body>
-           <div id="sidebarOverlay" class="sidebar-overlay" onclick="dongSidebar()"></div>
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="dongSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-box">G</div>
@@ -39,7 +39,7 @@
     <div class="main">
         <div class="header">
             <div class="header-left">
-                <button type="button" class="menu-toggle"onclick="moSidebar()">
+                <button type="button" class="menu-toggle" onclick="moSidebar()">
                     <img src="../assets/images/menu.png" alt="Menu" />
                 </button>
                 <div>
@@ -62,12 +62,12 @@
                     <img src="../assets/images/search.png" alt="" />
 
                     <input type="text" id="searchInput"
-                           placeholder="Search products"
-                           oninput="locSanPham()" />
+                        placeholder="Search products"
+                        oninput="locSanPham()" />
                 </div>
 
                 <select id="categoryFilter"
-                        onchange="locSanPham()">
+                    onchange="locSanPham()">
                     <option value="All">All categories</option>
                     <option value="GPU">GPU</option>
                     <option value="CPU">CPU</option>
@@ -78,7 +78,7 @@
                 </select>
 
                 <select id="stockFilter"
-                        onchange="locSanPham()">
+                    onchange="locSanPham()">
                     <option value="All">All stock</option>
                     <option value="In stock">In stock</option>
                     <option value="Low stock">Low stock</option>
@@ -86,9 +86,8 @@
                 </select>
 
                 <button type="button" class="btn-add"
-                        onclick="moModalThem()">
-                    <img src="../assets/images/add.png" alt="" />
-                    Add product
+                    onclick="moModalThem()">
+                    <img src="../assets/images/add.png" alt="" /> Add product
                 </button>
 
             </div>
@@ -97,7 +96,7 @@
                     <table>
                         <thead>
                             <tr>
-                              <th>PRODUCT</th>
+                                <th>PRODUCT</th>
                                 <th>CATEGORY</th>
                                 <th>PRICE</th>
                                 <th>STOCK</th>
@@ -113,23 +112,22 @@
     </div>
 
     <div class="modal-overlay" id="modalOverlay"
-         onclick="dongModal()"></div>
+        onclick="dongModal()">
+    </div>
     <div class="modal" id="viewModal"
-         role="dialog" aria-modal="true"
-         aria-labelledby="viewTitle">
+        role="dialog" aria-modal="true"
+        aria-labelledby="viewTitle">
         <div class="modal-header">
             <div>
                 <p>PRODUCT MANAGEMENT</p>
                 <h2 id="viewTitle">View product</h2>
             </div>
-            <button type="button" class="btn-close"
-                    onclick="dongModal()">
+            <button type="button" class="btn-close" onclick="dongModal()">
                 <img src="../assets/images/close.png" alt="Close" />
             </button>
         </div>
         <div class="view-image">
-            <img id="viewImage" src="../assets/images/gpu.png"
-                 alt="Product image" />
+            <img id="viewImage" src="../assets/images/gpu.png" alt="Product image" />
         </div>
         <div class="modal-body">
             <div class="view-grid">
@@ -160,30 +158,27 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn-cancel"
-                    onclick="dongModal()">Close</button>
+            <button type="button" class="btn-cancel" onclick="dongModal()">Close</button>
         </div>
     </div>
     <div class="modal" id="editModal"
-         role="dialog" aria-modal="true"
-         aria-labelledby="editTitle">
+        role="dialog" aria-modal="true"
+        aria-labelledby="editTitle">
         <div class="modal-header">
             <div>
                 <p>PRODUCT MANAGEMENT</p>
                 <h2 id="editTitle">Edit product</h2>
             </div>
-            <button type="button" class="btn-close"
-                    onclick="dongModal()">
-                <img src="../assets/images/close.png" alt="Close" />
+            <button type="button" class="btn-close" onclick="dongModal()"> <img src="../assets/images/close.png" alt="Close" />
             </button>
         </div>
-        <form id="editForm"
-              onsubmit="luuSuaSanPham(); return false;">
+        <form id="editForm" novalidate onsubmit="luuSuaSanPham(); return false;">
             <div class="modal-body">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="editName">Product name</label>
-                        <input type="text" id="editName" required />
+                        <input type="text" id="editName" />
+                        <label id="errorEditName" class="error-label" hidden></label>
                     </div>
                     <div class="form-group">
                         <label for="editCategory">Category</label>
@@ -198,71 +193,77 @@
                     </div>
                     <div class="form-group">
                         <label for="editBrand">Brand</label>
-                        <input type="text" id="editBrand" required />
+                        <input type="text" id="editBrand" />
+                        <label id="errorEditBrand" class="error-label" hidden></label>
                     </div>
                     <div class="form-group">
                         <label for="editPrice">Price</label>
                         <input type="number" id="editPrice"
-                               min="0" step="0.01" required />
+                            min="0" step="1" />
+                        <label id="errorEditPrice" class="error-label" hidden></label>
                     </div>
                     <div class="form-group">
                         <label for="editStock">Stock quantity</label>
                         <input type="number" id="editStock"
-                               min="0" step="1" required />
+                            min="0" step="1" />
+                        <label id="errorEditStock" class="error-label" hidden></label>
                     </div>
                     <div class="form-group full-width">
                         <label for="editImage">Product image</label>
                         <label class="upload-box" for="editImage">
                             <img src="../assets/images/add.png" alt="" />
                             <span>Click to upload image</span>
-                            <small>PNG, JPG up to 1MB (demo)</small>
+                            <small>PNG, JPG up to 1MB</small>
                         </label>
                         <input type="file" id="editImage"
-                               accept="image/png,image/jpeg"
-                               onchange="chonAnh('edit')" hidden />
-
+                            accept="image/png,image/jpeg"
+                            onchange="chonAnh('edit')" hidden />
                         <p class="image-filename" id="editFileName"></p>
+                        <label id="errorEditImage" class="error-label" hidden></label>
                     </div>
                     <div class="form-group full-width">
                         <label for="editDescription">Description</label>
-                        <textarea id="editDescription"
-                                  rows="4"
-                                  placeholder="Add a product description"
-                                  required></textarea>
+                        <textarea id="editDescription" rows="4"
+                            placeholder="Add a product description"></textarea>
+                        <label id="errorEditDescription"
+                            class="error-label" hidden>
+                        </label>
                     </div>
                 </div>
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn-cancel"
-                        onclick="dongModal()">Cancel</button>
-     <button type="submit" class="btn-save">
-    Save changes
-</button>
+                    onclick="dongModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-save">
+                    Save changes
+                </button>
             </div>
         </form>
     </div>
     <div class="modal" id="addModal"
-         role="dialog" aria-modal="true"
-         aria-labelledby="addTitle">
+        role="dialog" aria-modal="true"
+        aria-labelledby="addTitle">
         <div class="modal-header">
             <div>
                 <p>PRODUCT MANAGEMENT</p>
                 <h2 id="addTitle">Add product</h2>
             </div>
             <button type="button" class="btn-close"
-                    onclick="dongModal()">
+                onclick="dongModal()">
                 <img src="../assets/images/close.png" alt="Close" />
             </button>
         </div>
-        <form id="addForm"
-              onsubmit="themSanPham(); return false;">
+        <form id="addForm" novalidate onsubmit="themSanPham(); return false;">
             <div class="modal-body">
                 <div class="form-grid">
+
                     <div class="form-group">
                         <label for="addName">Product name</label>
                         <input type="text" id="addName"
-                               placeholder="Enter product name" required />
+                            placeholder="Enter product name" />
+                        <label id="errorAddName" class="error-label" hidden></label>
                     </div>
                     <div class="form-group">
                         <label for="addCategory">Category</label>
@@ -278,45 +279,51 @@
                     <div class="form-group">
                         <label for="addBrand">Brand</label>
                         <input type="text" id="addBrand"
-                               placeholder="e.g. ASUS" required />
+                            placeholder="e.g. ASUS" />
+                        <label id="errorAddBrand" class="error-label" hidden></label>
                     </div>
                     <div class="form-group">
                         <label for="addPrice">Price</label>
                         <input type="number" id="addPrice"
-                               min="0" step="0.01"
-                               placeholder="0.00" required />
+                            min="0" step="1" placeholder="0" />
+                        <label id="errorAddPrice" class="error-label" hidden></label>
                     </div>
                     <div class="form-group">
                         <label for="addStock">Stock quantity</label>
                         <input type="number" id="addStock"
-                               min="0" step="1"
-                               placeholder="0" required />
+                            min="0" step="1" placeholder="0" />
+                        <label id="errorAddStock" class="error-label" hidden></label>
                     </div>
                     <div class="form-group full-width">
                         <label for="addImage">Product image</label>
                         <label class="upload-box" for="addImage">
                             <img src="../assets/images/add.png" alt="" />
                             <span>Click to upload image</span>
-                            <small>PNG, JPG up to 1MB (demo)</small>
+                            <small>PNG, JPG up to 1MB</small>
                         </label>
                         <input type="file" id="addImage"
-                               accept="image/png,image/jpeg"
-                               onchange="chonAnh('add')" hidden />
+                            accept="image/png,image/jpeg"
+                            onchange="chonAnh('add')" hidden />
                         <p class="image-filename" id="addFileName"></p>
+                        <label id="errorAddImage" class="error-label" hidden></label>
                     </div>
                     <div class="form-group full-width">
                         <label for="addDescription">Description</label>
-                        <textarea id="addDescription" rows="4" placeholder="Add a product description"required></textarea>
+                        <textarea id="addDescription" rows="4"
+                            placeholder="Add a product description"></textarea>
+                        <label id="errorAddDescription"
+                            class="error-label" hidden>
+                        </label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-cancel"
-                        onclick="dongModal()">Cancel</button>
-               <button type="button" class="btn-save"
-        onclick="themSanPham();">
-    Add product
-</button>
+                    onclick="dongModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-save">
+                    Add product
                 </button>
             </div>
         </form>

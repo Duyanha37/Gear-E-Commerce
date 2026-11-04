@@ -831,3 +831,16 @@ tbody tr:hover {
         gap: 0.5rem;
     }
 }
+
+.error-label {
+    display: block;
+    color: #e53935;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+    .error-label[hidden] {
+        display: none;
+    }
+
