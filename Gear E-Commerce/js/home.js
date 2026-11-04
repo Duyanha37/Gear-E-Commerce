@@ -1,12 +1,7 @@
 ﻿//  Danh sách sản phẩm nổi bật
 const featuredProductIDs = ["1", "2", "3", "4", "5"];
-const featuredProducts = [];
-productList.forEach(function (product) {
-  featuredProductIDs.forEach(function (productID) {
-    if (product.productID === productID) {
-      featuredProducts.push(product);
-    }
-  });
+const featuredProducts = productList.filter(function (product) {
+  return featuredProductIDs.includes(product.productID);
 });
 
 //  Tạo và hiển thị thẻ sản phẩm
@@ -46,23 +41,16 @@ function createProductCard(product) {
 // duyệt danh sách và hiện sản phẩm
 function showProducts(products, containerID, numberToShow) {
   const container = document.getElementById(containerID);
-  container.innerHTML = "";
-  products.forEach(function (product, index) {
-    if (index < numberToShow) {
-      container.innerHTML = container.innerHTML + createProductCard(product);
-    }
-  });
+  container.innerHTML = products
+    .slice(0, numberToShow)
+    .map(createProductCard)
+    .join("");
 }
 
 //  Khởi tạo sản phẩm và tìm kiếm trên Home
 document.addEventListener("DOMContentLoaded", function () {
   showProducts(featuredProducts, "danhSachSanPhamNoiBat", 5);
-  const newProducts = [];
-  productList.forEach(function (product, index) {
-    if (index >= productList.length - 5) {
-      newProducts.push(product);
-    }
-  });
+  const newProducts = productList.slice(-5);
   showProducts(newProducts, "danhSachSanPhamMoi", 5);
 
   [

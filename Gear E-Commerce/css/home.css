@@ -391,7 +391,6 @@ main {
   .banner-hieu-nang {
     display: flex;
     flex-direction: column;
-    width: calc(100% - var(--mobile-gutter));
     aspect-ratio: auto;
     min-height: 0;
     margin-top: 1rem;
@@ -493,13 +492,6 @@ main {
   }
 }
 
-@media (max-width: 360px) {
-  .khu-vuc-san-pham .danh-sach,
-  .danh-sach-danh-muc {
-    grid-auto-columns: calc((100% - 0.6rem) / 2);
-  }
-}
-
 @media (min-width: 1200px) {
   .danh-sach-danh-muc {
     grid-auto-columns: calc((100% - 6 * clamp(0.4rem, 0.8vw, 0.75rem)) / 7);
@@ -549,10 +541,6 @@ main {
 
   .danh-sach-danh-muc .khung-anh img {
     object-fit: contain;
-  }
-
-  .khu-vuc-san-pham .the-san-pham {
-    padding: clamp(8px, 2.5vw, 12px);
   }
 
   .khu-vuc-san-pham .khung-anh {

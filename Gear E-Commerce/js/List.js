@@ -354,6 +354,10 @@ function formatGiaVND(gia) {
   }).format(gia);
 }
 
+function getProductSearchText(product) {
+  return (product.Name + " " + product.Description + " " + product.Category).toLowerCase();
+}
+
 // Link đến List vẫn nhận bộ lọc từ URL; Refresh luôn tải lại danh sách mặc định.
 const navigationEntries =
   window.performance &&
@@ -497,14 +501,7 @@ function filterProducts() {
   productList.forEach(function (product) {
     const categoryMatches =
       pageState.category === "All" || product.Category === pageState.category;
-    const searchText = (
-      product.Name +
-      " " +
-      product.Description +
-      " " +
-      product.Category
-    ).toLowerCase();
-    const keywordMatches = searchText.includes(pageState.keyword);
+    const keywordMatches = getProductSearchText(product).includes(pageState.keyword);
     let giaPhuHop = true;
     if (mucGia === "duoi7500000") giaPhuHop = product.Price < 7500000;
     if (mucGia === "7500000den12500000")
@@ -678,13 +675,7 @@ function runSearch(keyword) {
   pageState.keyword = keyword;
   const foundCategories = [];
   productList.forEach(function (product) {
-    const productText = (
-      product.Name +
-      " " +
-      product.Description +
-      " " +
-      product.Category
-    ).toLowerCase();
+    const productText = getProductSearchText(product);
     if (
       productText.includes(keyword) &&
       !foundCategories.includes(product.Category)
@@ -806,9 +797,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function closeSearch() {
     if (!searchForm) return;
     searchForm.classList.remove("dang-mo");
-    if (header) {
-      header.classList.remove("tim-kiem-dang-mo");
-    }
+    header.classList.remove("tim-kiem-dang-mo");
     if (searchToggle) {
       searchToggle.setAttribute("aria-expanded", "false");
       searchToggle.setAttribute("aria-label", "Mở tìm kiếm");
@@ -817,7 +806,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.addEventListener("resize", scheduleNavigationMeasure);
-  if (header && "ResizeObserver" in window) {
+  if ("ResizeObserver" in window) {
     const navigationObserver = new ResizeObserver(scheduleNavigationMeasure);
     navigationObserver.observe(header);
     if (accountActions) navigationObserver.observe(accountActions);
@@ -835,7 +824,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     searchForm.classList.add("dang-mo");
-    if (header) header.classList.add("tim-kiem-dang-mo");
+    header.classList.add("tim-kiem-dang-mo");
     updateNavigationRow();
     searchToggle.setAttribute("aria-expanded", "true");
     searchToggle.setAttribute("aria-label", "Đóng tìm kiếm");
