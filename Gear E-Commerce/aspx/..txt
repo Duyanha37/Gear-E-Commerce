@@ -1,0 +1,146 @@
+﻿ASP
+
+<div class="form-group">
+    <label class="form-label" for="address">Địa chỉ</label>
+    <input class="form-input" type="text" id="address" name="address" placeholder="Nhập địa chỉ">
+    <span class="form-error-message" id="address_error" runat="server" ClientIDMode="Static"></span>
+</div>
+<div class="form-group">
+    <label class="form-label" for="address">Quốc gia</label>
+    <select class="form-input" id="country" name="country">
+        <option selected disabled>Chọn quốc gia</option>
+        <option value="Vietnam">Việt Nam</option>
+        <option value="USA">Hoa Kỳ</option>
+        <option value="UK">Vương quốc Anh</option>
+        <option value="Canada">Canada</option>
+        <option value="Australia">Úc</option>
+    </select>
+    <span class="form-error-message" id="option_error" runat="server" ClientIDMode="Static"></span>
+</div>
+
+JS hiển thị chi tiết tí được không
+const hienThiThanhVien = async () => {
+    var members = await loadMembers();
+    var html = "";
+    var total = 0;
+    var showing = 0;
+    var search = document.getElementById("searchInput").value.toLowerCase();
+    var status = document.getElementById("statusFilter").value;
+
+    for (var i = 0; i < members.length; i++) {
+        if (members[i].isDeleted == false) {
+            total++;
+
+            if (members[i].FullName.toLowerCase().indexOf(search) == -1 &&
+                members[i].Email.toLowerCase().indexOf(search) == -1) {
+                continue;
+            }
+
+            if (status != "All" && members[i].Status != status) {
+                continue;
+            }
+
+            showing++;
+
+            var words = members[i].FullName.split(" ");
+            var avatar = words[0].charAt(0);
+
+            if (words.length > 1) {
+                avatar += words[words.length - 1].charAt(0);
+            }
+
+            html += "<tr>";
+            html += "<td class='member-id'>" + members[i].memberID + "</td>";
+            html += "<td>";
+            html += "<div class='member-info'>";
+            html += "<div class='member-avatar'>" + avatar.toUpperCase() + "</div>";
+            html += "<span>" + members[i].FullName + "</span>";
+            html += "</div>";
+            html += "</td>";
+            html += "<td>" + members[i].Email + "</td>";
+            html += "<td>" + members[i].Phone + "</td>";
+
+            if (members[i].Status == "Active") {
+                html += "<td><span class='status status-active'>Active</span></td>";
+            } else {
+                html += "<td><span class='status status-inactive'>Inactive</span></td>";
+            }
+            html += "<td>" + members[i].Role + "</td>";
+            html += "<td>" + members[i].Address + "</td>";
+            html += "<td>" + members[i].Country + "</td>";
+
+            html += "<td><div class='action-buttons'>";
+            html += "<button class='btn-action' onclick='moModalXem(" + members[i].memberID + ")'>View</button>";
+            html += "<button class='btn-action' onclick='moModalSua(" + members[i].memberID + ")'>Edit</button>";
+            html += "<button class='btn-action btn-delete' onclick='xoaThanhVien(" + members[i].memberID + ")'>Delete</button>";
+            html += "</div></td>";
+            html += "</tr>";
+        }
+    }
+
+JS SignUp.js
+
+khai báo
+const addressInput = document.getElementById('address');
+const addressError = document.getElementById('address_error');
+const option = document.getElementById('country');
+const optionError = document.getElementById('option_error');
+kiểm tra
+if (addressInput.value.trim() === '' || !regexAddress.test(addressInput.value)) {
+    addressError.textContent = 'Địa chỉ không được để trống hoặc không hợp lệ.';
+    addressError.style.display = 'block';
+    isValid = false;
+}
+if (option.value === "Chọn quốc gia") {
+    optionError.textContent = 'Chưa chọn quốc gia';
+    optionError.style.display = 'block';
+    isValid = false;
+}
+
+Member.cs
+
+using Gear_E_Commerce;
+
+namespace Gear_E_Commerce
+{
+    public class Member
+    {
+        public Member(string memberID, string Role, string FullName, string Username, string Password, string Email, string Phone, string Address, string Country)
+        {
+            this.memberID = memberID;
+            this.Role = Role;
+            this.FullName = FullName;
+            this.Username = Username;
+            this.Password = Password;
+            this.Email = Email;
+            this.Phone = Phone;
+            this.Address = Address;
+            this.Country = Country;
+            this.Status = "Active";
+            this.isDeleted = false;
+        }
+
+        public Member()
+        {
+        }
+
+        public string memberID { get; set; }
+        public string Role { get; set; }
+        public string FullName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string Country { get; set; }
+        public string Status { get; set; } = "Active";
+        public bool isDeleted { get; set; } = false;
+    }
+}
+
+constructor newmember
+Member newMember = new Member((memberList.Max(m => int.Parse(m.memberID))+1).ToString(), "User", fullname, username, password, email, phone, address, country);
+
+khai báo giá trị
+string address = Request.Form["address"];
+string country = Request.Form["country"];
