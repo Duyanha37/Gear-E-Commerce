@@ -17,8 +17,15 @@ function taoPhanTu(tagName, className, text) {
     return element;
 }
 
+function layMemberID() {
+    var memberID = document.body.getAttribute("data-member-id") ||
+        document.documentElement.getAttribute("data-member-id");
+
+    return memberID ? String(memberID).trim() : "";
+}
+
 async function layGioHang() {
-    var memberID = document.body.getAttribute("data-member-id");
+    var memberID = layMemberID();
 
     if (!memberID) {
         var sessionResponse = await fetch("Cart.aspx?api=cart", {
@@ -71,15 +78,25 @@ async function layGioHang() {
 
     return cartItems.map(function (item) {
         return {
-            cartItemID: String(item.CartID || item.CartItemID || ""),
-            productID: Number(item.ProductID),
-            quantity: Number(item.Quantity) || 0
+            cartItemID: String(
+                item.CartID ||
+                item.cartID ||
+                item.CartItemID ||
+                memberID
+            ),
+            productID: Number(
+                item.ProductID ||
+                item.productID
+            ),
+            quantity: Number(
+                item.Quantity ||
+                item.quantity
+            ) || 0
         };
     });
 }
-
 async function themVaoGioHang(productID, quantity) {
-    var memberID = document.body.getAttribute("data-member-id");
+    var memberID = layMemberID();
 
     if (!memberID) {
         var sessionResponse = await fetch("Cart.aspx?api=cart", {
@@ -113,8 +130,9 @@ async function themVaoGioHang(productID, quantity) {
                 "Service-Name": "AddCartItem"
             },
             body: JSON.stringify({
+                CartID: memberID,
                 ProductID: String(productID),
-                Quantity: quantity
+                Quantity: Number(quantity)
             })
         }
     );
@@ -131,39 +149,82 @@ async function themVaoGioHang(productID, quantity) {
 }
 
 async function capNhatGioHangThanhVien(cartItem, productID, quantity) {
-    var memberID = document.body.getAttribute("data-member-id");
+    var memberID = layMemberID();
 
-    if (!memberID || !cartItem) {
-        throw new Error("Không xác định được sản phẩm trong giỏ hàng.");
-    }
-
-    var response = await fetch(
-        "CartControllers.aspx?memberID=" +
-        encodeURIComponent(memberID),
-        {
-            method: "PUT",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-                "Service-Name": "UpdateCartItems"
-            },
-            body: JSON.stringify({
-                CartID: String(cartItem.cartItemID),
-                ProductID: String(productID),
-                Quantity: quantity
-            })
-        }
-    );
-
-    var responseText = await response.text();
-
-    if (!response.ok) {
+    if (!memberID || !cartItem || !cartItem.cartItemID) {
         throw new Error(
-            responseText || "Không thể cập nhật giỏ hàng."
+            "Không xác định được mã sản phẩm trong giỏ hàng."
         );
     }
 
-    return responseText ? JSON.parse(responseText) : null;
+    var baseUrl =
+        "CartControllers.aspx?memberID=" +
+        encodeURIComponent(memberID);
+
+    var deleteUrl = baseUrl +
+        "&cartItemID=" +
+        encodeURIComponent(cartItem.cartItemID) +
+        "&productID=" +
+        encodeURIComponent(productID);
+
+    var deleteResponse = await fetch(deleteUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Service-Name": "DeleteCartItem"
+        },
+        cache: "no-store"
+    });
+
+    if (!deleteResponse.ok) {
+        throw new Error(
+            "Không thể xóa sản phẩm cũ trong giỏ hàng."
+        );
+    }
+
+    var addResponse = await fetch(baseUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Service-Name": "AddCartItem"
+        },
+        body: JSON.stringify({
+            CartID: cartItem.cartItemID,
+            ProductID: String(productID),
+            Quantity: Number(quantity)
+        }),
+        cache: "no-store"
+    });
+
+    if (!addResponse.ok) {
+        throw new Error(
+            "Không thể thêm số lượng mới vào giỏ hàng."
+        );
+    }
+
+    return await addResponse.text();
+}
+
+async function capNhatGioHangSession(productID, quantity) {
+    var response = await fetch("Cart.aspx?api=cart", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "set",
+            id: Number(productID),
+            quantity: Number(quantity)
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error("Không thể cập nhật giỏ hàng.");
+    }
+
+    return await response.json();
 }
 
 function chuyenDoiSanPham(apiProduct) {
@@ -273,11 +334,20 @@ async function themSanPham(product, quantity, kiemTraTrung) {
     }
 
     if (existing) {
-        await capNhatGioHangThanhVien(
-            existing,
-            product.id,
-            currentQuantity + requestedQuantity
-        );
+        var memberID = layMemberID();
+
+        if (memberID) {
+            await capNhatGioHangThanhVien(
+                existing,
+                product.id,
+                currentQuantity + requestedQuantity
+            );
+        } else {
+            await capNhatGioHangSession(
+                product.id,
+                currentQuantity + requestedQuantity
+            );
+        }
     } else {
         await themVaoGioHang(product.id, requestedQuantity);
     }
@@ -577,14 +647,13 @@ function hienThiChiTietSanPham() {
             Number(quantityInput.value) || 0
         );
 
-        if (requestedQuantity > currentProduct.stock ||
-            requestedQuantity > 99) {
+        if (requestedQuantity > 99) {
             window.alert(
-                "Số lượng sản phẩm vượt quá số lượng hàng còn lại!"
+                "Số lượng sản phẩm vượt quá giới hạn cho phép!"
             );
 
             message.textContent =
-                "Số lượng sản phẩm vượt quá số lượng hàng còn lại.";
+                "Số lượng sản phẩm không được vượt quá 99.";
             return;
         }
 
@@ -611,6 +680,7 @@ function hienThiChiTietSanPham() {
                 message.textContent =
                     "Không thể thêm sản phẩm vào giỏ hàng.";
             }
+
         } catch (error) {
             console.error("Lỗi thêm sản phẩm vào giỏ:", error);
             message.textContent =
