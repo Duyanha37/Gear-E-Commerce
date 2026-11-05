@@ -158,6 +158,7 @@ const moModalXem = async (id) => {
     document.getElementById("viewId").innerHTML = member.memberID;
     document.getElementById("viewName").innerText = member.FullName;
     document.getElementById("viewUsername").innerText = member.Username || "";
+    document.getElementById("viewRole").innerText = member.Role || "User";
     document.getElementById("viewEmail").innerText = member.Email;
     document.getElementById("viewPhone").innerText = member.Phone;
     document.getElementById("viewStatus").innerText = member.Status;
@@ -175,6 +176,7 @@ const moModalSua = async (id) => {
     document.getElementById("editUsername").value = member.Username || "";
     document.getElementById("editEmail").value = member.Email;
     document.getElementById("editPhone").value = member.Phone;
+    document.getElementById("editRole").value = member.Role || "User";
     document.getElementById("editStatus").value = member.Status;
 
     xoaLoiForm("edit");
@@ -210,6 +212,7 @@ const luuSuaThanhVien = async () => {
     var username = document.getElementById("editUsername").value.trim();
     var email = document.getElementById("editEmail").value.trim();
     var phone = document.getElementById("editPhone").value.trim();
+    var role = document.getElementById("editRole").value;
     var status = document.getElementById("editStatus").value;
 
     var member = await getMemberById(memberID);
@@ -241,6 +244,7 @@ const luuSuaThanhVien = async () => {
         hienLoi("errorEditEmail", "Email hoặc số điện thoại đã tồn tại!");
         return;
     } else {
+        member.Role = role;
         member.FullName = fullname;
         member.Username = username;
         member.Email = email;
@@ -261,6 +265,7 @@ function moModalThem() {
     document.getElementById("addPhone").value = "";
     document.getElementById("addPassword").value = "";
     document.getElementById("addConfirmPassword").value = "";
+    document.getElementById("addRole").value = "User";
     document.getElementById("addStatus").value = "Active";
 
     xoaLoiForm("add");
@@ -293,6 +298,7 @@ const themThanhVien = async () => {
     var username = document.getElementById("addUsername").value.trim();
     var email = document.getElementById("addEmail").value.trim();
     var phone = document.getElementById("addPhone").value.trim();
+    var role = document.getElementById("addRole").value;
     var status = document.getElementById("addStatus").value;
     xoaLoiForm("add");
     xoaLoiForm("add");
@@ -329,7 +335,7 @@ const themThanhVien = async () => {
 
     var newMember = {
         memberID: (maxID + 1),
-        Role: "User",
+        Role: role,
         FullName: fullname,
         Username: username,
         Email: email,

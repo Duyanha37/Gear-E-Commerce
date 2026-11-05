@@ -131,6 +131,10 @@
                     <strong id="viewPhone"></strong>
                 </div>
                 <div class="view-field">
+                    <small>Role</small>
+                    <strong id="viewRole"></strong>
+                </div>
+                <div class="view-field">
                     <small>Account status</small>
                     <strong id="viewStatus"></strong>
                 </div>
@@ -180,6 +184,13 @@
                         <label for="editPhone">Phone number</label>
                         <input type="tel" id="editPhone" oninput="kiemTraSoDienThoai('edit')" />
                         <label id="errorEditPhone" class="error-label" hidden></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRole">Role</label>
+                        <select id="editRole">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="editStatus">Account status</label>
@@ -255,6 +266,13 @@
                         <label id="errorAddConfirmPassword"
                             class="error-label" hidden>
                         </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="addRole">Role</label>
+                        <select id="addRole">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="addStatus">Account status</label>
