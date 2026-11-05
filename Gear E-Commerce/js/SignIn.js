@@ -62,10 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     signinForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (checkvalidateForm()) {
-            signinForm.submit();
-        }else {
+        if (!checkvalidateForm()) {
+            e.preventDefault();
+            console.log("Hủy gửi về")
             return;
         }
     });

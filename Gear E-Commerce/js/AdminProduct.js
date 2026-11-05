@@ -244,7 +244,7 @@ const themSanPham = async () => {
             alert("Vui lòng chọn một hình ảnh sản phẩm!");
             return;
         }
-        var maxID = Math.Max(...products.map(p => p.productID), 0);
+        var maxID = Math.max(...products.map(p => p.productID), 0);
         var newProduct = {
             id: maxID + 1,
             Name: name,

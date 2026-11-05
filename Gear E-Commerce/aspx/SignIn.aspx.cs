@@ -18,12 +18,14 @@ namespace Gear_E_Commerce
                 bool isValid = true;
                 if (string.IsNullOrWhiteSpace(username_email))
                 {
-                    username_email_error.InnerHtml = "Vui lòng nhập đầy đủ thông tin!";
+                    username_email_error.InnerText = "Vui lòng nhập đầy đủ thông tin!";
+                    username_email_error.Style["display"] = "block";
                     isValid = false;
                 }
                 if (string.IsNullOrWhiteSpace(password))
                 {
-                    password_error.InnerHtml = "Vui lòng nhập đầy đủ thông tin!";
+                    password_error.InnerText = "Vui lòng nhập đầy đủ thông tin!";
+                    password_error.Style["display"] = "block";
                     isValid = false;
                 }
                 if (!isValid) return;
@@ -33,7 +35,8 @@ namespace Gear_E_Commerce
 
                 if (mb == null)
                 {
-                    username_email_error.InnerHtml = "Tên đăng nhập hoặc mật khẩu không đúng!";
+                    username_email_error.InnerText = "Tên đăng nhập hoặc mật khẩu không đúng!";
+                    username_email_error.Style["display"] = "block";
                 }
                 else
                 {
@@ -45,7 +48,7 @@ namespace Gear_E_Commerce
                     }
                     else
                     {
-                        Response.Redirect("Home.aspx");
+                        Response.Redirect("home.aspx");
                     }
                 }
             }

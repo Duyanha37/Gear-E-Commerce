@@ -27,22 +27,26 @@ namespace Gear_E_Commerce
                 }
                 if(string.IsNullOrWhiteSpace(email))
                 {
-                    email_error.InnerHtml = "Email không được để trống.";
+                    email_error.InnerText = "Email không được để trống.";
+                    email_error.Style["display"] = "block";
                     isValid = false;
                 }
                 if(string.IsNullOrWhiteSpace(phone))
                 {
-                    phone_error.InnerHtml = "Số điện thoại không được để trống.";
+                    phone_error.InnerText = "Số điện thoại không được để trống.";
+                    phone_error.Style["display"] = "block";
                     isValid = false;
                 }
                 if(string.IsNullOrWhiteSpace(password))
                 {
-                    password_error.InnerHtml = "Mật khẩu không được để trống.";
+                    password_error.InnerText = "Mật khẩu không được để trống.";
+                    password_error.Style["display"] = "block";
                     isValid = false;
                 }
                 if(string.IsNullOrWhiteSpace(confirm_password) || password != confirm_password)
                 {
-                    confirm_password_error.InnerHtml = "Xác nhận mật khẩu không hợp lệ.";
+                    confirm_password_error.InnerText = "Xác nhận mật khẩu không hợp lệ.";
+                    confirm_password_error.Style["display"] = "block";
                     isValid = false;
                 }
                 if (!isValid) return;
@@ -54,7 +58,8 @@ namespace Gear_E_Commerce
                 
                 if(count > 0)
                 {
-                    email_error.InnerHtml = "Email đã tồn tại.";
+                    email_error.InnerText = "Email đã tồn tại.";
+                    email_error.Style["display"] = "block";
                     return;
                 }else
                 {

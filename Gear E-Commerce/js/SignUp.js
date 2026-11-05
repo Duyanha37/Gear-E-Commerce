@@ -63,27 +63,27 @@
 
     const checkvalidateForm = (e) => {
         let isValid = true;
-        if (fullnameInput.value.trim() === '' && !fullnameRegex.test(fullnameInput.value)) {
-            fullnameError.textContent = 'Họ và tên không được để trống.';
+        if (fullnameInput.value.trim() === '' || !regexFullname.test(fullnameInput.value)) {
+            fullnameError.textContent = 'Họ và tên không được để trống hoặc không hợp lệ.';
             fullnameError.style.display = 'block';
             isValid = false;
         }
-        if (emailInput.value.trim() === '' && !emailRegex.test(emailInput.value)) {
-            emailError.textContent = 'Địa chỉ email không được để trống.';
+        if (emailInput.value.trim() === '' || !emailRegex.test(emailInput.value)) {
+            emailError.textContent = 'Địa chỉ email không được để trống hoặc không hợp lệ.';
             emailError.style.display = 'block';
             isValid = false;
         }
-        if (phoneInput.value.trim() === '' && !regexPhone.test(phoneInput.value)) {
-            phoneError.textContent = 'Số điện thoại không được để trống.';
+        if (phoneInput.value.trim() === '' || !regexPhone.test(phoneInput.value)) {
+            phoneError.textContent = 'Số điện thoại không được để trống hoặc không hợp lệ.';
             phoneError.style.display = 'block';
             isValid = false;
         }
-        if (passwordInput.value.trim() === '' && !passwordRegex.test(passwordInput.value)) {
-            passwordError.textContent = 'Mật khẩu không được để trống.';
+        if (passwordInput.value.trim() === '' || !passwordRegex.test(passwordInput.value)) {
+            passwordError.textContent = 'Mật khẩu không được để trống hoặc không hợp lệ.';
             passwordError.style.display = 'block';
             isValid = false;
         }
-        if (confirmpasswordInput.value.trim() === '' && confirmpasswordInput.value !== passwordInput.value) {
+        if (confirmpasswordInput.value.trim() === '' || confirmpasswordInput.value !== passwordInput.value) {
             confirmpasswordError.textContent = 'Xác nhận mật khẩu không được để trống.';
             confirmpasswordError.style.display = 'block';
             isValid = false;
@@ -91,12 +91,9 @@
         return isValid;
     };
 
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (checkvalidateForm()) {
-            signupForm.submit();
-        } else {
-            console.log("Không hợp lệ");
+    signupForm.addEventListener('submit', (e) => {  
+        if (!checkvalidateForm()) {
+            e.preventDefault();
             return;
         }
     });
