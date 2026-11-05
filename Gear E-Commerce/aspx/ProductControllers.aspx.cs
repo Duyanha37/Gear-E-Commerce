@@ -33,7 +33,7 @@ namespace Gear_E_Commerce.aspx
                 AddProduct();
                 return;
             }
-            if (Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateProduct")
+            if (Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "UpdateProduct")
             {
                 isApiRequest = true;
                 UpdateProduct();
@@ -117,6 +117,7 @@ namespace Gear_E_Commerce.aspx
             Product product = products.FirstOrDefault(p => p.productID == updatedProduct.productID);
             if (product != null)
             {
+                Console.Write(product);
                 products[products.IndexOf(product)] = updatedProduct;
                 Response.StatusCode = 200;
                 Application["ProductList"] = products;

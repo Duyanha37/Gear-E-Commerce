@@ -101,9 +101,9 @@ const hienThiSanPham = async () => {
         document.body.style.overflow = "";
 }
 
-const getProductById = async (id) => {
+const getProductById = async (productID) => {
     try {
-        const response = await fetch("ProductControllers.aspx?productID=" + id, {
+        const response = await fetch("ProductControllers.aspx?productID=" + productID, {
             method: "GET",
             headers: {
                 "Service-Name": "GetProductByID"
@@ -151,8 +151,9 @@ const moModalSua = async (productID) => {
 
 const updateProduct = async (product) => {
     try {
+        console.log(product);
         const response = await fetch("ProductControllers.aspx", {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Service-Name": "UpdateProduct"
             },
@@ -181,9 +182,17 @@ const luuSuaSanPham = async () => {
             alert("Vui lòng điền thông tin hợp lệ!");
             return;
         }
-    var product = await getProductById(product);
-    if (editImageData != "") {
+    var product = await getProductById(productID);
+    if (product != null) {
+        product.Name = name;
+        product.Brand = brand;
+        product.Description = description;
+        product.Price = price;
+        product.Stock = stock;
+        product.Category = category;
+        if (editImageData != "") {
             product.Image = editImageData;
+        }
     }
     updateProduct(product);
     hienThiSanPham();

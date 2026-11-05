@@ -32,7 +32,7 @@ namespace Gear_E_Commerce.aspx
                 AddMember();
                 return;
             }
-            if (Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateMember")
+            if (Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "UpdateMember")
             {
                 isApiRequest = true;
                 UpdateMember();

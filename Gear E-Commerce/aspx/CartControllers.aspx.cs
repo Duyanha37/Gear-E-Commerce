@@ -21,7 +21,7 @@ namespace Gear_E_Commerce.aspx
                 GetCartItemsByMemberID();
                 return;
             }
-            if(Request.HttpMethod == "PUT" && Request.Headers["Service-Name"] == "UpdateCartItems")
+            if(Request.HttpMethod == "POST" && Request.Headers["Service-Name"] == "UpdateCartItems")
             {
                 isApiRequest = true;
                 UpdateCartItems();

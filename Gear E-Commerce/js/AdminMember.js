@@ -196,9 +196,9 @@ const updateMember = async (member) => {
 
         if (response.status !== 200) {
             throw new Error("Lỗi cập nhật member");
-        }
+        } else {
 
-        return await response.json();
+        }
     } catch (error) {
         console.error("Lỗi cập nhật member:", error);
     }
