@@ -549,7 +549,7 @@ body {
 }
 
     .product-card-footer strong {
-        font-size: 14px;
+        font-size: 11px;
     }
 
 .mini-add {
@@ -955,4 +955,160 @@ body .dau-trang header .menu-chinh a:hover {
             min-width: max-content;
             text-align: center;
         }
+}
+
+.dau-trang header {
+    width: var(--content-width);
+    min-height: clamp(4rem, 6vw, 5rem);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.dau-trang .logo-thuong-hieu {
+    flex: 0 0 auto;
+}
+
+    .dau-trang .logo-thuong-hieu a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #111;
+        white-space: nowrap;
+    }
+
+.dau-trang .logo-mark {
+    display: block;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 8px;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+.dau-trang .ten-thuong-hieu {
+    color: #111;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.dau-trang .menu-chinh {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(0.9rem, 2.2vw, 1.9rem);
+    min-width: 0;
+    margin-left: clamp(0.75rem, 1.5vw, 1.75rem);
+}
+
+    .dau-trang .menu-chinh a {
+        padding: 0.5rem 0;
+        color: #555;
+        font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+        white-space: nowrap;
+    }
+
+        .dau-trang .menu-chinh a:hover,
+        .dau-trang .menu-chinh a.dang-chon {
+            border-bottom: 1px solid #111;
+            color: #111;
+        }
+
+.dau-trang .tai-khoan {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: clamp(0.5rem, 1vw, 0.9rem);
+    margin-left: auto;
+}
+
+.dau-trang .bieu-tuong-tai-khoan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+}
+
+    .dau-trang .bieu-tuong-tai-khoan svg {
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+@media (max-width: 850px) {
+    .dau-trang header {
+        width: var(--content-width);
+    }
+
+    .dau-trang .menu-chinh {
+        gap: 0.85rem;
+        margin-left: 0.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .dau-trang header {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        width: calc(100% - var(--mobile-gutter));
+        min-height: 0;
+        padding-block: 10px;
+        gap: 8px;
+    }
+
+    .dau-trang .logo-thuong-hieu {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .dau-trang .tai-khoan {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        gap: 8px;
+    }
+
+    .dau-trang .menu-chinh {
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        width: 100%;
+        margin: 0;
+    }
+
+        .dau-trang .menu-chinh a {
+            padding: 0.5rem 0;
+            font-size: clamp(0.875rem, 3vw, 1rem);
+            text-align: center;
+        }
+
+            .dau-trang .menu-chinh a:first-child {
+                text-align: left;
+            }
+
+            .dau-trang .menu-chinh a:last-child {
+                text-align: right;
+            }
+
+    .dau-trang .ten-thuong-hieu {
+        font-size: 18px;
+    }
 }

@@ -1,4 +1,5 @@
-const FEATURED_PRODUCT_IDS = ["1", "2", "3", "4"];
+var catalog = [];
+var FEATURED_IDS = ["1", "2", "3", "4"];
 
 function layMemberID() {
     var memberID = document.body.getAttribute("data-member-id") ||
@@ -20,79 +21,51 @@ function layMemberID() {
 
 function chuanHoaSanPham(product) {
     return {
-        productID: String(product.productID),
-        Name: product.Name || "",
-        Brand: product.Brand || "",
-        Description: product.Description || "",
-        Price: Number(product.Price) || 0,
-        Stock: Number(product.Stock) || 0,
-        Category: product.Category || "",
-        Image: product.Image || "",
-        isDelete: product.isDelete === true || product.isDeleted === true
+        id: Number(product.productID),
+        ten: product.Name || "",
+        loai: product.Category || "",
+        brand: product.Brand || "",
+        gia: Number(product.Price) || 0,
+        anh: product.Image || "",
+        tonkho: Number(product.Stock) || 0,
+        thongSo: product.SpecificationsSummary || product.Description || "",
+        moTa: product.Description || ""
     };
 }
 
-const getProducts = async () => {
-    // TODO: ProductControllers.aspx.cs đang đọc Application["Products"],
-    // trong khi Global.asax.cs khởi tạo Application["ProductList"].
-    // Cần thống nhất khóa phía controller để API trả danh sách sản phẩm.
-    try {
-        var response = await fetch("ProductControllers.aspx", {
-            method: "GET",
-            headers: {
-                "Service-Name": "GetProducts"
-            },
-            credentials: "same-origin"
-        });
-
-        if (!response.ok) {
-            throw new Error("Không thể lấy danh sách sản phẩm.");
-        }
-
-        var products = await response.json();
-        if (!Array.isArray(products)) {
-            throw new Error("API không trả về danh sách sản phẩm.");
-        }
-
-        return products.map(chuanHoaSanPham).filter(product => !product.isDelete);
-    } catch (error) {
-        console.error("Lỗi lấy danh sách sản phẩm:", error);
-        throw error;
-    }
-};
-
-const getCartByMember = async (memberID) => {
-    // TODO: CartControllers.aspx.cs đang đọc Application["CartMembers"],
-    // trong khi Global.asax.cs khởi tạo Application["CartMemberList"].
-    // Cần thống nhất khóa phía controller để API thành viên hoạt động.
-    var response = await fetch("CartControllers.aspx?memberID=" + encodeURIComponent(memberID), {
+async function loadProducts() {
+    var response = await fetch("ProductControllers.aspx", {
         method: "GET",
         headers: {
-            "Service-Name": "GetCartItemsByMemberID"
+            "Service-Name": "GetProducts"
         },
-        credentials: "same-origin"
+        credentials: "same-origin",
+        cache: "no-store"
     });
 
     if (!response.ok) {
-        throw new Error("Không thể lấy giỏ hàng của thành viên.");
+        throw new Error("Không thể lấy danh sách sản phẩm.");
     }
 
-    var cartItems = await response.json();
-    if (!Array.isArray(cartItems)) {
-        throw new Error("API không trả về danh sách giỏ hàng.");
+    var products = await response.json();
+
+    if (!Array.isArray(products)) {
+        throw new Error("API không trả về danh sách sản phẩm.");
     }
 
-    return cartItems.map(item => ({
-        CartID: String(item.CartID),
-        ProductID: String(item.ProductID),
-        Quantity: Math.max(0, Number(item.Quantity) || 0)
-    }));
-};
+    return products
+        .filter(function (product) {
+            return product.isDelete !== true &&
+                product.isDeleted !== true;
+        })
+        .map(chuanHoaSanPham);
+}
 
-const getCartBySession = async () => {
+async function loadCartBySession() {
     var response = await fetch("Cart.aspx?api=cart", {
         method: "GET",
-        credentials: "same-origin"
+        credentials: "same-origin",
+        cache: "no-store"
     });
 
     if (!response.ok) {
@@ -100,84 +73,172 @@ const getCartBySession = async () => {
     }
 
     var cartItems = await response.json();
+
     if (!Array.isArray(cartItems)) {
         throw new Error("API không trả về danh sách giỏ hàng.");
     }
 
-    return cartItems.map(item => ({
-        ProductID: String(item.id),
-        Quantity: Math.max(0, Number(item.soLuong) || 0)
-    }));
-};
+    return cartItems.map(function (item) {
+        return {
+            id: Number(item.id),
+            productID: String(item.id),
+            cartID: "",
+            soLuong: Math.max(1, Number(item.soLuong) || 1)
+        };
+    });
+}
 
-const getCart = async () => {
+async function loadCart() {
     var memberID = layMemberID();
 
-    if (memberID) {
-        return {
-            items: await getCartByMember(memberID),
-            memberID: memberID,
-            isMemberCart: true
-        };
+    if (memberID === "") {
+        return await loadCartBySession();
     }
 
-    // TODO: Cart.aspx hiện chưa render memberID từ Session vào HTML.
-    // Khi trang cung cấp memberID, nhánh trên sẽ dùng CartControllers.aspx.
-    // Tạm thời dùng API session hiện có để giỏ hàng vẫn hoạt động.
-    return {
-        items: await getCartBySession(),
-        memberID: "",
-        isMemberCart: false
-    };
-};
+    var response = await fetch(
+        "CartControllers.aspx?memberID=" +
+        encodeURIComponent(memberID),
+        {
+            method: "GET",
+            headers: {
+                "Service-Name": "GetCartItemsByMemberID"
+            },
+            credentials: "same-origin",
+            cache: "no-store"
+        }
+    );
 
-const guiLenhGioHangSession = async (action, productID, quantity) => {
-    var response = await fetch("Cart.aspx?api=cart", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            action: action,
-            id: Number(productID),
-            quantity: quantity
-        })
-    });
-
-    var result = await response.json();
     if (!response.ok) {
-        throw new Error(result.error || "Không thể cập nhật giỏ hàng.");
+        throw new Error("Không thể lấy giỏ hàng của thành viên.");
     }
 
-    return result;
-};
+    var cartItems = await response.json();
 
-const guiLenhGioHangThanhVien = async (action, memberID, item, quantity) => {
-    var serviceName = "";
+    if (!Array.isArray(cartItems)) {
+        throw new Error("API không trả về danh sách giỏ hàng.");
+    }
+
+    return cartItems.map(function (item) {
+        var productID = item.ProductID ||
+            item.productID ||
+            item.id;
+
+        var cartID = item.CartID ||
+            item.cartID ||
+            "";
+
+        var quantity = item.Quantity ||
+            item.quantity ||
+            item.soLuong ||
+            1;
+
+        return {
+            id: Number(productID),
+            productID: String(productID),
+            cartID: cartID ? String(cartID) : "",
+            soLuong: Math.max(
+                1,
+                Math.min(99, Math.floor(Number(quantity) || 1))
+            )
+        };
+    });
+}
+
+async function sendCartAction(action, item, quantity) {
+    var memberID = layMemberID();
+
+    if (memberID === "") {
+        var sessionAction = action;
+
+        if (action === "update") {
+            sessionAction = quantity < 1 ? "remove" : "set";
+        }
+
+        var sessionResponse = await fetch("Cart.aspx?api=cart", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: sessionAction,
+                id: Number(item.productID),
+                quantity: quantity
+            })
+        });
+
+        if (!sessionResponse.ok) {
+            throw new Error("Không thể cập nhật giỏ hàng.");
+        }
+
+        return sessionResponse;
+    }
+
     var method = "POST";
-    var url = "CartControllers.aspx?memberID=" + encodeURIComponent(memberID);
+    var serviceName = "";
+    var url = "CartControllers.aspx?memberID=" +
+        encodeURIComponent(memberID);
     var body = null;
 
     if (action === "add") {
         serviceName = "AddCartItem";
         body = JSON.stringify({
-            CartID: item.CartID || memberID,
-            ProductID: item.ProductID,
-            Quantity: quantity
+            CartID: item.cartID || memberID,
+            ProductID: String(item.productID),
+            Quantity: Number(quantity)
         });
-    } else if (action === "update") {
-        serviceName = "UpdateCartItems";
-        method = "PUT";
-        body = JSON.stringify({
-            CartID: item.CartID,
-            ProductID: item.ProductID,
-            Quantity: quantity
+    }
+
+    else if (action === "update") {
+        var deleteUrl = url +
+            "&cartItemID=" +
+            encodeURIComponent(item.cartID) +
+            "&productID=" +
+            encodeURIComponent(item.productID);
+
+        var deleteResponse = await fetch(deleteUrl, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Service-Name": "DeleteCartItem"
+            },
+            cache: "no-store"
         });
-    } else if (action === "remove") {
+
+        if (!deleteResponse.ok) {
+            throw new Error("Không thể xóa sản phẩm cũ trong giỏ hàng.");
+        }
+
+        var addResponse = await fetch(url, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Service-Name": "AddCartItem"
+            },
+            body: JSON.stringify({
+                CartID: item.cartID || memberID,
+                ProductID: String(item.productID),
+                Quantity: Number(quantity)
+            }),
+            cache: "no-store"
+        });
+
+        if (!addResponse.ok) {
+            throw new Error("Không thể thêm số lượng mới vào giỏ hàng.");
+        }
+
+        return addResponse;
+    }
+    else if (action === "remove") {
         serviceName = "DeleteCartItem";
-        url += "&cartItemID=" + encodeURIComponent(item.CartID) +
-            "&productID=" + encodeURIComponent(item.ProductID);
+        url += "&cartItemID=" +
+            encodeURIComponent(item.cartID) +
+            "&productID=" +
+            encodeURIComponent(item.productID);
+    }
+    else {
+        throw new Error("Thao tác giỏ hàng không hợp lệ.");
     }
 
     var options = {
@@ -185,62 +246,93 @@ const guiLenhGioHangThanhVien = async (action, memberID, item, quantity) => {
         headers: {
             "Service-Name": serviceName
         },
-        credentials: "same-origin"
+        credentials: "same-origin",
+        cache: "no-store"
     };
 
-    if (body) {
+    if (body !== null) {
         options.headers["Content-Type"] = "application/json";
         options.body = body;
     }
 
     var response = await fetch(url, options);
+
+    var responseText = await response.text();
+
     if (!response.ok) {
-        throw new Error("Không thể cập nhật giỏ hàng thành viên.");
+        throw new Error(
+            "Không thể cập nhật giỏ hàng. HTTP " +
+            response.status +
+            (responseText ? ": " + responseText : "")
+        );
     }
 
-    return response;
-};
-
-const capNhatGioHang = async (action, product, item, quantity) => {
-    var cart = await getCart();
-
-    if (cart.isMemberCart) {
-        await guiLenhGioHangThanhVien(action, cart.memberID, item, quantity);
-        return;
-    }
-
-    if (action === "remove") {
-        await guiLenhGioHangSession("remove", product.productID, 0);
-    } else if (action === "update") {
-        if (quantity < 1) {
-            await guiLenhGioHangSession("remove", product.productID, 0);
-        } else {
-            await guiLenhGioHangSession("set", product.productID, quantity);
-        }
-    } else if (action === "add") {
-        await guiLenhGioHangSession("add", product.productID, quantity);
-    }
-};
+    return responseText;
+}
 
 function formatPrice(price) {
     return Number(price).toLocaleString("vi-VN") + " ₫";
 }
 
-function taoTheSanPham(product, label) {
+async function addToCart(product, quantity) {
+    if (!product || product.tonkho < 1) {
+        return {
+            added: false,
+            alreadyExists: false
+        };
+    }
+
+    var cart = await loadCart();
+    var existing = cart.find(function (item) {
+        return item.id === product.id;
+    });
+
+    if (existing) {
+        return {
+            added: false,
+            alreadyExists: true
+        };
+    }
+
+    var requestedQuantity = Math.floor(Number(quantity) || 0);
+
+    if (requestedQuantity < 1 ||
+        requestedQuantity > product.tonkho ||
+        requestedQuantity > 99) {
+        return {
+            added: false,
+            alreadyExists: false
+        };
+    }
+
+    await sendCartAction(
+        "add",
+        {
+            cartID: "",
+            productID: String(product.id)
+        },
+        requestedQuantity
+    );
+
+    return {
+        added: true,
+        alreadyExists: false
+    };
+}
+
+function makeProductCard(product, label, refreshCart) {
     var card = document.createElement("article");
     card.className = "product-card";
 
     var imageLink = document.createElement("a");
     imageLink.className = "product-card-image";
-    imageLink.href = "ChiTietSanPham.aspx?id=" + encodeURIComponent(product.productID);
+    imageLink.href = "ChiTietSanPham.aspx?id=" + product.id;
 
-    if (product.Image) {
-        var image = document.createElement("img");
-        image.src = product.Image;
-        image.alt = product.Name;
-        image.loading = "lazy";
-        imageLink.appendChild(image);
-    }
+    var image = document.createElement("img");
+    image.src = product.anh;
+    image.alt = product.ten;
+    image.loading = "lazy";
+    imageLink.appendChild(image);
 
     if (label) {
         var tag = document.createElement("span");
@@ -251,309 +343,447 @@ function taoTheSanPham(product, label) {
 
     var body = document.createElement("div");
     body.className = "product-card-body";
+
     var category = document.createElement("p");
     category.className = "product-card-category";
-    category.textContent = product.Brand
-        ? product.Category + " · " + product.Brand
-        : product.Category;
+    category.textContent = product.brand
+        ? product.loai + " · " + product.brand
+        : product.loai;
 
     var title = document.createElement("h3");
     var titleLink = document.createElement("a");
     titleLink.href = imageLink.href;
-    titleLink.textContent = product.Name;
+    titleLink.textContent = product.ten;
     title.appendChild(titleLink);
 
-    var description = document.createElement("p");
-    description.className = "product-card-spec";
-    description.textContent = product.Description;
+    var spec = document.createElement("p");
+    spec.className = "product-card-spec";
+    spec.textContent = product.thongSo;
 
     var footer = document.createElement("div");
     footer.className = "product-card-footer";
-    var price = document.createElement("strong");
-    price.textContent = formatPrice(product.Price);
 
-    var addButton = document.createElement("button");
-    addButton.type = "button";
-    addButton.className = "mini-add";
-    addButton.textContent = product.Stock > 0 ? "Thêm vào giỏ" : "Hết hàng";
-    addButton.disabled = product.Stock < 1;
-    addButton.addEventListener("click", async function () {
+    var price = document.createElement("strong");
+    price.textContent = formatPrice(product.gia);
+
+    var add = document.createElement("button");
+    add.type = "button";
+    add.className = "mini-add";
+    add.textContent = product.tonkho > 0
+        ? "Thêm vào giỏ"
+        : "Hết hàng";
+    add.disabled = product.tonkho < 1;
+
+    add.addEventListener("click", async function (event) {
+        event.preventDefault();
+
+        if (add.disabled) {
+            return;
+        }
+
+        add.disabled = true;
+
         try {
-            await themVaoGio(product, 1);
-            addButton.textContent = "Đã thêm";
+            var result = await addToCart(product, 1);
+
+            if (result.alreadyExists) {
+                window.alert("Sản phẩm đã được thêm vào giỏ hàng rồi!");
+                add.disabled = false;
+                return;
+            }
+
+            if (!result.added) {
+                add.textContent = "Hết hàng";
+                add.disabled = false;
+                return;
+            }
+
+            add.textContent = "Đã thêm";
+
+            if (refreshCart) {
+                await refreshCart();
+            }
+
             window.setTimeout(function () {
-                addButton.textContent = "Thêm vào giỏ";
+                add.textContent = "Thêm vào giỏ hàng";
+                add.disabled = false;
             }, 1200);
         } catch (error) {
-            addButton.textContent = "Thử lại";
+            console.error(
+                "Lỗi thêm sản phẩm từ danh sách gợi ý:",
+                error
+            );
+
+            add.textContent = "Try again";
+            add.disabled = false;
+
             window.setTimeout(function () {
-                addButton.textContent = "Thêm vào giỏ";
+                add.textContent = "Add to cart";
             }, 1500);
         }
     });
 
-    footer.append(price, addButton);
-    body.append(category, title, description, footer);
+    footer.append(price, add);
+    body.append(category, title, spec, footer);
     card.append(imageLink, body);
+
     return card;
 }
 
-async function themVaoGio(product, requestedQuantity) {
-    var cart = await getCart();
-    var item = cart.items.find(function (cartItem) {
-        return cartItem.ProductID === product.productID;
-    });
-    var currentQuantity = item ? item.Quantity : 0;
-    var availableQuantity = Math.min(product.Stock - currentQuantity, 99 - currentQuantity);
-    var quantity = Math.min(Math.floor(Number(requestedQuantity) || 0), availableQuantity);
+document.addEventListener("DOMContentLoaded", function () {
+    var searchForm = document.getElementById("formTimKiem");
+    var searchToggle = document.getElementById("nutMoTimKiem");
+    var searchInput = searchForm &&
+        searchForm.querySelector('input[type="search"]');
 
-    if (quantity < 1) {
-        throw new Error("Số lượng yêu cầu vượt quá tồn kho.");
-    }
+    if (searchForm && searchToggle && searchInput) {
+        searchToggle.addEventListener("click", function () {
+            var isOpen = searchForm.classList.toggle("dang-mo");
 
-    if (cart.isMemberCart && item) {
-        await guiLenhGioHangThanhVien("update", cart.memberID, item, currentQuantity + quantity);
-    } else {
-        await capNhatGioHang("add", product, item || { ProductID: product.productID }, quantity);
-    }
+            searchToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
 
-    await capNhatSoLuongGio();
-}
+            searchToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm"
+            );
 
-async function capNhatSoLuongGio() {
-    try {
-        var cart = await getCart();
-        var totalItems = cart.items.reduce(function (total, item) {
-            return total + item.Quantity;
-        }, 0);
-
-        document.querySelectorAll("[data-cart-count]").forEach(function (element) {
-            element.textContent = String(totalItems);
+            if (isOpen) {
+                searchInput.focus();
+            }
         });
-    } catch (error) {
-        console.error("Lỗi cập nhật số lượng giỏ hàng:", error);
-    }
-}
 
-document.addEventListener("DOMContentLoaded", async function () {
+        searchInput.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                searchForm.classList.remove("dang-mo");
+                searchToggle.setAttribute("aria-expanded", "false");
+                searchToggle.focus();
+            }
+        });
+    }
+
     var cartList = document.getElementById("danhSachGioHang");
     var cartContent = document.getElementById("noiDungGioHang");
     var emptyState = document.getElementById("gioHangTrong");
     var recommendations = document.getElementById("danhSachNoiBat");
-    var products = [];
+    var checkoutMessage = document.getElementById("checkoutMessage");
 
     if (!cartList || !cartContent || !emptyState) {
         return;
     }
 
-    const showUnavailable = (message) => {
-        cartContent.hidden = true;
-        emptyState.hidden = false;
-        emptyState.querySelector("h2").textContent = "Không tải được giỏ hàng";
-        emptyState.querySelector("p").textContent = message;
-    };
+    function updateCart(items) {
+        var totalItems = items.reduce(function (sum, item) {
+            return sum + item.soLuong;
+        }, 0);
 
-    const hienThiGioHang = async () => {
-        var cart;
+        var subtotal = items.reduce(function (sum, item) {
+            var product = catalog.find(function (candidate) {
+                return candidate.id === item.id;
+            });
+
+            return sum + (
+                product
+                    ? product.gia * item.soLuong
+                    : 0
+            );
+        }, 0);
+
+        var itemCount = document.getElementById("itemCount");
+        var subtotalElement = document.getElementById("tamTinh");
+        var totalElement = document.getElementById("tongCong");
+
+        if (itemCount) {
+            itemCount.textContent = totalItems +
+                (totalItems === 1 ? " item" : " items");
+        }
+
+        document.querySelectorAll("[data-cart-count]")
+            .forEach(function (element) {
+                element.textContent = String(totalItems);
+            });
+
+        if (subtotalElement) {
+            subtotalElement.textContent = formatPrice(subtotal);
+        }
+
+        if (totalElement) {
+            totalElement.textContent = formatPrice(subtotal);
+        }
+    }
+
+    async function renderCart() {
+        var items;
+
         try {
-            cart = await getCart();
+            items = await loadCart();
         } catch (error) {
-            showUnavailable("Không thể kết nối tới giỏ hàng. Vui lòng thử lại.");
+            cartContent.hidden = true;
+            emptyState.hidden = false;
+            emptyState.querySelector("h2").textContent =
+                "Cart unavailable";
+            emptyState.querySelector("p").textContent =
+                "Could not connect to the application cart. Please try again.";
+            console.error("Có lỗi khi hiển thị giỏ hàng:", error);
             return;
         }
 
         cartList.replaceChildren();
-        var items = cart.items.filter(function (item) {
-            return products.some(function (product) {
-                return product.productID === item.ProductID;
+
+        var itemsInCatalog = items.filter(function (item) {
+            return catalog.some(function (product) {
+                return product.id === item.id;
             });
         });
-        var hasItems = items.length > 0;
+
+        itemsInCatalog.sort(function (firstItem, secondItem) {
+            var firstIndex = catalog.findIndex(function (product) {
+                return product.id === firstItem.id;
+            });
+
+            var secondIndex = catalog.findIndex(function (product) {
+                return product.id === secondItem.id;
+            });
+
+            return firstIndex - secondIndex;
+        });
+
+        var hasItems = itemsInCatalog.length > 0;
+
         cartContent.hidden = !hasItems;
         emptyState.hidden = hasItems;
 
-        if (!hasItems) {
-            emptyState.querySelector("h2").textContent = "Giỏ hàng đang trống";
-            emptyState.querySelector("p").textContent = "Tìm linh kiện phù hợp cho bộ máy tiếp theo của bạn.";
+        emptyState.querySelector("h2").textContent =
+            "Giỏ hàng của bạn đang trống";
+        emptyState.querySelector("p").textContent =
+            "Tìm các linh kiện phù hợp cho bộ máy tiếp theo của bạn.";
+
+        if (hasItems) {
+            itemsInCatalog.forEach(function (item) {
+                var product = catalog.find(function (candidate) {
+                    return candidate.id === item.id;
+                });
+
+                if (!product) {
+                    return;
+                }
+
+                var row = document.createElement("article");
+                row.className = "cart-item";
+                row.dataset.productId = String(product.id);
+                row.dataset.cartId = String(item.cartID);
+
+                var imageLink = document.createElement("a");
+                imageLink.className = "cart-item-image";
+                imageLink.href =
+                    "ChiTietSanPham.aspx?id=" + product.id;
+
+                var image = document.createElement("img");
+                image.src = product.anh;
+                image.alt = product.ten;
+                imageLink.appendChild(image);
+
+                var details = document.createElement("div");
+                details.className = "cart-item-details";
+
+                var category = document.createElement("p");
+                category.className = "cart-item-category";
+                category.textContent = product.brand
+                    ? product.loai + " · " + product.brand
+                    : product.loai;
+
+                var name = document.createElement("h2");
+                var nameLink = document.createElement("a");
+                nameLink.href = imageLink.href;
+                nameLink.textContent = product.ten;
+                name.appendChild(nameLink);
+
+                var spec = document.createElement("p");
+                spec.className = "cart-item-spec";
+                spec.textContent = product.thongSo;
+
+                var remove = document.createElement("button");
+                remove.type = "button";
+                remove.className = "remove-item";
+                remove.textContent = "Remove";
+
+                details.append(category, name, spec, remove);
+
+                var purchase = document.createElement("div");
+                purchase.className = "cart-item-purchase";
+
+                var price = document.createElement("strong");
+                price.className = "cart-item-price";
+                price.textContent = formatPrice(product.gia);
+
+                var quantity = document.createElement("div");
+                quantity.className = "cart-quantity";
+
+                var minus = document.createElement("button");
+                minus.type = "button";
+                minus.dataset.action = "decrease";
+                minus.textContent = "−";
+                minus.disabled = item.soLuong <= 1;
+                minus.setAttribute(
+                    "aria-label",
+                    "Decrease " + product.ten
+                );
+
+                var count = document.createElement("span");
+                count.className = "quantity-value";
+                count.textContent = String(item.soLuong);
+
+                var plus = document.createElement("button");
+                plus.type = "button";
+                plus.dataset.action = "increase";
+                plus.textContent = "+";
+                plus.disabled = item.soLuong >= product.tonkho ||
+                    item.soLuong >= 99;
+                plus.setAttribute(
+                    "aria-label",
+                    "Increase " + product.ten
+                );
+
+                quantity.append(minus, count, plus);
+
+                var lineTotal = document.createElement("span");
+                lineTotal.className = "cart-line-total";
+                lineTotal.textContent = formatPrice(
+                    product.gia * item.soLuong
+                );
+
+                purchase.append(price, quantity, lineTotal);
+                row.append(imageLink, details, purchase);
+                cartList.appendChild(row);
+            });
         }
 
-        items.forEach(function (item) {
-            var product = products.find(function (candidate) {
-                return candidate.productID === item.ProductID;
-            });
-            if (!product) return;
-
-            var row = document.createElement("article");
-            row.className = "cart-item";
-            row.dataset.productId = product.productID;
-            row.dataset.cartId = item.CartID || "";
-
-            var imageLink = document.createElement("a");
-            imageLink.className = "cart-item-image";
-            imageLink.href = "ChiTietSanPham.aspx?id=" + encodeURIComponent(product.productID);
-            if (product.Image) {
-                var image = document.createElement("img");
-                image.src = product.Image;
-                image.alt = product.Name;
-                imageLink.appendChild(image);
-            }
-
-            var details = document.createElement("div");
-            details.className = "cart-item-details";
-            var category = document.createElement("p");
-            category.className = "cart-item-category";
-            category.textContent = product.Brand
-                ? product.Category + " · " + product.Brand
-                : product.Category;
-            var name = document.createElement("h2");
-            var nameLink = document.createElement("a");
-            nameLink.href = imageLink.href;
-            nameLink.textContent = product.Name;
-            name.appendChild(nameLink);
-            var description = document.createElement("p");
-            description.className = "cart-item-spec";
-            description.textContent = product.Description;
-            var removeButton = document.createElement("button");
-            removeButton.type = "button";
-            removeButton.className = "remove-item";
-            removeButton.textContent = "Xóa";
-            details.append(category, name, description, removeButton);
-
-            var purchase = document.createElement("div");
-            purchase.className = "cart-item-purchase";
-            var price = document.createElement("strong");
-            price.className = "cart-item-price";
-            price.textContent = formatPrice(product.Price);
-
-            var quantity = document.createElement("div");
-            quantity.className = "cart-quantity";
-            var minus = document.createElement("button");
-            minus.type = "button";
-            minus.dataset.action = "decrease";
-            minus.textContent = "−";
-            minus.setAttribute("aria-label", "Giảm số lượng " + product.Name);
-            var count = document.createElement("span");
-            count.className = "quantity-value";
-            count.textContent = String(item.Quantity);
-            var plus = document.createElement("button");
-            plus.type = "button";
-            plus.dataset.action = "increase";
-            plus.textContent = "+";
-            plus.setAttribute("aria-label", "Tăng số lượng " + product.Name);
-            plus.disabled = item.Quantity >= product.Stock || item.Quantity >= 99;
-            quantity.append(minus, count, plus);
-
-            var lineTotal = document.createElement("span");
-            lineTotal.className = "cart-line-total";
-            lineTotal.textContent = formatPrice(product.Price * item.Quantity);
-            purchase.append(price, quantity, lineTotal);
-            row.append(imageLink, details, purchase);
-            cartList.appendChild(row);
-        });
-
-        capNhatTongTien(items, products);
-    };
-
-    try {
-        products = await getProducts();
-    } catch (error) {
-        showUnavailable("Không thể tải dữ liệu sản phẩm từ máy chủ.");
-        return;
-    }
-
-    if (recommendations) {
-        FEATURED_PRODUCT_IDS.forEach(function (productID, index) {
-            var product = products.find(function (candidate) {
-                return candidate.productID === productID;
-            });
-            if (product) {
-                recommendations.appendChild(taoTheSanPham(product, index === 0 ? "Nổi bật" : ""));
-            }
-        });
+        updateCart(itemsInCatalog);
     }
 
     cartList.addEventListener("click", async function (event) {
         var button = event.target.closest("button");
-        if (!button) return;
+
+        if (!button) {
+            return;
+        }
 
         var row = button.closest(".cart-item");
-        var product = products.find(function (candidate) {
-            return candidate.productID === row.dataset.productId;
-        });
-        if (!product) return;
 
-        var cart = await getCart();
-        var item = cart.items.find(function (cartItem) {
-            return cartItem.ProductID === product.productID &&
-                (!cart.isMemberCart || cartItem.CartID === row.dataset.cartId);
-        });
-        if (!item) return;
+        if (!row) {
+            return;
+        }
+
+        if (button.disabled) {
+            return;
+        }
+
+        var productID = String(row.dataset.productId);
+        var memberID = layMemberID();
+
+        button.disabled = true;
 
         try {
-            if (button.classList.contains("remove-item")) {
-                await capNhatGioHang("remove", product, item, 0);
-            } else if (button.dataset.action === "increase") {
-                if (item.Quantity < product.Stock && item.Quantity < 99) {
-                    if (cart.isMemberCart) {
-                        await guiLenhGioHangThanhVien("update", cart.memberID, item, item.Quantity + 1);
-                    } else {
-                        await guiLenhGioHangSession("add", product.productID, 1);
-                    }
-                }
-            } else if (button.dataset.action === "decrease") {
-                if (item.Quantity <= 1) {
-                    await capNhatGioHang("remove", product, item, 0);
-                } else {
-                    await capNhatGioHang("update", product, item, item.Quantity - 1);
-                }
+            var items = await loadCart();
+            var item = items.find(function (entry) {
+                return String(entry.productID) === productID;
+            });
+
+            var product = catalog.find(function (candidate) {
+                return String(candidate.id) === productID;
+            });
+
+            if (!item || !product) {
+                throw new Error("Không tìm thấy sản phẩm trong giỏ hàng.");
             }
 
-            await hienThiGioHang();
-        } catch (error) {
-            var message = document.getElementById("checkoutMessage");
-            if (message) {
-                message.textContent = "Không thể cập nhật giỏ hàng. Vui lòng thử lại.";
-                message.hidden = false;
+            if (button.classList.contains("remove-item")) {
+                await sendCartAction("remove", item, 0);
+            } else if (button.dataset.action === "increase") {
+                if (item.soLuong >= product.tonkho ||
+                    item.soLuong >= 99) {
+                    return;
+                }
+
+                await sendCartAction(
+                    "update",
+                    item,
+                    item.soLuong + 1
+                );
+            } else if (button.dataset.action === "decrease") {
+                if (item.soLuong <= 1) {
+                    return;
+                }
+
+                await sendCartAction(
+                    "update",
+                    item,
+                    item.soLuong - 1
+                );
             }
+
+            await renderCart();
+        } catch (error) {
+            console.error("Lỗi cập nhật số lượng giỏ hàng:", error);
+
+            if (checkoutMessage) {
+                checkoutMessage.textContent =
+                    "Không thể cập nhật số lượng sản phẩm. Vui lòng thử lại.";
+                checkoutMessage.hidden = false;
+            }
+        } finally {
+            button.disabled = false;
         }
     });
 
     var checkoutButton = document.getElementById("thanhToan");
+
     if (checkoutButton) {
         checkoutButton.addEventListener("click", function () {
-            var message = document.getElementById("checkoutMessage");
-            if (message) {
-                message.textContent = "Chức năng thanh toán chưa có trong bản demo.";
-                message.hidden = false;
+            if (!checkoutMessage) {
+                return;
             }
+
+            checkoutMessage.textContent =
+                "Thanh toán chưa khả dụng!";
+            checkoutMessage.hidden = false;
         });
     }
 
-    await hienThiGioHang();
+    loadProducts()
+        .then(function (products) {
+            catalog = products;
+
+            FEATURED_IDS.forEach(function (id, index) {
+                var product = catalog.find(function (item) {
+                    return item.id === Number(id);
+                });
+
+                if (product && recommendations) {
+                    recommendations.appendChild(
+                        makeProductCard(
+                            product,
+                            index === 0 ? "Popular" : "",
+                            renderCart
+                        )
+                    );
+                }
+            });
+
+            renderCart();
+        })
+        .catch(function (error) {
+            cartContent.hidden = true;
+            emptyState.hidden = false;
+            emptyState.querySelector("h2").textContent =
+                "Cart unavailable";
+            emptyState.querySelector("p").textContent =
+                "Could not connect to the application cart. Please try again.";
+            console.error(
+                "Có lỗi khi khởi tạo giỏ hàng:",
+                error
+            );
+        });
 });
-
-function capNhatTongTien(items, products) {
-    var totalItems = items.reduce(function (total, item) {
-        return total + item.Quantity;
-    }, 0);
-    var subtotal = items.reduce(function (total, item) {
-        var product = products.find(function (candidate) {
-            return candidate.productID === item.ProductID;
-        });
-        return total + (product ? product.Price * item.Quantity : 0);
-    }, 0);
-
-    var itemCount = document.getElementById("itemCount");
-    if (itemCount) {
-        itemCount.textContent = totalItems + (totalItems === 1 ? " sản phẩm" : " sản phẩm");
-    }
-
-    document.querySelectorAll("[data-cart-count]").forEach(function (element) {
-        element.textContent = String(totalItems);
-    });
-
-    var subtotalElement = document.getElementById("tamTinh");
-    var totalElement = document.getElementById("tongCong");
-    if (subtotalElement) subtotalElement.textContent = formatPrice(subtotal);
-    if (totalElement) totalElement.textContent = formatPrice(subtotal);
-}

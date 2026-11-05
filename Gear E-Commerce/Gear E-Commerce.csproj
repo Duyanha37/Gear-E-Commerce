@@ -92,7 +92,6 @@
     <Content Include="aspx\SignIn.aspx" />
     <Content Include="css\SignIn.css" />
     <Content Include="js\AdminMember.js" />
-    <Content Include="js\ProductCatalog.js" />
     <Content Include="js\SignIn.js" />
     <Content Include="aspx\SignUp.aspx" />
     <Content Include="css\SignUp.css" />

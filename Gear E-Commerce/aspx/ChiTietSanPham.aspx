@@ -7,34 +7,80 @@
     <title>Product Details - GearHouse</title>
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" href="../css/site-shell.css" />
-    <link rel="stylesheet" href="../css/ChiTietSanPham.css?v=2" />
+    <link rel="stylesheet" href="../css/ChiTietSanPham.css?v=4" />
 </head>
-<body>
+<body data-member-id="<%= Server.HtmlEncode(Convert.ToString(Session["memberID"])) %>">
     <div class="dau-trang">
         <header>
-        <div class="logo-thuong-hieu">
-            <a href="../aspx/home.aspx">G</a>
-        </div>
-        <nav class="menu-chinh">
-            <a href="../aspx/home.aspx">Trang chủ</a>
-            <a class="dang-chon" href="../aspx/List.aspx">Sản phẩm</a>
-            <a href="../aspx/List.aspx">Lắp ráp PC</a>
-            <a href="#chan-trang">Hỗ trợ</a>
-        </nav>
-        <div class="tai-khoan">
-            <form class="hop-tim-kiem" id="formTimKiem" action="../aspx/List.aspx">
-                <button class="nut-mo-tim-kiem" id="nutMoTimKiem" type="button" aria-label="Mở tìm kiếm" aria-expanded="false">
+            <div class="logo-thuong-hieu">
+            <a href="home.aspx" aria-label="GearHouse - Trang chủ">
+                <img class="logo-mark"
+                        src="../assets/images/Logo-White.png"
+                        alt=""
+                        aria-hidden="true" />
+                <span class="ten-thuong-hieu">GearHouse</span>
+            </a>
+            </div>
+
+            <nav class="menu-chinh" id="menuChinh">
+                <a href="home.aspx">Trang chủ</a>
+                <a class="dang-chon" href="List.aspx">Sản phẩm</a>
+                <a href="List.aspx">Lắp ráp PC</a>
+                <a href="#chan-trang">Hỗ trợ</a>
+            </nav>
+
+            <div class="tai-khoan">
+            <form class="hop-tim-kiem"
+                    id="formTimKiem"
+                    action="List.aspx"
+                    autocomplete="off">
+                <button class="nut-mo-tim-kiem"
+                        id="nutMoTimKiem"
+                        type="button"
+                        aria-label="Mở tìm kiếm"
+                        aria-expanded="false">
                     <img src="../assets/images/search.png" alt="" />
                 </button>
-                <input type="search" name="search" placeholder="Tìm sản phẩm" aria-label="Tìm sản phẩm" />
-                <button class="nut-thuc-hien-tim-kiem" type="submit">Tìm</button>
+
+                <input type="search"
+                        name="search"
+                        placeholder="Tìm kiếm"
+                        aria-label="Tìm kiếm"
+                        autocomplete="off" />
+
+                <button class="nut-thuc-hien-tim-kiem"
+                        type="submit">
+                    Tìm
+                </button>
             </form>
-            <a class="bieu-tuong-gio-hang" href="Cart.aspx" aria-label="Giỏ hàng">
-                <img src="../assets/images-backup/shopping-cart.png" alt="" />
+
+            <a class="bieu-tuong-gio-hang"
+                href="Cart.aspx"
+                aria-label="Giỏ hàng">
+                <img src="../assets/images-backup/shopping-cart.png"
+                        alt="Giỏ hàng" />
                 <span data-cart-count="">0</span>
             </a>
-            <a class="nut-dang-nhap" href="../aspx/SignIn.aspx">Đăng nhập</a>
-        </div>
+
+            <% if (Session["memberID"] != null) { %>
+                <span class="nut-dang-nhap bieu-tuong-tai-khoan"
+                        role="img"
+                        aria-label="Đã đăng nhập"
+                        title="Đã đăng nhập">
+                    <svg viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false">
+                        <circle cx="12" cy="8" r="3.5"></circle>
+                        <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"></path>
+                    </svg>
+                </span>
+            <% } else { %>
+                <a class="nut-dang-nhap"
+                    href="SignIn.aspx">
+                    Đăng nhập
+                </a>
+            <% } %>
+            </div>
         </header>
     </div>
 
@@ -48,8 +94,8 @@
         </nav>
         <div id="chiTietSanPham" aria-live="polite"></div>
         <section class="overview-panel">
-            <div><p class="overview-kicker">PRODUCT OVERVIEW</p>
-                <h2>Built without compromise.</h2>
+            <div><p class="overview-kicker">TỔNG QUAN VỀ SẢN PHẨM</p>
+                <h2>Sự hoàn hảo không cần thỏa hiệp!</h2>
             </div>
             <p id="productOverview">Được thiết kế cho hiệu suất tin cậy, khả năng tản nhiệt thông minh và độ bền lâu dài.</p>
         </section>
@@ -60,7 +106,7 @@
                     <p>Khám phá thêm các linh kiện cho pc của bạn.</p>
                 </div>
                 <a href="../aspx/List.aspx">
-                    View all 
+                    Xem tất cả
                     <span aria-hidden="true">↗</span>
                 </a>
             </div>
@@ -72,33 +118,31 @@
         <div class="danh-sach">
             <div class="the-san-pham">
                 <h4>G GearHouse</h4>
-                <p>Precision components for your next great build.</p>
+                <p>Linh kiện chất lượng cho bộ máy tiếp theo của bạn.</p>
             </div>
             <div class="the-san-pham">
-                <h4>Shop</h4>
-                <a href="../aspx/List.aspx">All products</a>
-                <a href="../aspx/List.aspx?category=GPU">Graphics cards</a>
-                <a href="../aspx/List.aspx?category=CPU">Processors</a>
+                <h4>Mua sắm</h4>
+                <a href="../aspx/List.aspx">Tất cả sản phẩm</a>
+                <a href="../aspx/List.aspx?category=GPU">Card đồ họa</a>
+                <a href="../aspx/List.aspx?category=CPU">Bộ vi sử lý</a>
             </div>
             <div class="the-san-pham">
-                <h4>Support</h4>
-                <a href="#">Order status</a>
-                <a href="#">Shipping and returns</a>
-                <a href="#">Contact us</a>
+                <h4>Hỗ trợ</h4>
+                <a href="#">Tra cứu đơn hàng</a>
+                <a href="#">Giao hàng và đổi trả</a>
+                <a href="#">Liên hệ</a>
             </div>
             <div class="the-san-pham">
                 <h4>GearHouse</h4>
-                <a href="#">Admin portal</a>
-                <a href="#">About</a>
-                <a href="#">Careers</a>
+                <a href="#">Cổng quản trị</a>
+                <a href="#">Giới thiệu</a>
+                <a href="#">Tuyển dụng</a>
             </div>
         </div>
         <div class="dong-cuoi">
             <p>© 2026 GearHouse, Inc. All rights reserved.</p>
         </div>
     </footer>
-
-    <script src="../js/ProductCatalog.js"></script>
     <script src="../js/ChiTietSanPham.js"></script>
 </body>
 </html>
